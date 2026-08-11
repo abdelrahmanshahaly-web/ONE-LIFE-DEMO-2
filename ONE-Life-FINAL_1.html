@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, interactive-widget=resizes-content" />
+<meta name="theme-color" content="#9E69FF" />
+
+<!-- home screen icon (iPhone: Share > Add to Home Screen) -->
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="icon-180.png" />
+<link rel="manifest" href="manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="ONE Life" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<!-- link preview on WhatsApp / email / LinkedIn -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ONE Life" />
+<meta property="og:description" content="Your community. Connected. A private, verified resident network." />
+<meta property="og:image" content="og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="og-image.png" />
+<title>ONE Life — Your community. Connected.</title>
+<meta name="description" content="ONE Life — a private, verified resident network for premium residential communities." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Jost:wght@200;300;400;500&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ONE Life — visual system
+   Palette : ONE brand purple #9E69FF / white / deep aubergine ink
+   Type    : Jost (brand + display) · Manrope (UI) · Plex Mono (data)
+   Signature: concentric "ONE" rings = resident ↔ community ↔ management
+   ============================================================ */
+
+:root{
+  /* ONE brand */
+  --brand:      #9E69FF;   /* sampled from the ONE Development mark */
+  --brand-deep: #6F3FD6;
+  --brand-soft: rgba(158,105,255,.16);
+  --brand-line: rgba(158,105,255,.38);
+  --ai:         #C9AEFF;   /* lighter lavender, ONE AI only */
+  --ai-soft:    rgba(201,174,255,.14);
+
+  /* neutrals, tinted toward the brand */
+  --ink:        #0A0616;
+  --ink-2:      #0E0920;
+  --surface:    #17102B;
+  --surface-2:  #1F1739;
+  --line:       rgba(255,255,255,.085);
+  --line-2:     rgba(255,255,255,.16);
+  --white:      #F7F4FF;
+  --grey:       #9A93B0;
+  --grey-2:     #6B6488;
+  --green:      #6FCF97;
+
+  --r-lg: 22px;
+  --r-md: 16px;
+  --r-sm: 11px;
+
+  --pad: 20px;
+  --ease: cubic-bezier(.22,.85,.3,1);
+  --font-brand: "Bodoni Moda", Georgia, serif;
+  --font-ui: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Jost", "Manrope", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+
+html,body{ height:100%; }
+body{
+  background:var(--ink);
+  color:var(--white);
+  font-family:var(--font-ui);
+  font-size:15px;
+  line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+input,textarea,select{ font:inherit; color:inherit; }
+img{ display:block; max-width:100%; }
+
+/* ---------- ambience (desktop only) ---------- */
+.ambience{ position:fixed; inset:0; overflow:hidden; pointer-events:none; }
+.orb{ position:absolute; border-radius:50%; filter:blur(90px); opacity:.5; }
+.orb-a{ width:520px; height:520px; left:-140px; top:-120px; background:radial-gradient(circle,rgba(158,105,255,.30),transparent 70%); }
+.orb-b{ width:620px; height:620px; right:-200px; bottom:-220px; background:radial-gradient(circle,rgba(111,63,214,.30),transparent 70%); }
+
+/* ---------- device shell ---------- */
+.stage{ position:relative; display:flex; flex-direction:column; align-items:center; gap:14px; }
+.device{
+  position:relative;
+  width:400px; height:min(844px, 92vh);
+  background:var(--ink-2);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:46px;
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  box-shadow:0 40px 120px -20px rgba(0,0,0,.9), 0 0 0 10px rgba(255,255,255,.02);
+}
+.stage-note{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--grey-2); }
+
+/* ---------- splash : the ONE LIFE mark ---------- */
+.splash{
+  position:absolute; inset:0; z-index:60;
+  background:radial-gradient(125% 95% at 50% 32%, #B489FF 0%, #9E69FF 48%, #7B4AE8 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+}
+.splash.out{ opacity:0; transform:scale(1.04); pointer-events:none; }
+.splash-inner{ position:relative; display:grid; place-items:center; }
+
+/* ring motif sits behind the mark as a watermark */
+.rings{
+  position:absolute; width:296px; height:296px; opacity:.34; pointer-events:none;
+  animation:rise 1.2s var(--ease) both;
+}
+.ring{ fill:none; stroke:rgba(255,255,255,.75); stroke-width:1; transform-origin:110px 110px; }
+.ring.r1{ stroke-dasharray:120 495; animation:spin 5.5s linear infinite; }
+.ring.r2{ stroke-dasharray:80 385; animation:spin 4s linear infinite reverse; }
+.ring.r3{ stroke-dasharray:60 254; animation:spin 3s linear infinite; }
+.core{ fill:#fff; animation:pulse 2.4s var(--ease) infinite; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+@keyframes pulse{ 0%,100%{ opacity:.4; r:4 } 50%{ opacity:1; r:6 } }
+
+/* ONE over LIFE, LIFE locked to the bottom right */
+.wordmark{
+  position:relative; text-align:right; color:#fff;
+  opacity:0; animation:rise 1s var(--ease) .3s forwards;
+}
+.wm-one{
+  display:block; font-family:var(--font-brand); font-weight:400;
+  font-size:76px; line-height:.84; letter-spacing:.045em; margin-right:-.045em;
+}
+.wm-life{
+  display:block; font-family:var(--font-display); font-weight:200;
+  font-size:19px; letter-spacing:.46em; margin-right:-.46em; margin-top:9px;
+}
+.splash-tag{ margin-top:26px; color:rgba(255,255,255,.88); font-size:13px; letter-spacing:.03em; opacity:0; animation:rise .9s var(--ease) .75s forwards; }
+.splash-bar{ margin-top:30px; width:110px; height:1px; background:rgba(255,255,255,.3); overflow:hidden; opacity:0; animation:rise .5s var(--ease) 1s forwards; }
+.splash-bar i{ display:block; height:100%; width:0; background:#fff; animation:load 1.6s var(--ease) 1.1s forwards; }
+@keyframes load{ to{ width:100% } }
+.splash-foot{
+  position:absolute; bottom:38px; font-family:var(--font-mono); font-size:10px;
+  letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.62);
+  opacity:0; animation:rise .9s var(--ease) 1.4s forwards;
+}
+@keyframes rise{ from{ opacity:0; transform:translateY(10px) } to{ opacity:1; transform:none } }
+
+/* the same lockup, small, for in-app brand moments */
+.mark{ text-align:right; display:inline-block; color:var(--white); }
+.mark b{ display:block; font-family:var(--font-brand); font-weight:400; font-size:34px; line-height:.85; letter-spacing:.045em; margin-right:-.045em; }
+.mark span{ display:block; font-family:var(--font-display); font-weight:200; font-size:9px; letter-spacing:.44em; margin-right:-.44em; margin-top:5px; }
+
+/* ---------- scrolling view ---------- */
+.view{
+  flex:1; overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:none; outline:none;
+  padding-bottom:104px;
+}
+.device.has-composer .view{ padding-bottom:16px; }
+.view::-webkit-scrollbar{ display:none; }
+.page{ animation:pageIn .42s var(--ease) both; }
+.page.push{ animation:pushIn .38s var(--ease) both; }
+@keyframes pageIn{ from{ opacity:0; transform:translateY(12px) } to{ opacity:1; transform:none } }
+@keyframes pushIn{ from{ opacity:0; transform:translateX(26px) } to{ opacity:1; transform:none } }
+
+/* ---------- top bars ---------- */
+.topbar{
+  position:static; z-index:20;
+  padding:calc(env(safe-area-inset-top) + 20px) var(--pad) 12px;
+  background:linear-gradient(to bottom, var(--ink-2) 62%, rgba(11,14,21,0));
+  display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+}
+.topbar.solid{ background:var(--ink-2); border-bottom:1px solid var(--line); padding-bottom:14px; }
+.eyebrow{
+  font-family:var(--font-mono); font-size:9.5px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--grey-2);
+}
+.greeting{ font-family:var(--font-display); font-weight:300; font-size:25px; letter-spacing:.01em; margin-top:5px; }
+.greeting b{ font-weight:400; color:var(--white); }
+.page-title{ font-family:var(--font-display); font-weight:300; font-size:29px; letter-spacing:.01em; margin-top:6px; }
+.page-sub{ color:var(--grey); font-size:13px; margin-top:6px; }
+
+.icon-btn{
+  width:38px; height:38px; flex:0 0 38px; border-radius:50%;
+  border:1px solid var(--line); background:var(--surface);
+  display:grid; place-items:center; position:relative;
+  transition:transform .18s var(--ease), border-color .2s;
+}
+.icon-btn:active{ transform:scale(.92); }
+.icon-btn svg{ width:17px; height:17px; }
+.icon-btn .dot{ position:absolute; top:8px; right:9px; width:6px; height:6px; border-radius:50%; background:var(--brand); box-shadow:0 0 0 3px var(--surface); }
+.bar-actions{ display:flex; gap:8px; align-items:center; }
+
+/* ---------- generic layout ---------- */
+.section{ padding:6px var(--pad) 0; }
+.section + .section{ margin-top:22px; }
+.section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:11px; }
+.section-head h2{ font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--grey); }
+.link{ font-size:12px; color:var(--brand); letter-spacing:.02em; }
+.stack{ display:flex; flex-direction:column; gap:11px; }
+
+/* staggered entrance */
+[data-anim]{ animation:cardIn .5s var(--ease) both; }
+@keyframes cardIn{ from{ opacity:0; transform:translateY(14px) } to{ opacity:1; transform:none } }
+
+/* ---------- signals (live status strip) ---------- */
+.signals{ display:flex; gap:9px; overflow-x:auto; padding:2px var(--pad) 4px; scrollbar-width:none; }
+.signals::-webkit-scrollbar{ display:none; }
+.signal{
+  flex:0 0 152px; padding:13px 14px 14px; border-radius:var(--r-md);
+  background:var(--surface); border:1px solid var(--line);
+  display:flex; flex-direction:column; gap:5px; text-align:left;
+  transition:transform .2s var(--ease), border-color .2s;
+}
+.signal:active{ transform:scale(.97); }
+.signal .sig-top{ display:flex; align-items:center; gap:7px; color:var(--grey-2); }
+.signal .sig-top svg{ width:14px; height:14px; }
+.signal .sig-label{ font-family:var(--font-mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; }
+.signal .sig-value{ font-size:13.5px; font-weight:600; letter-spacing:-.01em; }
+.signal .sig-note{ font-size:11.5px; color:var(--grey); }
+.signal.is-live{ border-color:var(--brand-line); background:linear-gradient(160deg,var(--brand-soft),var(--surface) 60%); }
+.signal.is-live .sig-top{ color:var(--brand); }
+
+.live-dot{ width:5px; height:5px; border-radius:50%; background:var(--green); display:inline-block; animation:blink 2s ease-in-out infinite; }
+@keyframes blink{ 0%,100%{ opacity:1 } 50%{ opacity:.25 } }
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg);
+  padding:16px; position:relative; overflow:hidden;
+}
+.card.tap{ transition:transform .2s var(--ease), background .2s; }
+.card.tap:active{ transform:scale(.985); background:var(--surface-2); }
+.card-eyebrow{
+  display:flex; align-items:center; gap:7px; margin-bottom:9px;
+  font-family:var(--font-mono); font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--grey-2);
+}
+.card-eyebrow .tick{ width:14px; height:1px; background:var(--brand); }
+.card-title{ font-family:var(--font-display); font-weight:400; font-size:20px; letter-spacing:.005em; }
+.card-title.sm{ font-size:17px; }
+.card-body{ color:var(--grey); font-size:13.5px; margin-top:7px; }
+.card-actions{ display:flex; gap:8px; margin-top:14px; align-items:center; }
+
+.meta-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.chip{
+  font-family:var(--font-mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  padding:5px 9px; border-radius:100px; border:1px solid var(--line);
+  color:var(--grey); background:rgba(255,255,255,.02);
+}
+.chip.accent{ color:var(--brand); border-color:var(--brand-line); background:var(--brand-soft); }
+
+/* people row */
+.people{ display:flex; align-items:center; gap:10px; margin-top:13px; }
+.avatars{ display:flex; }
+.avatars .av{ margin-left:-9px; border:2px solid var(--surface); }
+.avatars .av:first-child{ margin-left:0; }
+.av{
+  width:30px; height:30px; border-radius:50%; flex:0 0 auto;
+  display:grid; place-items:center; font-size:11px; font-weight:700; letter-spacing:.02em;
+  color:#180B33; background:linear-gradient(150deg,#CDB0FF,#8A5CF0);
+}
+.av.lg{ width:56px; height:56px; font-size:18px; }
+.av.md{ width:38px; height:38px; font-size:13px; }
+.av.v2{ background:linear-gradient(150deg,#E7DCFF,#A98BEA); }
+.av.v3{ background:linear-gradient(150deg,#B490FF,#6F3FD6); }
+.av.v4{ background:linear-gradient(150deg,#DCD2F7,#8E82C6); }
+.people-txt{ font-size:12.5px; color:var(--grey); }
+
+.verified{ display:inline-flex; align-items:center; gap:4px; color:var(--brand); font-size:11.5px; white-space:nowrap; }
+.verified svg{ width:12px; height:12px; }
+
+/* ---------- buttons ---------- */
+.btn{
+  height:38px; padding:0 17px; border-radius:100px;
+  border:1px solid var(--line-2); background:rgba(255,255,255,.04);
+  font-size:13px; font-weight:600; letter-spacing:.01em;
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  transition:transform .16s var(--ease), background .2s, border-color .2s, color .2s;
+}
+.btn:active{ transform:scale(.95); }
+.btn svg{ width:14px; height:14px; }
+.btn-accent{ background:var(--brand); border-color:var(--brand); color:#FFFFFF; }
+.btn-ghost{ background:transparent; border-color:var(--line-2); color:var(--grey); }
+.btn-block{ width:100%; height:48px; font-size:14px; }
+.btn-ai{ background:var(--ai); border-color:var(--ai); color:#1B0E38; }
+.btn.is-done{
+  background:transparent; border-color:rgba(111,207,151,.45); color:var(--green);
+  animation:pop .4s var(--ease);
+}
+@keyframes pop{ 0%{ transform:scale(.9) } 55%{ transform:scale(1.05) } 100%{ transform:scale(1) } }
+.btn.is-saved{ color:var(--brand); border-color:var(--brand-line); }
+
+/* ---------- tabs ---------- */
+.tabs{ display:flex; gap:7px; overflow-x:auto; padding:4px var(--pad) 14px; scrollbar-width:none; background:var(--ink-2); }
+.tabs::-webkit-scrollbar{ display:none; }
+.tab{
+  flex:0 0 auto; padding:8px 14px; border-radius:100px; font-size:12.5px; font-weight:600;
+  color:var(--grey); border:1px solid var(--line); transition:all .22s var(--ease);
+}
+.tab.on{ color:#0A0C11; background:var(--white); border-color:var(--white); }
+
+/* interest chips */
+.interests{ display:flex; flex-wrap:wrap; gap:8px; }
+.int{
+  padding:9px 14px; border-radius:100px; border:1px solid var(--line);
+  background:var(--surface); font-size:13px; color:var(--grey);
+  display:inline-flex; align-items:center; gap:7px; transition:all .22s var(--ease);
+}
+.int.on{ color:var(--white); border-color:var(--brand-line); background:var(--brand-soft); }
+.int:active{ transform:scale(.95); }
+
+/* ---------- marketplace ---------- */
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:11px; padding:0 var(--pad); }
+.tile{ text-align:left; border-radius:var(--r-md); overflow:hidden; border:1px solid var(--line); background:var(--surface); transition:transform .2s var(--ease); }
+.tile:active{ transform:scale(.97); }
+.thumb{
+  aspect-ratio:1/1; display:grid; place-items:center; position:relative;
+  background:linear-gradient(150deg,#2A1D4D,#120C24);
+}
+.thumb::after{ content:""; position:absolute; inset:0; background:radial-gradient(70% 60% at 30% 20%, rgba(255,255,255,.07), transparent 70%); }
+.thumb span{ font-size:34px; filter:grayscale(.25) opacity(.9); }
+.thumb.free::before{
+  content:"FREE"; position:absolute; top:9px; left:9px; z-index:2;
+  font-family:var(--font-mono); font-size:8.5px; letter-spacing:.16em;
+  padding:4px 7px; border-radius:100px; background:var(--brand); color:#fff;
+}
+.tile-body{ padding:11px 12px 13px; }
+.tile-name{ font-size:13.5px; font-weight:600; letter-spacing:-.01em; }
+.tile-price{ font-family:var(--font-mono); font-size:12px; color:var(--brand); margin-top:4px; }
+.tile-meta{ font-size:11px; color:var(--grey-2); margin-top:6px; display:flex; align-items:center; gap:5px; }
+
+.hero-thumb{ aspect-ratio:4/3; display:grid; place-items:center; background:linear-gradient(150deg,#2E2055,#110B22); border-radius:var(--r-lg); border:1px solid var(--line); position:relative; overflow:hidden; }
+.hero-thumb span{ font-size:64px; }
+
+/* ---------- list rows ---------- */
+.rows{ border-radius:var(--r-lg); border:1px solid var(--line); background:var(--surface); overflow:hidden; }
+.row{
+  width:100%; display:flex; align-items:center; gap:12px; padding:14px 15px;
+  border-bottom:1px solid var(--line); text-align:left; transition:background .18s;
+}
+.row:last-child{ border-bottom:0; }
+.row:active{ background:var(--surface-2); }
+.row-ico{ width:32px; height:32px; flex:0 0 32px; border-radius:10px; background:rgba(255,255,255,.045); display:grid; place-items:center; color:var(--grey); }
+.row-ico svg{ width:15px; height:15px; }
+.row-main{ flex:1; min-width:0; }
+.row-title{ font-size:14px; font-weight:600; }
+.row-sub{ font-size:12px; color:var(--grey); margin-top:2px; }
+.row-right{ color:var(--grey-2); display:flex; align-items:center; gap:8px; font-size:12px; }
+.row-right svg{ width:15px; height:15px; }
+
+/* toggle */
+.tog{ width:44px; height:26px; flex:0 0 44px; border-radius:100px; background:rgba(255,255,255,.10); position:relative; transition:background .25s var(--ease); }
+.tog i{ position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:var(--white); transition:transform .25s var(--ease); }
+.tog.on{ background:var(--brand); }
+.tog.on i{ transform:translateX(18px); background:#FFFFFF; }
+
+/* ---------- notifications ---------- */
+.note{ display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); }
+.note:last-child{ border-bottom:0; }
+.note-dot{ width:7px; height:7px; border-radius:50%; background:var(--brand); margin-top:7px; flex:0 0 7px; }
+.note-dot.read{ background:var(--line-2); }
+.note-title{ font-size:14px; font-weight:600; }
+.note-sub{ font-size:12.5px; color:var(--grey); margin-top:3px; }
+.note-time{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.14em; color:var(--grey-2); margin-top:6px; text-transform:uppercase; }
+
+/* ---------- AI ---------- */
+.ai-head{ padding:calc(env(safe-area-inset-top) + 22px) var(--pad) 4px; text-align:center; }
+.ai-orb{ width:74px; height:74px; margin:0 auto 14px; position:relative; }
+.ai-orb svg{ width:100%; height:100%; }
+.ai-orb .ring{ stroke:rgba(201,174,255,.5); transform-origin:50% 50%; }
+.ai-orb .ring.a{ stroke-dasharray:70 300; animation:spin 6s linear infinite; }
+.ai-orb .ring.b{ stroke-dasharray:40 200; animation:spin 4s linear infinite reverse; }
+.ai-orb .core{ fill:var(--ai); }
+.thread{ padding:14px var(--pad) 0; display:flex; flex-direction:column; gap:12px; }
+.msg{ max-width:84%; padding:12px 15px; border-radius:18px; font-size:14px; line-height:1.5; animation:cardIn .4s var(--ease) both; }
+.msg.me{ align-self:flex-end; background:var(--white); color:#0A0C11; border-bottom-right-radius:6px; font-weight:500; }
+.msg.ai{ align-self:flex-start; background:var(--surface); border:1px solid var(--line); border-bottom-left-radius:6px; }
+.msg.ai.tint{ border-color:rgba(201,174,255,.28); background:linear-gradient(160deg,var(--ai-soft),var(--surface) 70%); }
+.msg-card{ align-self:flex-start; width:88%; animation:cardIn .4s var(--ease) both; }
+.dots{ display:inline-flex; gap:4px; align-items:center; height:14px; }
+.dots i{ width:5px; height:5px; border-radius:50%; background:var(--ai); opacity:.4; animation:bob 1.1s ease-in-out infinite; }
+.dots i:nth-child(2){ animation-delay:.15s } .dots i:nth-child(3){ animation-delay:.3s }
+@keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.35 } 50%{ transform:translateY(-4px); opacity:1 } }
+.suggests{ display:flex; flex-direction:column; gap:8px; padding:16px var(--pad) 0; }
+.sugg{
+  text-align:left; padding:13px 15px; border-radius:14px; font-size:13.5px;
+  border:1px solid var(--line); background:var(--surface); color:var(--white);
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  transition:transform .18s var(--ease), border-color .2s;
+}
+.sugg:active{ transform:scale(.98); }
+.sugg svg{ width:14px; height:14px; color:var(--grey-2); flex:0 0 14px; }
+
+/* composer */
+.composer{
+  padding:10px var(--pad); display:flex; gap:9px; align-items:center;
+  background:rgba(14,9,32,.94);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--line);
+}
+.composer input{
+  flex:1; height:44px; border-radius:100px; padding:0 17px;
+  background:var(--surface); border:1px solid var(--line); outline:none; font-size:14px;
+}
+.composer input::placeholder{ color:var(--grey-2); }
+.composer input:focus{ border-color:var(--line-2); }
+.send{ width:44px; height:44px; flex:0 0 44px; border-radius:50%; background:var(--brand); color:#FFFFFF; display:grid; place-items:center; }
+.send svg{ width:17px; height:17px; }
+
+/* ---------- profile ---------- */
+.profile-head{ padding:8px var(--pad) 0; display:flex; align-items:center; gap:14px; }
+.p-name{ font-family:var(--font-display); font-weight:400; font-size:23px; }
+.stats{ display:flex; gap:9px; padding:18px var(--pad) 0; }
+.stat{ flex:1; padding:13px 12px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--line); }
+.stat b{ font-family:var(--font-display); font-weight:400; font-size:21px; display:block; }
+.stat span{ font-family:var(--font-mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--grey-2); }
+
+.privacy-note{
+  margin:0 var(--pad); padding:14px 15px; border-radius:var(--r-md);
+  background:var(--brand-soft); border:1px solid var(--brand-line);
+  font-size:12.5px; color:#DCCDFF; display:flex; gap:10px; align-items:flex-start;
+}
+.privacy-note svg{ width:15px; height:15px; flex:0 0 15px; color:var(--brand); margin-top:1px; }
+
+/* ---------- concept diagram ---------- */
+.concept{ padding:0 var(--pad); }
+.diagram{ width:100%; height:250px; }
+.diagram text{ font-family:var(--font-mono); font-size:8px; letter-spacing:.18em; fill:var(--grey); text-transform:uppercase; }
+.diagram .node{ fill:var(--surface); stroke:var(--line-2); }
+.diagram .node.me{ fill:var(--brand); stroke:var(--brand); }
+.diagram .conn{ stroke:var(--brand-line); stroke-width:1; stroke-dasharray:3 4; animation:dash 14s linear infinite; }
+.diagram .halo{ fill:none; stroke:var(--line); }
+@keyframes dash{ to{ stroke-dashoffset:-140 } }
+.compare{ display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+.compare div{ padding:14px 15px; border-radius:var(--r-md); border:1px solid var(--line); background:var(--surface); }
+.compare .lbl{ font-family:var(--font-mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--grey-2); margin-bottom:7px; }
+.compare .flow{ font-family:var(--font-display); font-size:15px; font-weight:300; letter-spacing:.04em; color:var(--grey); }
+.compare .flow.accent{ color:var(--brand); }
+
+/* ---------- tab bar ---------- */
+.tabbar{
+  position:absolute; left:0; right:0; bottom:0; z-index:30;
+  height:calc(70px + env(safe-area-inset-bottom));
+  padding-bottom:env(safe-area-inset-bottom);
+  display:flex; align-items:center;
+  background:rgba(9,11,17,.82);
+  backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  border-top:1px solid var(--line);
+}
+.tabbtn{
+  flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  color:var(--grey-2); transition:color .22s var(--ease);
+}
+.tabbtn svg{ width:20px; height:20px; transition:transform .22s var(--ease); }
+.tabbtn span{ font-family:var(--font-mono); font-size:8px; letter-spacing:.14em; text-transform:uppercase; }
+.tabbtn.on{ color:var(--white); }
+.tabbtn.on svg{ transform:translateY(-1px); }
+.tabbtn.ai.on{ color:var(--ai); }
+.tabbtn:active svg{ transform:scale(.88); }
+
+/* FAB */
+.fab{
+  position:absolute; right:18px; bottom:calc(86px + env(safe-area-inset-bottom)); z-index:29;
+  height:46px; padding:0 18px; border-radius:100px; background:var(--brand); color:#FFFFFF;
+  font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; gap:7px;
+  box-shadow:0 14px 30px -10px rgba(158,105,255,.6);
+  animation:cardIn .45s var(--ease) both;
+}
+.fab:active{ transform:scale(.94); }
+.fab svg{ width:15px; height:15px; }
+
+/* ---------- sheet ---------- */
+.scrim{
+  position:fixed; inset:0; z-index:80; background:rgba(4,5,8,.65);
+  backdrop-filter:blur(3px); opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+}
+.scrim.on{ opacity:1; pointer-events:auto; }
+.sheet{
+  position:fixed; z-index:90; left:50%; bottom:0; width:400px; max-width:100%;
+  transform:translate(-50%,102%);
+  background:var(--ink-2); border:1px solid var(--line); border-bottom:0;
+  border-radius:28px 28px 0 0; padding:10px var(--pad) calc(24px + env(safe-area-inset-bottom));
+  max-height:86vh; overflow-y:auto; scrollbar-width:none;
+  transition:transform .42s var(--ease);
+}
+.sheet::-webkit-scrollbar{ display:none; }
+.sheet.on{ transform:translate(-50%,0); }
+.grabber{ width:38px; height:4px; border-radius:100px; background:var(--line-2); margin:0 auto 16px; }
+.sheet h3{ font-family:var(--font-display); font-weight:400; font-size:22px; margin-bottom:5px; }
+.sheet .sub{ color:var(--grey); font-size:13px; margin-bottom:16px; }
+
+/* forms */
+.field{ margin-bottom:12px; }
+.field label{ display:block; font-family:var(--font-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--grey-2); margin-bottom:7px; }
+.field input,.field textarea,.field select{
+  width:100%; background:var(--surface); border:1px solid var(--line);
+  border-radius:12px; padding:13px 14px; font-size:14px; outline:none;
+}
+.field textarea{ resize:none; min-height:74px; }
+.field input:focus,.field textarea:focus,.field select:focus{ border-color:var(--brand-line); }
+.field-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.picker{ display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:6px; }
+.pick{
+  padding:15px 14px; border-radius:14px; border:1px solid var(--line); background:var(--surface);
+  text-align:left; transition:all .2s var(--ease);
+}
+.pick b{ display:block; font-size:14px; font-weight:600; }
+.pick span{ font-size:11.5px; color:var(--grey-2); }
+.pick.on{ border-color:var(--brand-line); background:var(--brand-soft); }
+.uploader{
+  min-height:104px; border-radius:14px; border:1px dashed var(--line-2);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  color:var(--grey-2); margin-bottom:12px; background:var(--surface); padding:16px 14px;
+  transition:border-color .2s, background .2s;
+}
+.uploader:active{ border-color:var(--brand-line); background:var(--surface-2); }
+.up-plus{
+  width:34px; height:34px; border-radius:50%; display:grid; place-items:center;
+  background:var(--brand-soft); border:1px solid var(--brand-line); color:var(--brand);
+}
+.up-plus svg{ width:16px; height:16px; }
+.up-label{ font-size:13px; font-weight:600; color:var(--white); }
+.up-hint{ font-size:11.5px; color:var(--grey-2); }
+.uploader.has{ border-style:solid; border-color:var(--brand-line); }
+.up-thumbs{ display:flex; gap:8px; align-items:center; margin-bottom:4px; }
+.up-thumbs img{ width:56px; height:56px; border-radius:11px; object-fit:cover; border:1px solid var(--line-2); }
+.up-more{
+  width:34px; height:56px; border-radius:11px; display:grid; place-items:center;
+  border:1px dashed var(--line-2); color:var(--grey-2);
+}
+.up-more svg{ width:14px; height:14px; }
+.thumb-img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+.req-photo{ width:100%; height:120px; object-fit:cover; border-radius:12px; margin-bottom:12px; }
+
+/* ---------- toast ---------- */
+.toast{
+  position:absolute; left:50%; bottom:calc(94px + env(safe-area-inset-bottom)); z-index:70;
+  transform:translate(-50%,14px); opacity:0; pointer-events:none;
+  padding:11px 18px; border-radius:100px; font-size:13px; font-weight:600;
+  background:var(--brand); color:#fff;
+  display:flex; align-items:center; gap:8px;
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
+  box-shadow:0 14px 34px -12px rgba(158,105,255,.7);
+}
+.toast.on{ opacity:1; transform:translate(-50%,0); }
+.toast svg{ width:14px; height:14px; }
+
+/* ---------- misc ---------- */
+.empty{ text-align:center; padding:50px var(--pad); color:var(--grey-2); font-size:13px; }
+.divider{ height:1px; background:var(--line); margin:22px var(--pad); }
+.badge-line{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--grey); }
+
+.hero-quote{
+  margin:22px var(--pad) 0; padding:28px 20px; border-radius:var(--r-lg);
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(155deg,#9E69FF 0%, #7B4AE8 100%);
+  text-align:center; color:#fff;
+}
+.hero-quote h4{ font-family:var(--font-brand); font-weight:400; font-size:22px; letter-spacing:.01em; }
+.hero-quote p{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.75); margin-top:10px; }
+
+/* ---------- responsive ---------- */
+@media (max-width:520px){
+  body{ display:block; }
+  .ambience{ display:none; }
+  .stage{ gap:0; }
+  .device{ width:100vw; height:100dvh; border:0; border-radius:0; box-shadow:none; }
+  .stage-note{ display:none; }
+  .sheet{ width:100%; }
+}
+@media (max-height:700px) and (min-width:521px){
+  .device{ height:94vh; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; border-radius:8px; }
+
+/* ---------- added for the demo build: undo, slots, pass, tracking, tour ---------- */
+.toast-undo{
+  margin-left:6px; padding:4px 10px; border-radius:100px;
+  background:rgba(255,255,255,.22); color:#fff; font-size:12px; font-weight:700;
+}
+.toast-undo:active{ transform:scale(.94); }
+
+/* amenity time slots */
+.slots{ display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+.slot{
+  padding:14px 6px; border-radius:14px; border:1px solid var(--line); background:var(--surface);
+  font-size:13.5px; font-weight:600; transition:all .2s var(--ease); position:relative;
+}
+.slot.on{ border-color:var(--brand); background:var(--brand-soft); color:var(--white); }
+.slot.taken{ opacity:.4; }
+.slot.taken i{ display:block; font-style:normal; font-family:var(--font-mono); font-size:8px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey-2); margin-top:3px; }
+.slot:active{ transform:scale(.96); }
+
+/* visitor gate pass */
+.pass{
+  border-radius:24px; padding:26px 22px; text-align:center;
+  background:linear-gradient(160deg,#9E69FF,#6F3FD6);
+  border:1px solid rgba(255,255,255,.18); color:#fff;
+  box-shadow:0 24px 60px -22px rgba(158,105,255,.75);
+}
+.pass-eyebrow{ font-family:var(--font-mono); font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.75); }
+.pass-name{ font-family:var(--font-brand); font-weight:400; font-size:28px; margin-top:10px; }
+.pass-sub{ font-size:12.5px; color:rgba(255,255,255,.85); margin-top:5px; }
+.pass-qr{ background:#fff; width:186px; height:186px; margin:20px auto 14px; border-radius:16px; display:grid; place-items:center; }
+.pass-code{ font-family:var(--font-mono); font-size:22px; letter-spacing:.34em; margin-right:-.34em; }
+.pass-meta{
+  display:flex; justify-content:space-between; margin-top:18px; padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.25);
+  font-family:var(--font-mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.8);
+}
+
+/* maintenance progress */
+.track{ display:flex; gap:6px; margin-top:16px; }
+.track-step{ flex:1; }
+.track-step i{ display:block; height:3px; border-radius:100px; background:rgba(255,255,255,.10); }
+.track-step.on i{ background:var(--brand); }
+.track-step span{
+  display:block; margin-top:7px; font-family:var(--font-mono); font-size:8px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--grey-2);
+}
+.track-step.on span{ color:var(--white); }
+
+/* guided tour */
+.tourbar{
+  position:absolute; left:12px; right:12px; bottom:calc(80px + env(safe-area-inset-bottom)); z-index:40;
+  padding:16px 18px 14px; border-radius:20px;
+  background:rgba(23,16,43,.96); border:1px solid var(--brand-line);
+  backdrop-filter:blur(20px); box-shadow:0 20px 50px -18px rgba(0,0,0,.9);
+  animation:cardIn .4s var(--ease) both;
+}
+.tour-step{ font-family:var(--font-mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); }
+.tour-text{ font-size:14px; line-height:1.5; margin-top:8px; }
+.tour-actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:14px; }
+.tour-actions .btn{ height:34px; font-size:12.5px; }
+
+/* ---------- collapsing home header ---------- */
+.minibar{
+  position:sticky; top:0; z-index:25;
+  margin-bottom:-1px;
+  padding:calc(env(safe-area-inset-top) + 12px) var(--pad) 12px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:rgba(14,9,32,.72);
+  backdrop-filter:blur(22px) saturate(160%);
+  -webkit-backdrop-filter:blur(22px) saturate(160%);
+  border-bottom:1px solid transparent;
+  opacity:0; transform:translateY(-6px); pointer-events:none;
+  transition:opacity .28s var(--ease), transform .28s var(--ease), border-color .28s;
+}
+.minibar.on{ opacity:1; transform:none; pointer-events:auto; border-bottom-color:var(--line); }
+.mini-mark{ text-align:right; line-height:1; }
+.mini-mark b{ display:block; font-family:var(--font-brand); font-weight:400; font-size:19px; letter-spacing:.05em; }
+.mini-mark span{ display:block; font-family:var(--font-display); font-weight:200; font-size:6.5px; letter-spacing:.44em; margin-right:-.44em; margin-top:3px; color:var(--grey); }
+
+/* the full greeting now scrolls away instead of pinning over the cards */
+.topbar.bigbar{
+  position:static; background:none;
+  padding-top:14px;
+  transition:opacity .28s var(--ease), transform .28s var(--ease);
+}
+.topbar.bigbar.gone{ opacity:0; transform:translateY(-8px); }
+
+/* ---------- creator credit ---------- */
+.credit{ margin:22px var(--pad) 0; padding:22px 20px; border-radius:var(--r-lg); border:1px solid var(--line); background:var(--surface); }
+.credit-people{ display:flex; flex-direction:column; gap:14px; margin-top:14px; }
+.credit-person{ display:flex; align-items:center; gap:12px; }
+.credit-person p{ font-size:14.5px; font-weight:600; }
+.credit-person span{ font-family:var(--font-mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--grey-2); }
+.credit-note{ margin-top:18px; padding-top:14px; border-top:1px solid var(--line); font-family:var(--font-mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--grey-2); }
+
+/* ---------- live occupancy ---------- */
+.occ-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.occ-word{ display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; }
+.occ-count{ font-family:var(--font-mono); font-size:11px; color:var(--grey); }
+.occ-bar{ height:6px; border-radius:100px; background:rgba(255,255,255,.08); overflow:hidden; }
+.occ-bar i{ display:block; height:100%; border-radius:100px; background:var(--green); transition:width .8s var(--ease); }
+.occ.steady .occ-bar i{ background:var(--brand); }
+.occ.busy .occ-bar i{ background:#E8A05C; }
+.occ.quiet .live-dot{ background:var(--green); }
+.occ.steady .live-dot{ background:var(--brand); }
+.occ.busy .live-dot{ background:#E8A05C; }
+
+/* busy-times chart */
+.busy{ display:flex; align-items:flex-end; gap:4px; height:92px; }
+.busy-bar{ flex:1; height:100%; display:flex; align-items:flex-end; }
+.busy-bar i{ display:block; width:100%; border-radius:4px 4px 2px 2px; background:rgba(255,255,255,.12); }
+.busy-bar.now i{ background:var(--brand); }
+.busy-axis{ display:flex; justify-content:space-between; margin-top:8px; font-family:var(--font-mono); font-size:8.5px; letter-spacing:.14em; color:var(--grey-2); }
+
+/* phone-as-key card */
+.keycard{
+  border-radius:24px; padding:24px 22px; text-align:center; color:#fff;
+  background:linear-gradient(160deg,#2A1D4D,#150E2A);
+  border:1px solid var(--brand-line);
+  box-shadow:0 24px 60px -24px rgba(0,0,0,.9);
+}
+.key-refresh{
+  display:flex; align-items:center; justify-content:center; gap:7px; margin-top:10px;
+  font-family:var(--font-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--grey);
+}
+
+/* drone tracking */
+.dronebox{ border-radius:22px; border:1px solid var(--line); background:var(--surface); padding:20px; }
+.drone-sky{
+  position:relative; height:96px; border-radius:16px; overflow:hidden;
+  background:linear-gradient(180deg,#2A1D4D,#120B24);
+}
+.drone-sky .drone{ position:absolute; top:26px; font-size:26px; transition:left 1s var(--ease); }
+.drone-sky .pad{
+  position:absolute; right:14px; bottom:12px; width:38px; height:8px; border-radius:100px;
+  background:var(--brand); box-shadow:0 0 22px 4px rgba(158,105,255,.55);
+}
+.drone-eta{ text-align:center; margin-top:14px; font-family:var(--font-brand); font-size:22px; }
+
+
+/* ---------- pinned composer sits between the feed and the tab bar ---------- */
+#composerSlot{
+  flex:0 0 auto; position:relative; z-index:31;
+  /* the tab bar is absolutely positioned over the bottom, so sit clear of it */
+  margin-bottom:calc(70px + env(safe-area-inset-bottom));
+}
+#composerSlot:empty{ display:none; margin-bottom:0; }
+.composer input{ min-width:0; }
+
+</style>
+</head>
+<body>
+
+  <!-- Ambient background for desktop viewing -->
+  <div class="ambience" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span></div>
+
+  <div class="stage">
+    <div class="device" id="device">
+
+      <!-- SPLASH -->
+      <div class="splash" id="splash">
+        <div class="splash-inner">
+          <svg class="rings" viewBox="0 0 220 220" aria-hidden="true">
+            <circle class="ring r1" cx="110" cy="110" r="98"/>
+            <circle class="ring r2" cx="110" cy="110" r="74"/>
+            <circle class="ring r3" cx="110" cy="110" r="50"/>
+            <circle class="core" cx="110" cy="110" r="5"/>
+          </svg>
+          <div class="wordmark">
+            <span class="wm-one">ONE</span>
+            <span class="wm-life">LIFE</span>
+          </div>
+        </div>
+        <p class="splash-tag">Your community. Connected.</p>
+        <div class="splash-bar"><i></i></div>
+        <p class="splash-foot">Verified residents. Real community.</p>
+      </div>
+
+      <!-- APP -->
+      <main class="view" id="view" tabindex="-1"></main>
+
+      <div id="composerSlot"></div>
+
+      <nav class="tabbar" id="tabbar" aria-label="Primary"></nav>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <p class="stage-note">ONE Life — interactive concept demo. Tap anything.</p>
+  </div>
+
+  <!-- Bottom sheet -->
+  <div class="scrim" id="scrim"></div>
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Sheet"></section>
+
+  <script>
+/* ============================================================
+   ONE Life — investor demo prototype
+   No backend. All data local. All interactions simulated.
+   ============================================================ */
+(function () {
+  "use strict";
+
+  /* ---------------- icons ---------------- */
+  const P = {
+    home: '<path d="M3 10.6 12 3.5l9 7.1V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+    users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 5.2A3.2 3.2 0 0 1 16 11"/><path d="M17.5 14.8c2.1.6 3.5 2.4 3.5 5"/>',
+    spark: '<path d="M12 3.2 14 9.4l6.2 2-6.2 2-2 6.2-2-6.2-6.2-2 6.2-2z"/>',
+    ai: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>',
+    user: '<circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/>',
+    bell: '<path d="M6 9a6 6 0 0 1 12 0c0 4 1.4 5.4 2 6H4c.6-.6 2-2 2-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/>',
+    back: '<path d="M15 4.5 7.5 12 15 19.5"/>',
+    plus: '<path d="M12 5.5v13M5.5 12h13"/>',
+    check: '<path d="M4.5 12.5 9.5 17.5 19.5 6.5"/>',
+    bookmark: '<path d="M6.5 4h11v16.2l-5.5-3.8-5.5 3.8z"/>',
+    message: '<path d="M4 5.5h16v10.5H9.2L4 20z"/>',
+    chevron: '<path d="M9.5 5 16.5 12 9.5 19"/>',
+    shield: '<path d="M12 3.2 19.5 6v6.1c0 4.6-3.2 7.4-7.5 8.7-4.3-1.3-7.5-4.1-7.5-8.7V6z"/>',
+    box: '<path d="M3.5 8 12 4l8.5 4-8.5 4z"/><path d="M3.5 8v8L12 20l8.5-4V8"/>',
+    wrench: '<path d="M15.5 3.5a5 5 0 0 0-4.4 7.3L3.5 18.4 5.6 20.5l7.6-7.6a5 5 0 0 0 6.3-6.6l-2.9 2.9-2.3-2.3 2.9-2.9a5 5 0 0 0-1.7-.5Z"/>',
+    activity: '<path d="M3 12.5h3.8l2.7 6.5 4.2-14.5 2.6 8h4.7"/>',
+    clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.2 2"/>',
+    calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/>',
+    search: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
+    sliders: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
+    lock: '<rect x="4.5" y="10" width="15" height="10.5" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/>',
+    flag: '<path d="M5.5 3v18M5.5 4.2h12l-2.6 4 2.6 4h-12"/>',
+    help: '<circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2-2.4 3.6"/><circle cx="12" cy="17" r=".9" fill="currentColor" stroke="none"/>',
+    send: '<path d="M4.5 12 20 4.5 15.5 20l-3.8-5.6z"/>',
+    tag: '<path d="M4 4h7.5l8.5 8.5-7.5 7.5L4 11.5z"/><circle cx="8.6" cy="8.6" r="1.3" fill="currentColor" stroke="none"/>',
+    refresh: '<path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20.5 3.5v5h-5"/>',
+    pin: '<path d="M12 21c4.5-5 6.5-8 6.5-11a6.5 6.5 0 1 0-13 0c0 3 2 6 6.5 11Z"/><circle cx="12" cy="10" r="2.3"/>'
+  };
+  function ic(n) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + (P[n] || "") + "</svg>";
+  }
+
+  /* ---------------- demo data ---------------- */
+  const ME = { name: "Abdelrahman", partner: "Mohammed", both: "Abdelrahman and Mohammed", full: "Abdelrahman E.", initials: "AE", tower: "Tower B", community: "ONE Residence" };
+
+  const RES = {
+    ahmed:  { name: "Ahmed",  initials: "AK", tower: "Tower B", av: "" },
+    omar:   { name: "Omar",   initials: "OS", tower: "Tower A", av: "v2" },
+    sara:   { name: "Sara",   initials: "SR", tower: "Tower A", av: "v3" },
+    noor:   { name: "Noor",   initials: "NH", tower: "Tower C", av: "v4" },
+    khalid: { name: "Khalid", initials: "KM", tower: "Tower B", av: "v2" },
+    mariam: { name: "Mariam", initials: "MZ", tower: "Tower C", av: "v3" },
+    mohammed: { name: "Mohammed", initials: "MH", tower: "Tower B", av: "v2" },
+    me:     { name: "Abdelrahman", initials: "AE", tower: "Tower B", av: "" }
+  };
+
+  const MATCHES = [
+    { id: "m1", cat: "padel", kind: "Padel match", title: "Court 2 · 8:00 PM", when: "Tonight", host: ["ahmed", "mohammed"],
+      need: "2 more players", skill: "Intermediate", place: "Padel Court 2",
+      body: "Ahmed and Mohammed are playing a friendly doubles set. Two spaces left.", cta: "Join match" },
+    { id: "m2", cat: "study", kind: "Study group", title: "SAT Mathematics", when: "Tomorrow · 5:00 PM", host: ["sara"],
+      need: "3 residents interested", skill: "Grade 11–12", place: "Clubhouse library",
+      body: "Weekly problem-solving session for the May sitting. Bring your own worksheets.", cta: "Join group" },
+    { id: "m3", cat: "running", kind: "Running", title: "Community evening run", when: "Tonight · 7:30 PM", host: ["noor", "khalid", "mariam"],
+      need: "5 residents joining", skill: "All paces · 5 km", place: "Community Park loop",
+      body: "Easy 5 km around the park. Two pace groups, nobody left behind.", cta: "Join run" },
+    { id: "m4", cat: "football", kind: "Football", title: "Saturday 7-a-side", when: "Saturday · 6:00 PM", host: ["omar", "khalid", "mohammed"],
+      need: "4 more players", skill: "Casual", place: "Community pitch",
+      body: "Friendly seven-a-side. Bibs and ball provided by the clubhouse.", cta: "Join match" },
+    { id: "m5", cat: "coffee", kind: "Coffee", title: "Saturday morning coffee", when: "Saturday · 9:00 AM", host: ["mariam"],
+      need: "Open to all", skill: "New residents welcome", place: "Clubhouse terrace",
+      body: "Informal meet-up for residents who moved in this year.", cta: "Join" },
+    { id: "m6", cat: "gaming", kind: "Gaming", title: "FC25 tournament night", when: "Friday · 9:00 PM", host: ["khalid"],
+      need: "6 more players", skill: "All levels", place: "Clubhouse lounge",
+      body: "Knockout bracket on the big screen. Winner takes the trophy for a month.", cta: "Join" },
+    { id: "m7", cat: "dogs", kind: "Dog owners", title: "Sunset dog walk", when: "Daily · 6:15 PM", host: ["sara", "noor"],
+      need: "9 regulars", skill: "Leads required", place: "Community Park, north gate",
+      body: "The regular evening loop. Small dogs welcome, we keep it slow.", cta: "Join walk" },
+    { id: "m8", cat: "fitness", kind: "Fitness", title: "Morning strength session", when: "Tomorrow · 6:30 AM", host: ["ahmed"],
+      need: "2 more residents", skill: "Beginner friendly", place: "Tower B gym",
+      body: "45 minutes, full body, shared programme. We rotate the lead each week.", cta: "Join" }
+  ];
+
+  const INTERESTS = [
+    { key: "padel", label: "Padel", emo: "🎾" },
+    { key: "football", label: "Football", emo: "⚽" },
+    { key: "running", label: "Running", emo: "🏃" },
+    { key: "gaming", label: "Gaming", emo: "🎮" },
+    { key: "study", label: "Study", emo: "📚" },
+    { key: "dogs", label: "Dog owners", emo: "🐕" },
+    { key: "fitness", label: "Fitness", emo: "🏋" },
+    { key: "coffee", label: "Coffee", emo: "☕" },
+    { key: "art", label: "Art", emo: "🎨" },
+    { key: "parents", label: "Parents", emo: "👨‍👩‍👧" }
+  ];
+
+  const ITEMS = [
+    { id: "i1", name: "PlayStation 5", price: "AED 1,300", emo: "🎮", seller: "khalid", area: "Tower B", cat: "Electronics", mode: "Sell",
+      desc: "Disc edition with two controllers. Bought last year, barely used since the kids discovered padel." },
+    { id: "i2", name: "Minimalist desk", price: "AED 250", emo: "🪑", seller: "ahmed", area: "Tower B", cat: "Furniture", mode: "Sell",
+      desc: "Excellent condition, 120 × 60 cm oak veneer. Selling because I am moving to a smaller unit." },
+    { id: "i3", name: "Moving boxes", price: "Free", free: true, emo: "📦", seller: "sara", area: "Tower A", cat: "Household", mode: "Give away",
+      desc: "Twelve large boxes plus bubble wrap. Collect from the Tower A loading bay this week." },
+    { id: "i4", name: "Power drill", price: "To borrow", emo: "🔧", seller: "omar", area: "Tower A", cat: "Tools", mode: "Lend",
+      desc: "Cordless drill with a full bit set. Happy to lend for a day, just message before 9 PM." },
+    { id: "i5", name: "Baby stroller", price: "AED 400", emo: "🍼", seller: "mariam", area: "Tower C", cat: "Kids", mode: "Sell",
+      desc: "Lightweight travel stroller, folds to cabin size. Cleaned and serviced last month." },
+    { id: "i6", name: "Road bike, 54 cm", price: "AED 900", emo: "🚲", seller: "mohammed", area: "Tower A", cat: "Sport", mode: "Sell",
+      desc: "Aluminium frame, recently serviced. Perfect for the park loop, outgrown by my son." },
+    { id: "i7", name: "Bookshelf", price: "AED 180", emo: "📚", seller: "sara", area: "Tower A", cat: "Furniture", mode: "Sell",
+      desc: "Five shelves, matte white, flat-packs in ten minutes. Collection only." },
+    { id: "i8", name: "Camping tent, 4 person", price: "To borrow", emo: "⛺", seller: "khalid", area: "Tower B", cat: "Outdoor", mode: "Lend",
+      desc: "Used twice in Ras Al Khaimah. Available most weekends, deposit not needed." }
+  ];
+
+  const GROUPS = [
+    { id: "g1", name: "Padel Club", members: 46, emo: "🎾", note: "Ladder matches every week, all levels.", next: "Doubles ladder · Tonight 8:00 PM" },
+    { id: "g2", name: "Parents Community", members: 52, emo: "👨‍👩‍👧", note: "School runs, tutors, childcare and play dates.", next: "Nursery open morning · Saturday" },
+    { id: "g3", name: "Dog Owners", members: 31, emo: "🐕", note: "Evening walks and vet recommendations.", next: "Sunset walk · Daily 6:15 PM" },
+    { id: "g4", name: "Gaming", members: 27, emo: "🎮", note: "Console nights in the clubhouse lounge.", next: "FC25 tournament · Friday 9:00 PM" },
+    { id: "g5", name: "Running Club", members: 18, emo: "🏃", note: "Two pace groups, park loop and corniche.", next: "Evening run · Tonight 7:30 PM" },
+    { id: "g6", name: "Photography", members: 14, emo: "📷", note: "Golden hour walks around the community.", next: "Rooftop shoot · Sunday 5:45 PM" }
+  ];
+
+  const QUESTIONS = [
+    { id: "q1", asker: "mariam", when: "2 hours ago", q: "Does anyone know a good maths tutor nearby?",
+      detail: "Looking for someone for Grade 10, ideally two evenings a week, in or close to the community.",
+      replies: [
+        { by: "sara", when: "1 hour ago", text: "I used a tutor who lives in the next community and she was very good with my daughter. Happy to pass on the contact.", helpful: 4 },
+        { by: "ahmed", when: "48 minutes ago", text: "My brother tutors maths up to Grade 12. I can send you his details if you like.", helpful: 3 },
+        { by: "khalid", when: "20 minutes ago", text: "There is also a study group forming in the clubhouse for SAT maths, might be worth joining first.", helpful: 1 },
+        { by: "mohammed", when: "12 minutes ago", text: "Seconding Sara. She helped my son through Grade 10 and his grades moved quickly.", helpful: 2 }
+      ] },
+    { id: "q2", asker: "omar", when: "Yesterday", q: "Which visitor parking bays are free after 8 PM?",
+      detail: "I have family visiting on Friday and I do not want them circling the basement.",
+      replies: [
+        { by: "noor", when: "Yesterday", text: "Bays 40 to 58 in basement two are visitor bays and they are usually empty after 8.", helpful: 7 },
+        { by: "khalid", when: "Yesterday", text: "Register the plate in the app first, security check it at the barrier now.", helpful: 5 }
+      ] },
+    { id: "q3", asker: "noor", when: "3 days ago", q: "Any recommendation for a reliable AC cleaning service?",
+      detail: "Ours has not been serviced since we moved in and the filters need proper attention.",
+      replies: [
+        { by: "ahmed", when: "3 days ago", text: "Management has an approved vendor list at reception, the rates are better than booking outside.", helpful: 6 }
+      ] }
+  ];
+
+  const NOTES = [
+    { t: "Your package has arrived", s: "Reception recorded it at 3:42 PM. Collect from the Tower B concierge desk.", time: "8 minutes ago", ic: "box", unread: true, go: ["home"] },
+    { t: "Your padel match starts in 30 minutes", s: "Court 2, 8:00 PM. Ahmed and Omar are already confirmed.", time: "30 minutes ago", ic: "activity", unread: true, go: ["match"] },
+    { t: "Ahmed replied to your marketplace listing", s: "“Is the desk still available this weekend?”", time: "1 hour ago", ic: "message", unread: true, go: ["chat", { who: "ahmed" }] },
+    { t: "3 residents replied to your question", s: "Maths tutor recommendations from verified residents.", time: "2 hours ago", ic: "help", unread: false, go: ["question", { id: "q1" }] },
+    { t: "Your maintenance technician is on the way", s: "Estimated arrival 4:15 PM for the kitchen tap.", time: "Today, 3:10 PM", ic: "wrench", unread: false, go: ["home"] },
+    { t: "Pool maintenance begins tomorrow at 10 AM", s: "The main pool is closed 10 AM – 12 PM. The lap pool stays open.", time: "Yesterday", ic: "shield", unread: false, go: ["home"] }
+  ];
+
+  /* ---------------- state ---------------- */
+  const S = {
+    route: "home",
+    params: {},
+    stack: [],
+    tab: "home",
+    joined: new Set(),
+    saved: new Set(["i2"]),
+    helpful: new Set(),
+    connected: new Set(),
+    groups: new Set(["g1", "g5"]),
+    filter: "all",
+    comTab: "foryou",
+    aiThread: [],
+    aiBusy: false,
+    chat: {},
+    requests: [],            /* maintenance requests you raised */
+    bookings: [],            /* amenity bookings */
+    passes: [],              /* visitor passes */
+    myInterests: new Set(["padel", "fitness", "gaming", "coffee"]),
+    notesRead: false,
+    undo: null,              /* { label, run } for the last reversible action */
+    tour: { on: false, step: 0 },
+    mcat: "All",
+    query: "",
+    prefs: { firstName: true, matchReq: true, dm: true, hideStatus: false, hideInterests: false,
+             nPackages: true, nMaintenance: true, nMatches: true, nMarket: true, nCommunity: false, nQuiet: true }
+  };
+
+  /* how much of each list is original, so Reset demo can trim what you added */
+  const BASE = { items: ITEMS.length, matches: MATCHES.length, questions: QUESTIONS.length };
+
+  const view = document.getElementById("view");
+  const tabbar = document.getElementById("tabbar");
+  const sheet = document.getElementById("sheet");
+  const scrim = document.getElementById("scrim");
+  const toastEl = document.getElementById("toast");
+
+  /* ---------------- helpers ---------------- */
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const r = (k) => RES[k];
+  const avatar = (k, size) => {
+    const p = r(k);
+    return '<div class="av ' + (size || "") + " " + (p.av || "") + '">' + p.initials + "</div>";
+  };
+  const verified = (name) => '<span class="verified">' + (name ? esc(name) + " " : "") + ic("check") + "</span>";
+  const stagger = (i) => 'style="animation-delay:' + Math.min(i * 55, 420) + 'ms"';
+
+  let toastTimer;
+  function toast(msg, undoFn) {
+    S.undo = undoFn ? { run: undoFn } : null;
+    toastEl.innerHTML = ic("check") + "<span>" + esc(msg) + "</span>" +
+      (undoFn ? '<button class="toast-undo" data-act="undo">Undo</button>' : "");
+    toastEl.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("on"), undoFn ? 4200 : 1900);
+    if (navigator.vibrate) navigator.vibrate(8);
+  }
+  function hideToast() { toastEl.classList.remove("on"); clearTimeout(toastTimer); }
+
+  /* ---------------- shared partials ---------------- */
+  function topbar(title, sub, opts) {
+    opts = opts || {};
+    return (
+      '<header class="topbar ' + (opts.solid ? "solid" : "") + '">' +
+        '<div>' +
+          (opts.back ? '<button class="icon-btn" data-act="back" aria-label="Back" style="margin-bottom:10px">' + ic("back") + "</button>" : "") +
+          (opts.eyebrow ? '<p class="eyebrow">' + opts.eyebrow + "</p>" : "") +
+          '<h1 class="page-title">' + title + "</h1>" +
+          (sub ? '<p class="page-sub">' + sub + "</p>" : "") +
+        "</div>" +
+        '<div class="bar-actions">' + (opts.actions || "") + "</div>" +
+      "</header>"
+    );
+  }
+    const bellBtn = () => '<button class="icon-btn" data-act="go" data-route="notifications" aria-label="Notifications">' + ic("bell") + (S.notesRead ? "" : '<i class="dot"></i>') + "</button>";
+
+  function matchCard(m, i) {
+    const joined = S.joined.has(m.id);
+    const hosts = m.host.map((k) => avatar(k)).join("");
+    const names = m.host.map((k) => r(k).name).join(" · ");
+    return (
+      '<article class="card" data-anim ' + stagger(i) + ">" +
+        '<div class="card-eyebrow"><i class="tick"></i>' + m.kind.toUpperCase() + " · " + m.when.toUpperCase() + "</div>" +
+        '<h3 class="card-title">' + m.title + "</h3>" +
+        '<p class="card-body">' + m.body + "</p>" +
+        '<div class="meta-row"><span class="chip accent">' + m.need + '</span><span class="chip">' + m.skill + '</span><span class="chip">' + m.place + "</span></div>" +
+        '<div class="people"><div class="avatars">' + hosts + "</div>" +
+          '<span class="people-txt">' + names + " · " + verified("Verified") + "</span></div>" +
+        '<div class="card-actions">' +
+          '<button class="btn ' + (joined ? "is-done" : "btn-accent") + '" data-act="join" data-id="' + m.id + '">' +
+            (joined ? ic("check") + "Joined" : m.cta) + "</button>" +
+          (joined
+            ? '<button class="btn btn-ghost" data-act="cancelspot" data-id="' + m.id + '">Cancel my spot</button>'
+            : '<button class="btn btn-ghost" data-act="go" data-route="matchdetail" data-id="' + m.id + '">Details</button>') +
+        "</div>" +
+      "</article>"
+    );
+  }
+
+  function tile(it, i) {
+    return (
+      '<button class="tile" data-anim ' + stagger(i) + ' data-act="go" data-route="listing" data-id="' + it.id + '">' +
+        '<div class="thumb ' + (it.free ? "free" : "") + '">' +
+          (it.photo ? '<img class="thumb-img" src="' + it.photo + '" alt="" />' : "<span>" + it.emo + "</span>") + "</div>" +
+        '<div class="tile-body">' +
+          '<p class="tile-name">' + it.name + "</p>" +
+          '<p class="tile-price">' + it.price + "</p>" +
+          '<p class="tile-meta">' + verified("Verified") + " · " + it.area + "</p>" +
+        "</div>" +
+      "</button>"
+    );
+  }
+
+  /* ---------------- screens ---------------- */
+  const SCREENS = {};
+
+  /* --- HOME --- */
+  SCREENS.home = function () {
+    const m1 = MATCHES[0], run = MATCHES[2], item = ITEMS[1], q = QUESTIONS[0];
+    const signals = [
+      { ic: "box", label: "Drone", value: "4 minutes out", note: "Pharmacy · Tower B pad", live: true, act: 'data-act="go" data-route="drone"' },
+      { ic: "lock", label: "My key", value: "Phone unlocks doors", note: "No card needed", act: 'data-act="go" data-route="access"' },
+      { ic: "wrench", label: "Maintenance", value: "Technician 4:15 PM", note: "Kitchen tap · Track", act: 'data-act="toastonly" data-msg="Tracking maintenance visit"' },
+      { ic: "activity", label: "Gym", value: LIVE.gym.now + " of " + LIVE.gym.cap + " in use", note: "Quietest at " + LIVE.gym.quiet, act: 'data-act="go" data-route="amenities"' },
+      { ic: "clock", label: "Padel", value: "2 players needed", note: "Court 2 · 8:00 PM", act: 'data-act="go" data-route="match"' }
+    ];
+
+    return (
+      '<div class="page">' +
+        /* slim bar pinned at the top, revealed once the greeting scrolls under it */
+        '<header class="minibar" id="minibar">' +
+          '<div class="mini-mark"><b>ONE</b><span>LIFE</span></div>' +
+          '<div class="bar-actions"><button class="icon-btn" data-act="go" data-route="search" aria-label="Search">' + ic("search") + "</button>" + bellBtn() + "</div>" +
+        "</header>" +
+        '<header class="topbar bigbar" id="bigbar">' +
+          "<div>" +
+            '<p class="eyebrow">Thursday · ' + ME.community + "</p>" +
+            '<h1 class="greeting">Good evening, <b>' + ME.both + ".</b></h1>" +
+          "</div>" +
+          '<div class="bar-actions"><button class="icon-btn" data-act="go" data-route="search" aria-label="Search">' + ic("search") + "</button>" + bellBtn() + "</div>" +
+        "</header>" +
+
+        '<div class="signals">' + signals.map((s, i) =>
+          '<button class="signal ' + (s.live ? "is-live" : "") + '" data-anim ' + stagger(i) + " " + s.act + ">" +
+            '<div class="sig-top">' + ic(s.ic) + '<span class="sig-label">' + s.label + "</span></div>" +
+            '<p class="sig-value">' + s.value + "</p>" +
+            '<p class="sig-note">' + s.note + "</p>" +
+          "</button>").join("") +
+        "</div>" +
+
+        '<div class="section">' +
+          '<div class="section-head"><h2>Happening around you</h2><span class="live-dot"></span></div>' +
+          '<div class="stack">' +
+
+            matchCard(m1, 0) +
+
+            /* marketplace */
+            '<article class="card tap" data-anim ' + stagger(1) + ' data-act="go" data-route="listing" data-id="i2">' +
+              '<div class="card-eyebrow"><i class="tick"></i>MARKETPLACE · TOWER B</div>' +
+              '<div style="display:flex;gap:14px;align-items:center">' +
+                '<div class="thumb" style="width:76px;height:76px;flex:0 0 76px;border-radius:14px"><span style="font-size:30px">🪑</span></div>' +
+                "<div style=\"flex:1\">" +
+                  '<h3 class="card-title sm">' + item.name + "</h3>" +
+                  '<p class="tile-price" style="font-size:13px">' + item.price + "</p>" +
+                  '<p class="card-body" style="margin-top:5px;font-size:12.5px">Excellent condition. Selling because I am moving.</p>' +
+                "</div>" +
+              "</div>" +
+              '<div class="people"><div class="avatars">' + avatar("ahmed") + "</div>" +
+                '<span class="people-txt">Ahmed · ' + verified("Verified resident") + "</span></div>" +
+              '<div class="card-actions">' +
+                '<button class="btn btn-accent" data-act="go" data-route="listing" data-id="i2">View item</button>' +
+                '<button class="btn ' + (S.saved.has("i2") ? "is-saved" : "btn-ghost") + '" data-act="save" data-id="i2">' +
+                  ic("bookmark") + (S.saved.has("i2") ? "Saved" : "Save") + "</button>" +
+              "</div>" +
+            "</article>" +
+
+            matchCard(run, 2) +
+
+            /* management update */
+            '<article class="card" data-anim ' + stagger(3) + ">" +
+              '<div class="card-eyebrow"><i class="tick"></i>COMMUNITY UPDATE · MANAGEMENT</div>' +
+              '<h3 class="card-title">Pool maintenance tomorrow</h3>' +
+              '<p class="card-body">The main pool is closed from 10:00 AM to 12:00 PM for filter servicing. The lap pool and jacuzzi stay open.</p>' +
+              '<div class="meta-row"><span class="chip">Verified by management</span><span class="chip">Amenities</span></div>' +
+              '<div class="card-actions"><button class="btn btn-ghost" data-act="toastonly" data-msg="Added to your calendar">Add to calendar</button></div>' +
+            "</article>" +
+
+            /* event */
+            '<article class="card" data-anim ' + stagger(4) + ">" +
+              '<div class="card-eyebrow"><i class="tick"></i>EVENT · SATURDAY</div>' +
+              '<h3 class="card-title">Football tournament</h3>' +
+              '<p class="card-body">Community pitch, 6:00 PM. Six teams, group stage then knockouts, families welcome on the terrace.</p>' +
+              '<div class="meta-row"><span class="chip accent">12 residents registered</span><span class="chip">Community pitch</span></div>' +
+              '<div class="people"><div class="avatars">' + avatar("omar") + avatar("khalid") + avatar("ahmed") + avatar("noor") + "</div>" +
+                '<span class="people-txt">and 8 more residents</span></div>' +
+              '<div class="card-actions"><button class="btn ' + (S.joined.has("ev1") ? "is-done" : "btn-accent") + '" data-act="join" data-id="ev1">' +
+                (S.joined.has("ev1") ? ic("check") + "Registered" : "View event") + "</button></div>" +
+            "</article>" +
+
+            /* question */
+            '<article class="card tap" data-anim ' + stagger(5) + ' data-act="go" data-route="question" data-id="q1">' +
+              '<div class="card-eyebrow"><i class="tick"></i>ASK COMMUNITY · 2 HOURS AGO</div>' +
+              '<h3 class="card-title sm">“' + q.q + '”</h3>' +
+              '<div class="people"><div class="avatars">' + avatar("sara") + avatar("ahmed") + avatar("khalid") + "</div>" +
+                '<span class="people-txt">3 resident replies</span></div>' +
+              '<div class="card-actions"><button class="btn btn-ghost" data-act="go" data-route="question" data-id="q1">View replies</button></div>' +
+            "</article>" +
+
+          "</div>" +
+        "</div>" +
+
+        '<div class="section">' +
+          '<div class="section-head"><h2>Building services</h2><button class="link" data-act="go" data-route="services">All services</button></div>' +
+          '<div class="signals" style="padding-left:0;padding-right:0">' +
+            '<button class="signal" data-anim data-act="sheet" data-sheet="maintenance">' +
+              '<div class="sig-top">' + ic("wrench") + '<span class="sig-label">Maintenance</span></div>' +
+              '<p class="sig-value">Report an issue</p><p class="sig-note">Technician same day</p></button>' +
+            '<button class="signal" data-anim ' + stagger(1) + ' data-act="go" data-route="amenity">' +
+              '<div class="sig-top">' + ic("calendar") + '<span class="sig-label">Amenities</span></div>' +
+              '<p class="sig-value">Book a slot</p><p class="sig-note">Court · clubhouse · BBQ</p></button>' +
+            '<button class="signal" data-anim ' + stagger(2) + ' data-act="go" data-route="visitor">' +
+              '<div class="sig-top">' + ic("box") + '<span class="sig-label">Visitors</span></div>' +
+              '<p class="sig-value">Create a pass</p><p class="sig-note">Scannable at the gate</p></button>' +
+            '<button class="signal" data-anim ' + stagger(3) + ' data-act="go" data-route="facilities">' +
+              '<div class="sig-top">' + ic("pin") + '<span class="sig-label">Facilities</span></div>' +
+              '<p class="sig-value">' + FACILITIES.length + ' on site</p><p class="sig-note">Spa · helipad · mini golf</p></button>' +
+          "</div>" +
+        "</div>" +
+
+        '<div class="hero-quote" data-anim ' + stagger(6) + ">" +
+          '<div class="mark" style="margin-bottom:16px"><b>ONE</b><span>LIFE</span></div>' +
+          "<h4>Verified residents. Real community.</h4>" +
+          "<p>Your community. Connected.</p>" +
+        "</div>" +
+        '<div style="height:8px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- COMMUNITY --- */
+  SCREENS.community = function () {
+    const tabs = [["foryou", "For you"], ["market", "Marketplace"], ["activities", "Activities"], ["groups", "Groups"], ["ask", "Ask community"]];
+    let body = "";
+
+    if (S.comTab === "foryou") body = communityForYou();
+    if (S.comTab === "market") body = marketBody();
+    if (S.comTab === "activities") body = '<div class="section"><div class="stack">' + MATCHES.slice(0, 5).map(matchCard).join("") + "</div></div>";
+    if (S.comTab === "groups") body = groupsBody();
+    if (S.comTab === "ask") body = askBody();
+
+    return (
+      '<div class="page">' +
+        topbar("Community", "Your private resident network.", { eyebrow: ME.community, actions: bellBtn() }) +
+        '<div class="tabs">' + tabs.map(([k, l]) =>
+          '<button class="tab ' + (S.comTab === k ? "on" : "") + '" data-act="comtab" data-tab="' + k + '">' + l + "</button>").join("") + "</div>" +
+        body +
+        (S.comTab === "market" ? '<button class="fab" data-act="sheet" data-sheet="listing">' + ic("plus") + "List item</button>" : "") +
+        (S.comTab === "activities" ? '<button class="fab" data-act="sheet" data-sheet="activity">' + ic("plus") + "Create activity</button>" : "") +
+        (S.comTab === "ask" ? '<button class="fab" data-act="sheet" data-sheet="ask">' + ic("plus") + "Ask</button>" : "") +
+      "</div>"
+    );
+  };
+
+  function communityForYou() {
+    const people = ["sara", "khalid", "noor"];
+    const shared = { sara: "Study · Art", khalid: "Gaming · Padel", noor: "Running · Dog owners" };
+    return (
+      '<div class="section">' +
+        '<div class="privacy-note" style="margin:0 0 18px">' + ic("shield") +
+          "<span>Only residents verified by management can see or post here. Unit numbers are never shown.</span></div>" +
+        '<div class="section-head"><h2>Residents who share your interests</h2></div>' +
+        '<div class="rows">' + people.map((k, i) => {
+          const p = r(k), on = S.connected.has(k);
+          return '<div class="row" data-anim ' + stagger(i) + ">" + avatar(k, "md") +
+            '<div class="row-main"><p class="row-title">' + p.name + " " + verified("") + "</p>" +
+            '<p class="row-sub">' + shared[k] + " · " + p.tower + "</p></div>" +
+            '<button class="btn ' + (on ? "is-done" : "btn-ghost") + '" style="height:32px;padding:0 13px;font-size:12px" data-act="connect" data-id="' + k + '">' +
+            (on ? "Requested" : "Connect") + "</button></div>";
+        }).join("") + "</div>" +
+      "</div>" +
+
+      '<div class="section">' +
+        '<div class="section-head"><h2>Tonight in the community</h2><button class="link" data-act="comtab" data-tab="activities">All activities</button></div>' +
+        '<div class="stack">' + [MATCHES[0], MATCHES[2]].map(matchCard).join("") + "</div>" +
+      "</div>" +
+
+      '<div class="section">' +
+        '<div class="section-head"><h2>New in the marketplace</h2><button class="link" data-act="comtab" data-tab="market">Browse</button></div>' +
+      "</div>" +
+      '<div class="grid">' + ITEMS.slice(0, 2).map(tile).join("") + "</div>" +
+      '<div style="height:20px"></div>'
+    );
+  }
+
+  function marketBody() {
+    const cats = ["All", "Furniture", "Electronics", "Kids", "Tools", "Free"];
+    const list = ITEMS.filter((x) =>
+      S.mcat === "All" ? true : S.mcat === "Free" ? x.free : x.cat === S.mcat);
+    return (
+      '<div class="section" style="padding-bottom:14px">' +
+        '<div class="interests">' + cats.map((c) =>
+          '<button class="int ' + (S.mcat === c ? "on" : "") + '" data-act="mcat" data-key="' + c + '">' + c + "</button>").join("") + "</div>" +
+      "</div>" +
+      (list.length
+        ? '<div class="grid">' + list.map(tile).join("") + "</div>"
+        : '<div class="empty">Nothing listed in ' + S.mcat + " right now. Residents add items most evenings.</div>") +
+      '<div style="height:24px"></div>'
+    );
+  }
+
+  function groupsBody() {
+    return (
+      '<div class="section"><div class="stack">' + GROUPS.map((g, i) => {
+        const joined = S.groups.has(g.id);
+        return '<article class="card" data-anim ' + stagger(i) + '>' +
+          '<div style="display:flex;gap:13px;align-items:center">' +
+            '<div class="thumb" style="width:52px;height:52px;flex:0 0 52px;border-radius:14px"><span style="font-size:22px">' + g.emo + "</span></div>" +
+            '<div style="flex:1"><h3 class="card-title sm">' + g.name + "</h3>" +
+            '<p class="card-body" style="margin-top:3px;font-size:12.5px">' + g.members + " verified members</p></div>" +
+          "</div>" +
+          '<p class="card-body">' + g.note + "</p>" +
+          '<div class="card-actions">' +
+            '<button class="btn ' + (joined ? "is-done" : "btn-accent") + '" data-act="joingroup" data-id="' + g.id + '">' +
+              (joined ? ic("check") + "Joined" : "Join group") + "</button>" +
+            '<button class="btn btn-ghost" data-act="go" data-route="group" data-id="' + g.id + '">View group</button>' +
+          "</div></article>";
+      }).join("") + "</div></div><div style=\"height:24px\"></div>"
+    );
+  }
+
+  function askBody() {
+    return (
+      '<div class="section"><div class="stack">' + QUESTIONS.map((q, i) => {
+        const p = r(q.asker);
+        return '<article class="card tap" data-anim ' + stagger(i) + ' data-act="go" data-route="question" data-id="' + q.id + '">' +
+          '<div class="card-eyebrow"><i class="tick"></i>' + q.when.toUpperCase() + " · " + p.tower.toUpperCase() + "</div>" +
+          '<h3 class="card-title sm">“' + q.q + '”</h3>' +
+          '<div class="people"><div class="avatars">' + q.replies.map((x) => avatar(x.by)).join("") + "</div>" +
+          '<span class="people-txt">' + q.replies.length + " resident " + (q.replies.length === 1 ? "reply" : "replies") + "</span></div>" +
+          "</article>";
+      }).join("") + "</div></div><div style=\"height:24px\"></div>"
+    );
+  }
+
+  /* --- LISTING DETAIL --- */
+  SCREENS.listing = function (p) {
+    const it = ITEMS.find((x) => x.id === p.id) || ITEMS[0];
+    const s = r(it.seller);
+    const saved = S.saved.has(it.id);
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button></div>" +
+          '<div class="bar-actions"><button class="icon-btn" data-act="toastonly" data-msg="Listing reported to management" aria-label="Report">' + ic("flag") + "</button></div></header>" +
+        '<div class="section">' +
+          '<div class="hero-thumb" data-anim>' +
+            (it.photo ? '<img class="thumb-img" src="' + it.photo + '" alt="" />' : "<span>" + it.emo + "</span>") + "</div>" +
+          '<div class="card-eyebrow" style="margin-top:18px"><i class="tick"></i>' + it.mode.toUpperCase() + " · " + it.cat.toUpperCase() + "</div>" +
+          '<h1 class="page-title" style="margin-top:2px">' + it.name + "</h1>" +
+          '<p class="tile-price" style="font-size:16px;margin-top:8px">' + it.price + "</p>" +
+          '<p class="card-body" style="margin-top:12px">' + it.desc + "</p>" +
+          '<div class="meta-row"><span class="chip">' + it.area + '</span><span class="chip">Collection in community</span></div>' +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="rows"><div class="row">' + avatar(it.seller, "md") +
+            '<div class="row-main"><p class="row-title">' + s.name + " " + verified("") + "</p>" +
+            '<p class="row-sub">Verified resident · ' + s.tower + "</p></div>" +
+            '<span class="row-right">' + ic("chevron") + "</span></div></div>" +
+          '<div class="privacy-note" style="margin:12px 0 0">' + ic("lock") +
+            "<span>Unit numbers are never shared. Arrange collection at the tower lobby or clubhouse.</span></div>" +
+          '<div class="card-actions" style="margin-top:16px">' +
+            '<button class="btn btn-accent btn-block" data-act="go" data-route="chat" data-id="' + it.seller + '">' + ic("message") + "Message " + s.name + "</button>" +
+            '<button class="btn ' + (saved ? "is-saved" : "btn-ghost") + '" data-act="save" data-id="' + it.id + '" style="width:52px;padding:0">' + ic("bookmark") + "</button>" +
+          "</div>" +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- MATCH --- */
+  SCREENS.match = function () {
+    const list = S.filter === "all" ? MATCHES : MATCHES.filter((m) => m.cat === S.filter);
+    return (
+      '<div class="page">' +
+        topbar("Find your people", "Connect with verified residents who share your interests.", { eyebrow: "ONE Match", actions: bellBtn() }) +
+        '<div class="section" style="padding-bottom:16px">' +
+          '<div class="interests">' +
+            '<button class="int ' + (S.filter === "all" ? "on" : "") + '" data-act="filter" data-key="all">All</button>' +
+            INTERESTS.map((x) =>
+              '<button class="int ' + (S.filter === x.key ? "on" : "") + '" data-act="filter" data-key="' + x.key + '"><span>' + x.emo + "</span>" + x.label + "</button>").join("") +
+          "</div>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>' + (list.length ? list.length + " open " + (list.length === 1 ? "activity" : "activities") : "Nothing yet") + "</h2>" +
+            '<button class="link" data-act="sheet" data-sheet="activity">Create activity</button></div>' +
+          (list.length
+            ? '<div class="stack">' + list.map(matchCard).join("") + "</div>"
+            : '<div class="empty">No open activities in this interest yet. Create one and residents nearby will see it.</div>') +
+        "</div>" +
+        '<div class="privacy-note" style="margin-top:20px">' + ic("shield") +
+          "<span>Your details stay private until you join. Residents only see your first name and interests.</span></div>" +
+        '<div style="height:20px"></div>' +
+        '<button class="fab" data-act="sheet" data-sheet="activity">' + ic("plus") + "Create activity</button>" +
+      "</div>"
+    );
+  };
+
+  /* --- GROUP DETAIL --- */
+  SCREENS.group = function (p) {
+    const g = GROUPS.find((x) => x.id === p.id) || GROUPS[0];
+    const joined = S.groups.has(g.id);
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button></div></header>" +
+        '<div class="section">' +
+          '<div style="display:flex;gap:14px;align-items:center" data-anim>' +
+            '<div class="thumb" style="width:64px;height:64px;flex:0 0 64px;border-radius:18px"><span style="font-size:28px">' + g.emo + "</span></div>" +
+            '<div><h1 class="page-title" style="margin:0">' + g.name + "</h1>" +
+            '<p class="page-sub">' + g.members + " verified members · " + ME.community + "</p></div>" +
+          "</div>" +
+          '<p class="card-body" style="margin-top:16px">' + g.note + "</p>" +
+          '<div class="card-actions">' +
+            '<button class="btn ' + (joined ? "is-done" : "btn-accent") + ' btn-block" data-act="joingroup" data-id="' + g.id + '">' +
+              (joined ? ic("check") + "Joined" : "Join group") + "</button>" +
+            '<button class="btn btn-ghost" style="width:52px;padding:0" data-act="toastonly" data-msg="Group notifications on">' + ic("bell") + "</button>" +
+          "</div>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>Next activity</h2></div>' +
+          '<article class="card" data-anim><div class="card-eyebrow"><i class="tick"></i>UPCOMING</div>' +
+            '<h3 class="card-title sm">' + g.next + "</h3>" +
+            '<div class="people"><div class="avatars">' + avatar("ahmed") + avatar("omar") + avatar("noor") + "</div>" +
+            '<span class="people-txt">and ' + (g.members - 3) + " members</span></div>" +
+            '<div class="card-actions"><button class="btn ' + (S.joined.has(g.id + "a") ? "is-done" : "btn-accent") + '" data-act="join" data-id="' + g.id + 'a">' +
+              (S.joined.has(g.id + "a") ? ic("check") + "Joined" : "Join") + "</button></div></article>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>Recent in this group</h2></div>' +
+          '<div class="rows">' +
+            '<button class="row" data-act="go" data-route="question" data-id="q1"><span class="row-ico">' + ic("help") + "</span>" +
+              '<div class="row-main"><p class="row-title">Question · 3 replies</p><p class="row-sub">Recommendations from verified residents</p></div>' +
+              '<span class="row-right">' + ic("chevron") + "</span></button>" +
+            '<button class="row" data-act="toastonly" data-msg="Opening group board"><span class="row-ico">' + ic("calendar") + "</span>" +
+              '<div class="row-main"><p class="row-title">Schedule</p><p class="row-sub">Weekly sessions and court bookings</p></div>' +
+              '<span class="row-right">' + ic("chevron") + "</span></button>" +
+            '<button class="row" data-act="toastonly" data-msg="First names only · no unit numbers"><span class="row-ico">' + ic("users") + "</span>" +
+              '<div class="row-main"><p class="row-title">Members</p><p class="row-sub">First names only, no unit information</p></div>' +
+              '<span class="row-right">' + ic("chevron") + "</span></button>" +
+          "</div>" +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- QUESTION DETAIL --- */
+  SCREENS.question = function (p) {
+    const q = QUESTIONS.find((x) => x.id === p.id) || QUESTIONS[0];
+    const a = r(q.asker);
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button></div>" +
+          '<div class="bar-actions"><button class="icon-btn" data-act="toastonly" data-msg="Saved to your profile" aria-label="Save">' + ic("bookmark") + "</button>" +
+          '<button class="icon-btn" data-act="toastonly" data-msg="Reported to moderation" aria-label="Report">' + ic("flag") + "</button></div></header>" +
+        '<div class="section">' +
+          '<div class="card-eyebrow"><i class="tick"></i>ASK COMMUNITY · ' + q.when.toUpperCase() + "</div>" +
+          '<h1 class="page-title" style="font-size:24px">“' + q.q + '”</h1>' +
+          '<p class="card-body" style="margin-top:12px">' + q.detail + "</p>" +
+          '<div class="people">' + avatar(q.asker) + '<span class="people-txt">' + a.name + " · " + verified("Verified resident") + "</span></div>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>' + q.replies.length + " replies</h2></div>" +
+          '<div class="stack">' + q.replies.map((x, i) => {
+            const rp = r(x.by), key = q.id + "-" + i, on = S.helpful.has(key);
+            return '<article class="card" data-anim ' + stagger(i) + '>' +
+              '<div class="people" style="margin:0 0 10px">' + avatar(x.by) +
+                '<span class="people-txt">' + rp.name + " · " + verified("Verified resident") + " · " + x.when + "</span></div>" +
+              '<p class="card-body" style="margin:0;color:var(--white);font-size:14px">' + x.text + "</p>" +
+              '<div class="card-actions">' +
+                '<button class="btn ' + (on ? "is-done" : "btn-ghost") + '" style="height:32px;padding:0 13px;font-size:12px" data-act="helpful" data-id="' + key + '">' +
+                  (on ? ic("check") + "Helpful · " + (x.helpful + 1) : "Helpful · " + x.helpful) + "</button>" +
+                '<button class="btn btn-ghost" style="height:32px;padding:0 13px;font-size:12px" data-act="go" data-route="chat" data-id="' + x.by + '">Reply</button>' +
+              "</div></article>";
+          }).join("") + "</div>" +
+        "</div>" +
+        '<div class="section"><button class="btn btn-accent btn-block" data-act="sheet" data-sheet="reply">Write a reply</button></div>' +
+        '<div class="privacy-note" style="margin-top:16px">' + ic("shield") +
+          "<span>Replies are visible to verified residents of " + ME.community + " only.</span></div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- AI --- */
+  const AI_SUGGEST = [
+    "Is anyone playing padel tonight?",
+    "Is my package downstairs?",
+    "I need a maths tutor",
+    "Report a maintenance issue",
+    "Invite a visitor on Friday",
+    "Book the clubhouse room"
+  ];
+
+  /* small talk first, so it behaves like an assistant and not a menu */
+  const AI_CHAT = [
+    { k: ["good morning"], t: ["Good morning, " + ME.name + ". The gym is almost empty right now if you want it to yourself.",
+                               "Morning. Quiet start in the community today. What can I do for you?"] },
+    { k: ["good afternoon"], t: ["Good afternoon, " + ME.name + ". How is your day going?"] },
+    { k: ["good evening", "good night", "goodnight"], t: ["Good evening, " + ME.name + ". Padel starts at eight if you are looking for something to do."] },
+    { k: ["hello", "hi ", "hey", "salam", "yo ", "hola"], t: ["Hello, " + ME.name + ". Good to see you. What do you need?",
+                                                              "Hi " + ME.name + ". How can I help this evening?",
+                                                              "Hey. What can I do for you?"] },
+    { k: ["how are you", "how r u", "how you doing", "how is your", "hows your", "how was your"],
+      t: ["I am well, thank you for asking. Quiet evening in the building, everything is running normally. How are you?",
+          "Doing well. The community has been calm today, no incidents and nothing outstanding on your account. How about you?"] },
+    { k: ["i am good", "im good", "i'm good", "fine", "not bad", "great", "im tired", "i am tired"],
+      t: ["Glad to hear it. Anything you would like me to sort out while you are here?",
+          "Good. If you want, I can show you what is happening in the community tonight."] },
+    { k: ["thank", "thanks", "shukran", "appreciate"], t: ["Any time, " + ME.name + ".", "Happy to help. Anything else?"] },
+    { k: ["who are you", "what are you", "your name"],
+      t: ["I am ONE AI, the assistant for " + ME.community + ". I only know this building and the people verified to live in it, which is why I can be specific where a general assistant cannot."] },
+    { k: ["what can you do", "help me", "what do you do", "options"],
+      t: ["I can track your packages and drone deliveries, log maintenance, book amenities, issue visitor passes, open doors with your phone, find activities and search the marketplace. Ask me in plain words and I will handle it."] },
+    { k: ["bye", "goodbye", "see you", "later"], t: ["Goodbye, " + ME.name + ". I am here whenever you need me."] },
+    { k: ["love you", "you are great", "youre great", "nice", "cool", "amazing", "good job"],
+      t: ["That is kind of you. Let me know what you need next."] },
+    { k: ["sorry"], t: ["No need to apologise. What can I do?"] },
+    { k: ["weather", "hot", "cold outside"],
+      t: ["I do not have the forecast, but the pool deck is shaded until four and the indoor courts are air conditioned if it is too warm."] },
+    { k: ["your day", "how was today"], t: ["Steady day here. Eleven deliveries, two maintenance jobs closed, and the padel courts have been busy since six."] }
+  ];
+
+  const AI_REPLIES = [
+    { k: ["padel", "tennis", "court", "play"], t: "Yes. There is an intermediate match at 8:00 PM on Court 2 with two spaces remaining. Ahmed and Mohammed are hosting.", card: "m1" },
+    { k: ["package", "parcel", "delivery", "downstairs"], t: "Yes. Reception recorded your package at 3:42 PM at the Tower B concierge desk. It is held under your collection code, valid for 72 hours." },
+    { k: ["tutor", "maths", "math", "school", "study"], t: "Two verified residents recommended a maths tutor in the last two hours, and a SAT study group is forming in the clubhouse tomorrow at 5:00 PM.", card: "m2" },
+    { k: ["maintenance", "repair", "broken", "leak", "ac", "tap"], t: "I can log that for you. Your last request, the kitchen tap, has a technician arriving at 4:15 PM today. Would you like to add a new request or track that one?" },
+    { k: ["visitor", "guest", "invite", "parking"], t: "I can prepare a visitor pass. Friday evening visitor bays are usually free after 8:00 PM in basement two. I will need the name and plate number to send the gate code." },
+    { k: ["book", "clubhouse", "amenity", "meeting room"], t: "The clubhouse meeting room is free tomorrow from 4:00 PM to 8:00 PM. Padel, mini golf and the cinema can all be booked from Facilities." },
+    { k: ["pool", "swim", "swimming"], t: () => "The pool has " + LIVE.pool.now + " of " + LIVE.pool.cap + " swimmers in it right now. Quietest " + LIVE.pool.quiet.toLowerCase() + ". Note it closes tomorrow 10 AM to 12 PM for filter servicing." },
+    { k: ["sell", "buy", "marketplace", "desk", "borrow"], t: "There are eight active listings from verified residents right now, including a desk in Tower B at AED 250 and a drill available to borrow in Tower A." },
+    { k: ["run", "running", "fitness"], t: "The community run leaves at 7:30 PM tonight from the park entrance, five residents are joining.", card: "m3" },
+    { k: ["gym", "busy", "how many", "crowded", "full"],
+      t: () => "The gym has " + LIVE.gym.now + " of " + LIVE.gym.cap + " stations in use, so it is " + (LIVE.gym.now / LIVE.gym.cap < 0.35 ? "quiet" : LIVE.gym.now / LIVE.gym.cap < 0.7 ? "steady" : "busy") + " right now. Quietest at " + LIVE.gym.quiet + ". You can open the door with your phone, no card needed." },
+    { k: ["key", "card", "door", "unlock", "access"],
+      t: "Your phone is your key. Open My key and hold the code to the reader at the gym, pool or sauna. Nothing to carry and nothing to forget upstairs." },
+    { k: ["drone", "delivery", "pharmacy"],
+      t: "Your drone delivery from the pharmacy is four minutes out, landing on the Tower B pad. I will tell you the locker number when it touches down." },
+    { k: ["spa", "hyperbaric", "oxygen", "massage", "sauna"],
+      t: "The wellness spa and hyperbaric oxygen therapy are by appointment through the concierge. The sauna is open now with two people inside." },
+    { k: ["helicopter", "helipad", "air taxi", "airport"],
+      t: "Air taxi lifts from the rooftop pad run to DXB and Downtown. The concierge arranges the slot, usually confirming within the hour." },
+    { k: ["golf", "cinema", "movie", "theatre", "theater"],
+      t: "Mini golf is open on the podium deck, and the rooftop cinema runs Thursday and Friday nights. Both can be booked from Facilities." }
+  ];
+
+  SCREENS.ai = function () {
+    const thread = S.aiThread;
+    return (
+      '<div class="page">' +
+        '<div class="ai-head">' +
+          '<div class="ai-orb"><svg viewBox="0 0 100 100">' +
+            '<circle class="ring a" cx="50" cy="50" r="44" fill="none" stroke-width="1"/>' +
+            '<circle class="ring b" cx="50" cy="50" r="30" fill="none" stroke-width="1"/>' +
+            '<circle class="core" cx="50" cy="50" r="4"/></svg></div>' +
+          '<p class="eyebrow" style="text-align:center">ONE AI · ' + ME.community + "</p>" +
+          (thread.length ? "" : '<h1 class="page-title" style="font-size:23px;margin-top:8px">Good evening, ' + ME.both + ".<br>How can I help?</h1>") +
+        "</div>" +
+        (thread.length
+          ? '<div class="thread" id="thread">' + thread.map(renderMsg).join("") + "</div>"
+          : '<div class="suggests">' + AI_SUGGEST.map((s, i) =>
+              '<button class="sugg" data-anim ' + stagger(i) + ' data-act="aisay" data-text="' + esc(s) + '"><span>' + s + "</span>" + ic("chevron") + "</button>").join("") +
+            '<p class="page-sub" style="text-align:center;margin-top:18px;font-size:12px">ONE AI only uses information from your community.</p></div>') +
+        '<div style="height:12px"></div>' +
+      "</div>"
+    );
+  };
+
+  function renderMsg(m) {
+    if (m.role === "me") return '<div class="msg me">' + esc(m.text) + "</div>";
+    if (m.role === "typing") return '<div class="msg ai tint"><span class="dots"><i></i><i></i><i></i></span></div>';
+    let out = '<div class="msg ai tint">' + esc(m.text) + "</div>";
+    if (m.card) {
+      const mm = MATCHES.find((x) => x.id === m.card);
+      if (mm) {
+        const joined = S.joined.has(mm.id);
+        out += '<div class="card msg-card"><div class="card-eyebrow"><i class="tick"></i>' + mm.kind.toUpperCase() + " · " + mm.when.toUpperCase() + "</div>" +
+          '<h3 class="card-title sm">' + mm.title + "</h3>" +
+          '<div class="meta-row"><span class="chip accent">' + mm.need + '</span><span class="chip">' + mm.skill + "</span></div>" +
+          '<div class="card-actions"><button class="btn ' + (joined ? "is-done" : "btn-ai") + '" data-act="join" data-id="' + mm.id + '">' +
+          (joined ? ic("check") + "Joined" : mm.cta) + "</button></div></div>";
+      }
+    }
+    return out;
+  }
+
+  function aiAsk(text) {
+    if (!text.trim() || S.aiBusy) return;
+    S.aiBusy = true;
+    S.aiThread.push({ role: "me", text: text });
+    S.aiThread.push({ role: "typing" });
+    render();
+    scrollThread();
+    setTimeout(() => {
+      S.aiThread.pop();
+      const low = " " + text.toLowerCase().trim() + " ";
+      const chat = AI_CHAT.find((x) => x.k.some((w) => low.includes(w)));
+      const hit = AI_REPLIES.find((x) => x.k.some((w) => low.includes(w)));
+      let out;
+      if (chat && !hit) out = { role: "ai", text: chat.t[Math.floor(Math.random() * chat.t.length)] };
+      else if (hit) out = { role: "ai", text: typeof hit.t === "function" ? hit.t() : hit.t, card: hit.card };
+      else out = { role: "ai", text: "I am not certain about that one. I know this building well though, so try me on your package, the gym, a maintenance issue, booking an amenity, a visitor pass or what is happening tonight." };
+      S.aiThread.push(out);
+      S.aiBusy = false;
+      render();
+      scrollThread();
+    }, 1150);
+  }
+  function scrollThread() {
+    requestAnimationFrame(() => { view.scrollTop = view.scrollHeight; });
+  }
+
+  /* --- CHAT --- */
+  SCREENS.chat = function (p) {
+    const who = p.id || "ahmed";
+    const person = r(who);
+    if (!S.chat[who]) {
+      S.chat[who] = [
+        { me: false, t: "Hi " + ME.name + ", I saw you looked at the desk. It is still available." },
+        { me: false, t: "I am in Tower B, so collection is easy. Lobby works any evening." }
+      ];
+    }
+    const msgs = S.chat[who];
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid" style="align-items:center">' +
+          '<div style="display:flex;align-items:center;gap:11px">' +
+            '<button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+            avatar(who, "md") +
+            '<div><p class="row-title">' + person.name + "</p>" +
+            '<p class="row-sub">' + verified("Verified resident") + " · " + person.tower + "</p></div>" +
+          "</div>" +
+        "</header>" +
+        '<div class="thread">' + msgs.map((m) => '<div class="msg ' + (m.me ? "me" : "ai") + '">' + esc(m.t) + "</div>").join("") + "</div>" +
+        '<div class="privacy-note" style="margin-top:18px">' + ic("lock") +
+          "<span>Numbers are never exchanged. This conversation stays inside ONE Life.</span></div>" +
+        '<div style="height:12px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- NOTIFICATIONS --- */
+  SCREENS.notifications = function () {
+    S.notesRead = true;
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Notifications</h1></div>' +
+          '<div class="bar-actions"><button class="icon-btn" data-act="go" data-route="notifprefs" aria-label="Notification settings">' + ic("sliders") + "</button></div></header>" +
+        '<div class="section">' + NOTES.map((n, i) =>
+          '<button class="note" data-anim ' + stagger(i) + ' style="width:100%;text-align:left" data-act="go" data-route="' + n.go[0] + '"' +
+            (n.go[1] ? ' data-id="' + (n.go[1].id || n.go[1].who) + '"' : "") + ">" +
+            '<i class="note-dot ' + (n.unread ? "" : "read") + '"></i>' +
+            '<div style="flex:1"><p class="note-title">' + n.t + "</p>" +
+            '<p class="note-sub">' + n.s + "</p>" +
+            '<p class="note-time">' + n.time + "</p></div>" +
+          "</button>").join("") + "</div>" +
+        '<div class="section"><button class="btn btn-ghost btn-block" data-act="go" data-route="notifprefs">Choose what you are notified about</button></div>' +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  SCREENS.notifprefs = function () {
+    const rows = [
+      ["nPackages", "Packages and deliveries", "When reception records something for you"],
+      ["nMaintenance", "Maintenance", "Technician updates and completion"],
+      ["nMatches", "Matches and activities", "Reminders and spaces opening up"],
+      ["nMarket", "Marketplace replies", "Messages about your listings"],
+      ["nCommunity", "Community updates", "Amenity closures and building notices"],
+      ["nQuiet", "Quiet hours 10 PM – 7 AM", "Only urgent building notices come through"]
+    ];
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Notifications</h1></div></header>' +
+        '<div class="section"><div class="rows">' + rows.map(([k, t, s]) =>
+          '<button class="row" data-act="tog" data-key="' + k + '"><div class="row-main"><p class="row-title">' + t + "</p>" +
+          '<p class="row-sub">' + s + '</p></div><span class="tog ' + (S.prefs[k] ? "on" : "") + '"><i></i></span></button>').join("") + "</div></div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- PROFILE --- */
+  SCREENS.profile = function () {
+    const rows = [
+      ["privacy", "Privacy", "Who can see you and reach you", "lock"],
+      ["notifprefs", "Notifications", "Choose what reaches your phone", "bell"],
+      ["mylistings", "My listings", "1 active · 1 sold", "tag"],
+      ["saved", "Saved", S.saved.size + " items and posts", "bookmark"],
+      ["mygroups", "Groups", S.groups.size + " joined", "users"],
+      ["mymatches", "Matches", S.joined.size + " upcoming", "activity"],
+      ["services", "Building services", "Maintenance, amenities, visitors", "wrench"],
+      ["about", "About ONE Life", "How the community connects", "shield"],
+      ["support", "Support", "Management, security, concierge", "help"]
+    ];
+    return (
+      '<div class="page">' +
+        topbar("Profile", "", { eyebrow: ME.community, actions: '<button class="icon-btn" data-act="go" data-route="privacy" aria-label="Settings">' + ic("sliders") + "</button>" }) +
+        '<div class="profile-head" data-anim>' +
+          '<div class="av lg">' + ME.initials + "</div>" +
+          "<div><p class=\"p-name\">" + ME.both + "</p>" +
+            '<p class="badge-line">' + verified("Verified ONE resident") + "</p>" +
+            '<p class="row-sub">' + ME.community + " · " + ME.tower + "</p></div>" +
+        "</div>" +
+        '<div class="stats">' +
+          '<div class="stat" data-anim ' + stagger(1) + "><b>" + (S.joined.size || 3) + "</b><span>Activities</span></div>" +
+          '<div class="stat" data-anim ' + stagger(2) + "><b>" + S.groups.size + "</b><span>Groups</span></div>" +
+          '<div class="stat" data-anim ' + stagger(3) + "><b>" + S.saved.size + "</b><span>Saved</span></div>" +
+        "</div>" +
+        '<div class="section" style="margin-top:22px">' +
+          '<div class="section-head"><h2>Interests</h2><button class="link" data-act="sheet" data-sheet="interests">Edit</button></div>' +
+          '<div class="interests">' + INTERESTS.filter((x) => S.myInterests.has(x.key)).map((x) =>
+            '<span class="int on"><span>' + x.emo + "</span>" + x.label + "</span>").join("") + "</div>" +
+        "</div>" +
+        '<div class="section"><div class="rows">' + rows.map(([route, t, s, icon]) =>
+          '<button class="row" data-act="go" data-route="' + route + '"><span class="row-ico">' + ic(icon) + "</span>" +
+          '<div class="row-main"><p class="row-title">' + t + "</p><p class=\"row-sub\">" + s + "</p></div>" +
+          '<span class="row-right">' + ic("chevron") + "</span></button>").join("") + "</div></div>" +
+        '<div class="section"><div class="rows">' +
+          '<button class="row" data-act="tourstart"><span class="row-ico">' + ic("spark") + "</span>" +
+            '<div class="row-main"><p class="row-title">Guided tour</p><p class="row-sub">Six stops through the whole product</p></div>' +
+            '<span class="row-right">' + ic("chevron") + "</span></button>" +
+          '<button class="row" data-act="reset"><span class="row-ico">' + ic("refresh") + "</span>" +
+            '<div class="row-main"><p class="row-title">Reset demo</p><p class="row-sub">Back to the opening state</p></div>' +
+            '<span class="row-right">' + ic("chevron") + "</span></button>" +
+        "</div></div>" +
+        '<div class="hero-quote"><h4>Your community. Connected.</h4><p>Abdelrahman Elshahaly · Mohammed</p></div>' +
+        '<div style="height:24px"></div>' +
+      "</div>"
+    );
+  };
+
+  SCREENS.privacy = function () {
+    const rows = [
+      ["firstName", "Show first name only", "Your family name is never displayed to residents"],
+      ["matchReq", "Allow match requests", "Residents can invite you to activities you follow"],
+      ["dm", "Allow direct messages", "Only verified residents can start a conversation"],
+      ["hideStatus", "Hide activity status", "Nobody sees when you were last active"],
+      ["hideInterests", "Hide interests", "Your interests stay off your public card"]
+    ];
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Privacy</h1></div></header>' +
+        '<div class="privacy-note">' + ic("shield") +
+          "<span>ONE Life protects resident privacy. Exact unit information is never shown publicly, and only management can verify who lives here.</span></div>" +
+        '<div class="section" style="margin-top:18px"><div class="rows">' + rows.map(([k, t, s]) =>
+          '<button class="row" data-act="tog" data-key="' + k + '"><div class="row-main"><p class="row-title">' + t + "</p>" +
+          '<p class="row-sub">' + s + '</p></div><span class="tog ' + (S.prefs[k] ? "on" : "") + '"><i></i></span></button>').join("") + "</div></div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>What residents can see</h2></div>' +
+          '<div class="card"><div class="people" style="margin:0">' + avatar("me", "md") +
+            '<div><p class="row-title">' + ME.name + " " + verified("") + "</p>" +
+            '<p class="row-sub">Verified resident · Tower B · Padel, Fitness</p></div></div>' +
+            '<p class="card-body">No unit number. No phone number. No exact location. Tower is shown only so residents can arrange collection.</p></div>' +
+        "</div>" +
+        '<div class="section"><div class="rows">' +
+          '<button class="row" data-act="toastonly" data-msg="Resident blocked"><span class="row-ico">' + ic("lock") + "</span>" +
+            '<div class="row-main"><p class="row-title">Block a resident</p><p class="row-sub">They can no longer see or contact you</p></div>' +
+            '<span class="row-right">' + ic("chevron") + "</span></button>" +
+          '<button class="row" data-act="toastonly" data-msg="Report sent to management"><span class="row-ico">' + ic("flag") + "</span>" +
+            '<div class="row-main"><p class="row-title">Report a resident</p><p class="row-sub">Reviewed by community management</p></div>' +
+            '<span class="row-right">' + ic("chevron") + "</span></button>" +
+        "</div></div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- ABOUT / CONCEPT --- */
+  SCREENS.about = function () {
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">About ONE Life</h1></div></header>' +
+        '<div class="concept">' +
+          '<svg class="diagram" viewBox="0 0 320 250" role="img" aria-label="Resident connects to residents, community and management">' +
+            '<circle class="halo" cx="160" cy="120" r="96"/><circle class="halo" cx="160" cy="120" r="66"/>' +
+            '<line class="conn" x1="160" y1="120" x2="160" y2="36"/>' +
+            '<line class="conn" x1="160" y1="120" x2="70" y2="186"/>' +
+            '<line class="conn" x1="160" y1="120" x2="250" y2="186"/>' +
+            '<circle class="node me" cx="160" cy="120" r="16"/>' +
+            '<circle class="node" cx="160" cy="36" r="13"/>' +
+            '<circle class="node" cx="70" cy="186" r="13"/>' +
+            '<circle class="node" cx="250" cy="186" r="13"/>' +
+            '<text x="160" y="18" text-anchor="middle">Management</text>' +
+            '<text x="70" y="216" text-anchor="middle">Residents</text>' +
+            '<text x="250" y="216" text-anchor="middle">Community</text>' +
+            '<text x="160" y="152" text-anchor="middle" style="fill:var(--brand)">You</text>' +
+          "</svg>" +
+          '<div class="compare">' +
+            '<div><p class="lbl">Traditional resident app</p><p class="flow">Resident → Management</p></div>' +
+            '<div><p class="lbl">ONE Life</p><p class="flow accent">Resident ↔ Resident<br>Resident ↔ Community<br>Resident ↔ Management</p></div>' +
+          "</div>" +
+          '<p class="card-body" style="margin-top:18px">ONE Life turns a residential development into a connected private community. No WhatsApp groups, no Facebook groups, no separate marketplace or sports chats. Everything useful lives in one verified place.</p>' +
+        "</div>" +
+        '<div class="hero-quote"><div class="mark" style="margin-bottom:16px"><b>ONE</b><span>LIFE</span></div>' +
+          '<h4>Verified residents. Real community.</h4><p>Your community. Connected.</p></div>' +
+        '<div class="credit"><p class="eyebrow">A concept by</p>' +
+          '<div class="credit-people">' +
+            '<div class="credit-person">' + avatar("me", "md") + "<div><p>Abdelrahman Elshahaly</p><span>Concept and product</span></div></div>" +
+            '<div class="credit-person">' + avatar("mohammed", "md") + "<div><p>Mohammed</p><span>Concept and product</span></div></div>" +
+          "</div>" +
+          '<p class="credit-note">Prepared for ONE Development · ' + new Date().getFullYear() + "</p></div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- simple sub-screens --- */
+  SCREENS.mylistings = function () {
+    return listPage("My listings", [ITEMS[1]], "You have no active listings. List something and verified residents nearby will see it.");
+  };
+  SCREENS.saved = function () {
+    const items = ITEMS.filter((x) => S.saved.has(x.id));
+    return listPage("Saved", items, "Nothing saved yet. Tap the bookmark on any listing to keep it here.");
+  };
+  function listPage(title, items, empty) {
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">' + title + "</h1></div></header>" +
+        (items.length ? '<div class="grid">' + items.map(tile).join("") + "</div>" : '<div class="empty">' + empty + "</div>") +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  }
+  SCREENS.mygroups = function () {
+    return '<div class="page push">' +
+      '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+      '<h1 class="page-title" style="margin-top:10px">Groups</h1></div></header>' + groupsBody() + "</div>";
+  };
+  SCREENS.mymatches = function () {
+    const list = MATCHES.filter((m) => S.joined.has(m.id));
+    return '<div class="page push">' +
+      '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+      '<h1 class="page-title" style="margin-top:10px">Matches</h1></div></header>' +
+      (list.length ? '<div class="section"><div class="stack">' + list.map(matchCard).join("") + "</div></div>"
+                   : '<div class="empty">You have not joined an activity yet. Open ONE Match to find residents playing tonight.</div>') +
+      '<div class="section"><button class="btn btn-accent btn-block" data-act="tabnav" data-route="match">Find an activity</button></div></div>';
+  };
+  SCREENS.support = function () {
+    const rows = [
+      ["Community management", "Reception, Tower B · 8 AM – 8 PM", "users"],
+      ["Security", "24 hours · main gate", "shield"],
+      ["Concierge", "Packages, visitors, bookings", "box"],
+      ["Report a problem in the app", "Goes to the ONE Life team", "flag"]
+    ];
+    return '<div class="page push">' +
+      '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+      '<h1 class="page-title" style="margin-top:10px">Support</h1></div></header>' +
+      '<div class="section"><div class="rows">' + rows.map(([t, s, i]) =>
+        '<button class="row" data-act="toastonly" data-msg="Connecting you"><span class="row-ico">' + ic(i) + "</span>" +
+        '<div class="row-main"><p class="row-title">' + t + '</p><p class="row-sub">' + s + "</p></div>" +
+        '<span class="row-right">' + ic("chevron") + "</span></button>").join("") + "</div></div></div>";
+  };
+
+
+  /* ================= building services ================= */
+  /* real, scannable QR: encodes the live ONE Life address */
+  const QR_ROWS = "111111100110110011111011001111111,100000100001111111000110101000001,101110101111010111100110001011101,101110101111001110011111101011101,101110101101000100100101101011101,100000101101110110101000001000001,111111101010101010101010101111111,000000001101000100000100000000000,101111100101010101000010101111100,000101010110100010111001001101111,111001101011100110101110001010110,111001001111001010010100010011110,101011110010000100100010110111001,010010011110111111001100001001111,110100100001111000110100111110110,011000011001000010111111011011100,111101100110111011011011110110001,100010010000101011111001001101101,110101110001011111000100111110110,000000001000000111111110011111111,000010110011011010010010100111010,110100010010111100100000001100001,100001110011111110101100000110110,100111010001110100011101010101101,101110111110000101010011111111000,000000001000000000111100100010101,111111100000010110101011101010110,100000101100111100000101100011101,101110101001000000100010111111011,101110101101001111010000010011111,101110101111101000001110101101100,100000100100001010101110111011100,111111101001011011000011111100010".split(",");
+  function qrSvg(size) {
+    const n = QR_ROWS.length, cell = 1;
+    let cells = "";
+    for (let y = 0; y < n; y++)
+      for (let x = 0; x < n; x++)
+        if (QR_ROWS[y][x] === "1") cells += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>';
+    return '<svg viewBox="-2 -2 ' + (n + 4) + " " + (n + 4) + '" width="' + size + '" height="' + size + '" shape-rendering="crispEdges">' +
+      '<rect x="-2" y="-2" width="' + (n + 4) + '" height="' + (n + 4) + '" fill="#fff"/>' +
+      '<g fill="#0A0616">' + cells + "</g></svg>";
+  }
+
+  const AMENITIES = [
+    { id: "a1", name: "Padel Court 2", emo: "🎾", note: "60 minute slots · racquets at reception" },
+    { id: "a2", name: "Clubhouse room", emo: "🪑", note: "Seats 12 · projector and whiteboard" },
+    { id: "a3", name: "BBQ terrace", emo: "🔥", note: "Two grills · park side" },
+    { id: "a4", name: "Cinema room", emo: "🎬", note: "Seats 14 · bring your own snacks" }
+  ];
+  const SLOTS = ["4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"];
+  const TAKEN = ["6:00 PM"];
+
+  SCREENS.services = function () {
+    const rows = [
+      ["maintenance", "Report a maintenance issue", "A technician is assigned the same day", "wrench"],
+      ["amenity", "Book an amenity", "Courts, clubhouse, BBQ terrace, cinema", "calendar"],
+      ["visitor", "Invite a visitor", "Gate pass with a scannable code", "box"],
+      ["requests", "My requests and bookings", (S.requests.length + S.bookings.length + S.passes.length) + " active", "clock"],
+      ["access", "My key", "Open doors with your phone", "lock"],
+      ["amenities", "Right now", "Live occupancy across the community", "activity"],
+      ["facilities", "Facilities", FACILITIES.length + " across ONE Residence", "pin"]
+    ];
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Services</h1>' +
+          '<p class="page-sub">' + ME.community + " · concierge and management</p></div></header>" +
+        '<div class="section"><div class="rows">' + rows.map(([route, t, sub, icon], i) =>
+          '<button class="row" data-anim ' + stagger(i) + ' data-act="go" data-route="' + route + '"><span class="row-ico">' + ic(icon) + "</span>" +
+          '<div class="row-main"><p class="row-title">' + t + '</p><p class="row-sub">' + sub + "</p></div>" +
+          '<span class="row-right">' + ic("chevron") + "</span></button>").join("") + "</div></div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>Building notices</h2></div>' +
+          '<article class="card" data-anim><div class="card-eyebrow"><i class="tick"></i>MANAGEMENT · TOMORROW</div>' +
+            '<h3 class="card-title sm">Pool maintenance 10 AM – 12 PM</h3>' +
+            '<p class="card-body">Main pool closed for filter servicing. Lap pool and jacuzzi stay open.</p></article>' +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- amenity booking --- */
+  SCREENS.amenity = function (p) {
+    const pick = p.id || S.amenityPick || "a1";
+    S.amenityPick = pick;
+    const am = AMENITIES.find((x) => x.id === pick);
+    const day = S.amenityDay || "Tonight";
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Book an amenity</h1></div></header>' +
+        '<div class="section">' +
+          '<div class="section-head"><h2>What are you booking</h2></div>' +
+          '<div class="picker">' + AMENITIES.map((a) =>
+            '<button class="pick ' + (a.id === pick ? "on" : "") + '" data-act="amenpick" data-id="' + a.id + '">' +
+            "<b>" + a.emo + " " + a.name + "</b><span>" + a.note + "</span></button>").join("") + "</div>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>Day</h2></div>' +
+          '<div class="interests">' + ["Tonight", "Tomorrow", "Saturday"].map((d) =>
+            '<button class="int ' + (day === d ? "on" : "") + '" data-act="amenday" data-key="' + d + '">' + d + "</button>").join("") + "</div>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>Time</h2><span class="page-sub" style="font-size:11px">60 minutes</span></div>' +
+          '<div class="slots">' + SLOTS.map((t) => {
+            const taken = TAKEN.indexOf(t) > -1 && day === "Tonight";
+            return '<button class="slot ' + (taken ? "taken" : "") + (S.amenitySlot === t ? " on" : "") + '"' +
+              (taken ? " disabled" : ' data-act="amenslot" data-key="' + t + '"') + ">" + t +
+              (taken ? "<i>Booked</i>" : "") + "</button>";
+          }).join("") + "</div>" +
+        "</div>" +
+        '<div class="section">' +
+          (S.amenitySlot
+            ? '<button class="btn btn-accent btn-block" data-act="bookamenity">Confirm ' + am.name + " · " + day + " " + S.amenitySlot + "</button>"
+            : '<button class="btn btn-ghost btn-block" disabled>Choose a time to continue</button>') +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- visitor pass --- */
+  SCREENS.visitor = function () {
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Invite a visitor</h1>' +
+          '<p class="page-sub">Security receives the pass automatically.</p></div></header>' +
+        '<div class="section">' +
+          '<div class="field"><label>Visitor name</label><input id="vName" placeholder="Sara Ahmed" /></div>' +
+          '<div class="field-2"><div class="field"><label>Date</label><select id="vDay"><option>Tonight</option><option selected>Friday</option><option>Saturday</option></select></div>' +
+            '<div class="field"><label>Arriving</label><select id="vTime"><option>6:00 PM</option><option selected>8:00 PM</option><option>10:00 PM</option></select></div></div>' +
+          '<div class="field"><label>Vehicle plate (optional)</label><input id="vPlate" placeholder="AUH 12345" /></div>' +
+          '<div class="privacy-note" style="margin:4px 0 16px">' + ic("lock") +
+            "<span>Your unit is shared with security only, never printed on the pass.</span></div>" +
+          '<button class="btn btn-accent btn-block" data-act="makepass">Generate gate pass</button>' +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  SCREENS.pass = function (p) {
+    const pass = S.passes.find((x) => x.id === p.id) || S.passes[0];
+    if (!pass) return SCREENS.visitor();
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button></div>" +
+          '<div class="bar-actions"><button class="icon-btn" data-act="toastonly" data-msg="Pass shared" aria-label="Share">' + ic("send") + "</button></div></header>" +
+        '<div class="section">' +
+          '<div class="pass" data-anim>' +
+            '<p class="pass-eyebrow">ONE Life · gate pass</p>' +
+            '<h2 class="pass-name">' + esc(pass.name) + "</h2>" +
+            '<p class="pass-sub">' + pass.day + " · from " + pass.time + " · " + ME.community + "</p>" +
+            '<div class="pass-qr">' + qrSvg(168) + "</div>" +
+            '<p class="pass-code">' + pass.code + "</p>" +
+            '<div class="pass-meta"><span>Host · ' + ME.name + "</span><span>" + (pass.plate || "No vehicle") + "</span></div>" +
+          "</div>" +
+          '<p class="page-sub" style="text-align:center;margin-top:14px;font-size:12px">Show at the gate or send it to your visitor.</p>' +
+          '<div class="card-actions" style="margin-top:16px">' +
+            '<button class="btn btn-accent btn-block" data-act="toastonly" data-msg="Pass sent to Sara">Send to visitor</button>' +
+            '<button class="btn btn-ghost" style="width:52px;padding:0" data-act="cancelpass" data-id="' + pass.id + '" aria-label="Cancel pass">' + ic("flag") + "</button>" +
+          "</div>" +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- my requests / bookings / passes --- */
+  SCREENS.requests = function () {
+    const empty = !S.requests.length && !S.bookings.length && !S.passes.length;
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">My requests</h1></div></header>' +
+        (empty ? '<div class="empty">Nothing open. Raise a maintenance request or book an amenity and it will be tracked here.</div>' : "") +
+        (S.requests.length ? '<div class="section"><div class="section-head"><h2>Maintenance</h2></div><div class="stack">' +
+          S.requests.map((q, i) =>
+            '<article class="card" data-anim ' + stagger(i) + '><div class="card-eyebrow"><i class="tick"></i>' + q.cat.toUpperCase() + " · " + q.urgency.toUpperCase() + "</div>" +
+            (q.photo ? '<img class="req-photo" src="' + q.photo + '" alt="" />' : "") +
+            '<h3 class="card-title sm">' + esc(q.desc) + "</h3>" +
+            '<div class="track">' + ["Logged", "Assigned", "On the way", "Done"].map((st, n) =>
+              '<div class="track-step ' + (n <= q.stage ? "on" : "") + '"><i></i><span>' + st + "</span></div>").join("") + "</div>" +
+            '<div class="card-actions"><button class="btn btn-ghost" data-act="cancelreq" data-id="' + q.id + '">Cancel request</button></div></article>').join("") +
+          "</div></div>" : "") +
+        (S.bookings.length ? '<div class="section"><div class="section-head"><h2>Bookings</h2></div><div class="rows">' +
+          S.bookings.map((b) =>
+            '<div class="row"><span class="row-ico">' + ic("calendar") + "</span>" +
+            '<div class="row-main"><p class="row-title">' + b.name + '</p><p class="row-sub">' + b.day + " · " + b.slot + "</p></div>" +
+            '<button class="btn btn-ghost" style="height:32px;padding:0 13px;font-size:12px" data-act="cancelbooking" data-id="' + b.id + '">Cancel</button></div>').join("") +
+          "</div></div>" : "") +
+        (S.passes.length ? '<div class="section"><div class="section-head"><h2>Visitor passes</h2></div><div class="rows">' +
+          S.passes.map((p) =>
+            '<button class="row" data-act="go" data-route="pass" data-id="' + p.id + '"><span class="row-ico">' + ic("box") + "</span>" +
+            '<div class="row-main"><p class="row-title">' + esc(p.name) + '</p><p class="row-sub">' + p.day + " · " + p.time + " · code " + p.code + "</p></div>" +
+            '<span class="row-right">' + ic("chevron") + "</span></button>").join("") +
+          "</div></div>" : "") +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- match detail --- */
+  SCREENS.matchdetail = function (p) {
+    const m = MATCHES.find((x) => x.id === p.id) || MATCHES[0];
+    const joined = S.joined.has(m.id);
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button></div>" +
+          '<div class="bar-actions"><button class="icon-btn" data-act="toastonly" data-msg="Activity reported" aria-label="Report">' + ic("flag") + "</button></div></header>" +
+        '<div class="section">' +
+          '<div class="card-eyebrow"><i class="tick"></i>' + m.kind.toUpperCase() + " · " + m.when.toUpperCase() + "</div>" +
+          '<h1 class="page-title" style="margin-top:2px">' + m.title + "</h1>" +
+          '<p class="card-body" style="margin-top:12px">' + m.body + "</p>" +
+          '<div class="meta-row"><span class="chip accent">' + m.need + '</span><span class="chip">' + m.skill + '</span><span class="chip">' + m.place + "</span></div>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>Who is going</h2></div>' +
+          '<div class="rows">' + m.host.map((k) =>
+            '<div class="row">' + avatar(k, "md") + '<div class="row-main"><p class="row-title">' + r(k).name + " " + verified("") + "</p>" +
+            '<p class="row-sub">Verified resident · ' + r(k).tower + "</p></div></div>").join("") +
+            (joined ? '<div class="row">' + avatar("me", "md") + '<div class="row-main"><p class="row-title">You ' + verified("") + '</p><p class="row-sub">Joined</p></div></div>' : "") +
+          "</div>" +
+          '<div class="privacy-note" style="margin:12px 0 0">' + ic("shield") +
+            "<span>Names and interests only. No unit numbers, no phone numbers.</span></div>" +
+        "</div>" +
+        '<div class="section">' +
+          (joined
+            ? '<button class="btn btn-ghost btn-block" data-act="cancelspot" data-id="' + m.id + '">Cancel my spot</button>'
+            : '<button class="btn btn-accent btn-block" data-act="join" data-id="' + m.id + '">' + m.cta + "</button>") +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- search --- */
+  SCREENS.search = function () {
+    const q = (S.query || "").toLowerCase();
+    const items = q ? ITEMS.filter((x) => (x.name + x.desc + x.cat).toLowerCase().includes(q)) : [];
+    const acts = q ? MATCHES.filter((x) => (x.title + x.kind + x.body + x.place).toLowerCase().includes(q)) : [];
+    const grps = q ? GROUPS.filter((x) => (x.name + x.note).toLowerCase().includes(q)) : [];
+    const none = q && !items.length && !acts.length && !grps.length;
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Search</h1></div></header>' +
+        '<div class="section"><div class="field"><input id="qInput" value="' + esc(S.query || "") + '" placeholder="Padel, desk, tutor, pool…" autocomplete="off" /></div></div>' +
+        (!q ? '<div class="empty">Search listings, activities and groups across ' + ME.community + ".</div>" : "") +
+        (none ? '<div class="empty">Nothing matches “' + esc(S.query) + '”.</div>' : "") +
+        (acts.length ? '<div class="section"><div class="section-head"><h2>Activities</h2></div><div class="stack">' + acts.map(matchCard).join("") + "</div></div>" : "") +
+        (items.length ? '<div class="section"><div class="section-head"><h2>Marketplace</h2></div></div><div class="grid">' + items.map(tile).join("") + "</div>" : "") +
+        (grps.length ? '<div class="section"><div class="section-head"><h2>Groups</h2></div><div class="rows">' + grps.map((g) =>
+            '<button class="row" data-act="go" data-route="group" data-id="' + g.id + '"><span class="row-ico">' + g.emo + "</span>" +
+            '<div class="row-main"><p class="row-title">' + g.name + '</p><p class="row-sub">' + g.members + " members</p></div>" +
+            '<span class="row-right">' + ic("chevron") + "</span></button>").join("") + "</div></div>" : "") +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+
+  /* ================= ONE Residence facilities, live occupancy, access ================= */
+  const LIVE = {
+    gym:   { name: "Gym", emo: "🏋", now: 6,  cap: 40, quiet: "3:00 PM" },
+    pool:  { name: "Swimming pool", emo: "🏊", now: 11, cap: 45, quiet: "After 8:00 PM" },
+    padel: { name: "Padel courts", emo: "🎾", now: 4,  cap: 8,  quiet: "Weekday mornings" },
+    sauna: { name: "Sauna and steam", emo: "🧖", now: 2, cap: 10, quiet: "Before 9:00 AM" },
+    yoga:  { name: "Yoga and Pilates studio", emo: "🧘", now: 0, cap: 20, quiet: "Now" }
+  };
+  /* rough shape of a day, 6am to 10pm, used for the busy-times bar */
+  const BUSY = [1,2,4,3,2,2,3,4,5,7,9,8,6,4,3,2];
+
+  const FACILITIES = [
+    { id: "f1", name: "Gym", emo: "🏋", live: "gym", note: "Technogym floor, free weights, two studios", act: "access" },
+    { id: "f2", name: "Swimming pool", emo: "🏊", live: "pool", note: "25 m lap pool and leisure pool", act: "access" },
+    { id: "f3", name: "Hyperbaric oxygen therapy", emo: "🫁", note: "60 and 90 minute sessions with a practitioner", act: "concierge", tag: "By appointment" },
+    { id: "f4", name: "Wellness spa", emo: "💆", note: "Treatment rooms, hammam, relaxation lounge", act: "concierge", tag: "By appointment" },
+    { id: "f5", name: "Sauna and steam", emo: "🧖", live: "sauna", note: "Dry sauna, steam room, cold plunge", act: "access" },
+    { id: "f6", name: "Yoga and Pilates studio", emo: "🧘", live: "yoga", note: "Reformer studio and mat classes", act: "book" },
+    { id: "f7", name: "Padel and multipurpose court", emo: "🎾", live: "padel", note: "Two courts, floodlit until midnight", act: "book" },
+    { id: "f8", name: "Mini golf course", emo: "⛳", note: "Nine holes on the podium deck", act: "book" },
+    { id: "f9", name: "Outdoor cinema", emo: "🎬", note: "Rooftop screen, Thursday and Friday nights", act: "book" },
+    { id: "f10", name: "Drone delivery pad", emo: "🚁", note: "Groceries and pharmacy direct to your tower", act: "drone", tag: "Live" },
+    { id: "f11", name: "Air taxi and helipad", emo: "🚁", note: "Scheduled lifts to DXB and Downtown", act: "concierge", tag: "Concierge" }
+  ];
+
+  function occBar(k) {
+    const l = LIVE[k];
+    const pct = Math.round((l.now / l.cap) * 100);
+    const state = pct < 35 ? "quiet" : pct < 70 ? "steady" : "busy";
+    const word = pct < 35 ? "Quiet" : pct < 70 ? "Steady" : "Busy";
+    return '<div class="occ ' + state + '">' +
+      '<div class="occ-top"><span class="occ-word"><i class="live-dot"></i>' + word + "</span>" +
+        '<span class="occ-count">' + l.now + " of " + l.cap + "</span></div>" +
+      '<div class="occ-bar"><i style="width:' + Math.max(pct, 3) + '%"></i></div>' +
+      "</div>";
+  }
+
+  /* --- live amenities --- */
+  SCREENS.amenities = function () {
+    const keys = Object.keys(LIVE);
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Right now</h1>' +
+          '<p class="page-sub">Live occupancy across ' + ME.community + "</p></div></header>" +
+        '<div class="section"><div class="stack">' + keys.map((k, i) => {
+          const l = LIVE[k];
+          return '<article class="card" data-anim ' + stagger(i) + '>' +
+            '<div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">' +
+              '<div class="thumb" style="width:44px;height:44px;flex:0 0 44px;border-radius:13px"><span style="font-size:20px">' + l.emo + "</span></div>" +
+              '<div style="flex:1"><h3 class="card-title sm">' + l.name + "</h3>" +
+              '<p class="row-sub">Quietest ' + l.quiet.toLowerCase() + "</p></div>" +
+            "</div>" +
+            occBar(k) +
+            '<div class="card-actions">' +
+              '<button class="btn btn-accent" data-act="go" data-route="access">Open with my phone</button>' +
+              '<button class="btn btn-ghost" data-act="go" data-route="amenity">Book</button>' +
+            "</div></article>";
+        }).join("") + "</div></div>" +
+
+        '<div class="section">' +
+          '<div class="section-head"><h2>Gym through the day</h2></div>' +
+          '<div class="card"><div class="busy">' + BUSY.map((v, i) =>
+            '<div class="busy-bar' + (i === 9 ? " now" : "") + '"><i style="height:' + (v * 10) + '%"></i></div>').join("") + "</div>" +
+            '<div class="busy-axis"><span>6 AM</span><span>2 PM</span><span>10 PM</span></div>' +
+            '<p class="card-body" style="margin-top:12px">Busiest between 6 and 8 in the evening. If you can move your session to 3 PM you will have the floor to yourself.</p></div>' +
+        "</div>" +
+        '<div class="privacy-note" style="margin-top:18px">' + ic("shield") +
+          "<span>Counts only. ONE Life never shows who is inside a facility or how long they stayed.</span></div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- phone as the key --- */
+  SCREENS.access = function () {
+    const code = S.accessCode || (S.accessCode = String(Math.floor(100000 + Math.random() * 899999)));
+    const log = [
+      ["Gym", "Entered 6:42 PM · left 7:38 PM", "56 minutes"],
+      ["Swimming pool", "Yesterday, 7:10 AM", "35 minutes"],
+      ["Padel Court 2", "Tuesday, 8:00 PM", "60 minutes"]
+    ];
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">My key</h1>' +
+          '<p class="page-sub">Hold this to the reader. No card needed.</p></div></header>' +
+        '<div class="section">' +
+          '<div class="keycard" data-anim>' +
+            '<p class="pass-eyebrow">ONE Residence · resident access</p>' +
+            '<div class="pass-qr">' + qrSvg(178) + "</div>" +
+            '<p class="pass-code">' + code + "</p>" +
+            '<p class="key-refresh"><i class="live-dot"></i>Refreshes every 30 seconds</p>' +
+            '<div class="pass-meta"><span>' + ME.name + "</span><span>" + ME.tower + "</span></div>" +
+          "</div>" +
+          '<div class="card-actions" style="margin-top:16px">' +
+            '<button class="btn btn-accent btn-block" data-act="unlock">Unlock the gym door</button>' +
+          "</div>" +
+          '<div class="privacy-note" style="margin-top:14px">' + ic("lock") +
+            "<span>The reader checks that you are a verified resident. It does not log where you went to anyone but you.</span></div>" +
+        "</div>" +
+        '<div class="section">' +
+          '<div class="section-head"><h2>Your recent access</h2><span class="page-sub" style="font-size:11px">Only you see this</span></div>' +
+          '<div class="rows">' + log.map(([a, b, c]) =>
+            '<div class="row"><span class="row-ico">' + ic("check") + "</span>" +
+            '<div class="row-main"><p class="row-title">' + a + '</p><p class="row-sub">' + b + "</p></div>" +
+            '<span class="row-right">' + c + "</span></div>").join("") + "</div>" +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- facilities directory --- */
+  SCREENS.facilities = function () {
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Facilities</h1>' +
+          '<p class="page-sub">Everything inside ' + ME.community + "</p></div></header>" +
+        '<div class="section"><div class="stack">' + FACILITIES.map((f, i) => {
+          const l = f.live ? LIVE[f.live] : null;
+          return '<button class="card tap" style="text-align:left;width:100%" data-anim ' + stagger(i) +
+            ' data-act="go" data-route="facility" data-id="' + f.id + '">' +
+            '<div style="display:flex;gap:13px;align-items:center">' +
+              '<div class="thumb" style="width:48px;height:48px;flex:0 0 48px;border-radius:14px"><span style="font-size:21px">' + f.emo + "</span></div>" +
+              '<div style="flex:1"><h3 class="card-title sm">' + f.name + "</h3>" +
+              '<p class="row-sub" style="margin-top:3px">' + f.note + "</p></div>" +
+              '<span class="row-right">' + ic("chevron") + "</span>" +
+            "</div>" +
+            (l ? '<div style="margin-top:12px">' + occBar(f.live) + "</div>"
+               : f.tag ? '<div class="meta-row"><span class="chip accent">' + f.tag + "</span></div>" : "") +
+            "</button>";
+        }).join("") + "</div></div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  SCREENS.facility = function (p) {
+    const f = FACILITIES.find((x) => x.id === p.id) || FACILITIES[0];
+    const l = f.live ? LIVE[f.live] : null;
+    const cta =
+      f.act === "access" ? '<button class="btn btn-accent btn-block" data-act="go" data-route="access">Open with my phone</button>' :
+      f.act === "book" ? '<button class="btn btn-accent btn-block" data-act="go" data-route="amenity">Book a slot</button>' :
+      f.act === "drone" ? '<button class="btn btn-accent btn-block" data-act="go" data-route="drone">Track a delivery</button>' :
+      '<button class="btn btn-accent btn-block" data-act="concierge" data-name="' + f.name + '">Request through concierge</button>';
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button></div></header>" +
+        '<div class="section">' +
+          '<div class="hero-thumb" data-anim><span>' + f.emo + "</span></div>" +
+          '<h1 class="page-title" style="margin-top:18px">' + f.name + "</h1>" +
+          '<p class="card-body" style="margin-top:10px">' + f.note + "</p>" +
+          (l ? '<div style="margin-top:16px">' + occBar(f.live) + '</div><p class="row-sub" style="margin-top:10px">Quietest ' + l.quiet.toLowerCase() + ".</p>" : "") +
+          (f.tag ? '<div class="meta-row"><span class="chip accent">' + f.tag + "</span></div>" : "") +
+          '<div class="card-actions" style="margin-top:18px">' + cta + "</div>" +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* --- drone delivery tracking --- */
+  SCREENS.drone = function () {
+    const st = S.droneStage || 0;
+    const steps = [
+      ["Order collected", "Pharmacy, Marina district"],
+      ["In the air", "4 minutes out · 84 km/h"],
+      ["Descending to pad", "Tower B landing pad"],
+      ["Landed", "Collect from the concierge locker"]
+    ];
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Drone delivery</h1>' +
+          '<p class="page-sub">Order 4471 · pharmacy</p></div></header>' +
+        '<div class="section">' +
+          '<div class="dronebox" data-anim>' +
+            '<div class="drone-sky"><span class="drone" style="left:' + (10 + st * 27) + '%">🚁</span>' +
+              '<i class="pad"></i></div>' +
+            '<p class="drone-eta">' + (st >= 3 ? "Arrived" : (4 - st) + " minutes away") + "</p>" +
+          "</div>" +
+          '<div class="rows" style="margin-top:16px">' + steps.map(([a, b], i) =>
+            '<div class="row"><span class="row-ico" style="' + (i <= st ? "color:var(--brand)" : "") + '">' + ic(i <= st ? "check" : "clock") + "</span>" +
+            '<div class="row-main"><p class="row-title" style="' + (i > st ? "color:var(--grey-2)" : "") + '">' + a + "</p>" +
+            '<p class="row-sub">' + b + "</p></div></div>").join("") + "</div>" +
+          '<div class="card-actions" style="margin-top:16px">' +
+            (st >= 3
+              ? '<button class="btn btn-accent btn-block" data-act="toastonly" data-msg="Locker opened">Open the locker</button>'
+              : '<button class="btn btn-ghost btn-block" data-act="dronenext">Advance the delivery (demo)</button>') +
+          "</div>" +
+        "</div>" +
+        '<div style="height:28px"></div>' +
+      "</div>"
+    );
+  };
+
+  /* ---------------- sheets ---------------- */
+  const SHEETS = {
+    listing: function () {
+      return (
+        '<div class="grabber"></div>' +
+        "<h3>List an item</h3><p class=\"sub\">Visible to verified residents of " + ME.community + " only.</p>" +
+        '<div class="picker">' + [["Sell", "Set a price"], ["Give away", "Free to a neighbour"], ["Lend", "Borrow and return"], ["Borrow request", "Ask to borrow"]]
+          .map(([t, s], i) => '<button class="pick ' + (i === 0 ? "on" : "") + '" data-act="pick"><b>' + t + "</b><span>" + s + "</span></button>").join("") + "</div>" +
+        '<input type="file" id="lPhoto" accept="image/*" multiple hidden />' +
+        '<div class="uploader" id="lDrop" data-act="pickphoto" data-for="lPhoto">' +
+          '<span class="up-plus">' + ic("plus") + "</span>" +
+          "<span class=\"up-label\">Add photos</span>" +
+          '<span class="up-hint">Camera or photo library</span></div>' +
+        '<div class="field"><label>Title</label><input id="lTitle" placeholder="Minimalist desk" /></div>' +
+        '<div class="field"><label>Description</label><textarea id="lDesc" placeholder="Excellent condition. Selling because I am moving."></textarea></div>' +
+        '<div class="field-2"><div class="field"><label>Price (AED)</label><input id="lPrice" placeholder="250" inputmode="numeric" /></div>' +
+          '<div class="field"><label>Category</label><select id="lCat"><option>Furniture</option><option>Electronics</option><option>Kids</option><option>Tools</option><option>Household</option></select></div></div>' +
+        '<div class="field"><label>Collection area</label><select id="lArea"><option>Tower A</option><option selected>Tower B</option><option>Tower C</option><option>Clubhouse</option></select></div>' +
+        '<button class="btn btn-accent btn-block" data-act="publish" data-kind="listing">Publish listing</button>' +
+        '<p class="page-sub" style="text-align:center;margin-top:12px;font-size:11.5px">Your unit number is never attached to a listing.</p>'
+      );
+    },
+    activity: function () {
+      return (
+        '<div class="grabber"></div>' +
+        "<h3>Create an activity</h3><p class=\"sub\">Residents who follow this interest will see it.</p>" +
+        '<div class="picker">' + [["Padel", "Court booking"], ["Football", "Community pitch"], ["Running", "Park loop"], ["Study", "Clubhouse"], ["Coffee", "Terrace"], ["Other", "Anything else"]]
+          .map(([t, s], i) => '<button class="pick ' + (i === 0 ? "on" : "") + '" data-act="pick"><b>' + t + "</b><span>" + s + "</span></button>").join("") + "</div>" +
+        '<div class="field-2"><div class="field"><label>Date</label><input id="aDay" placeholder="Tonight" value="Tonight" /></div>' +
+          '<div class="field"><label>Time</label><input id="aTime" placeholder="8:00 PM" value="8:00 PM" /></div></div>' +
+        '<div class="field-2"><div class="field"><label>Place</label><select id="aPlace"><option>Padel Court 1</option><option selected>Padel Court 2</option><option>Community pitch</option><option>Clubhouse</option></select></div>' +
+          '<div class="field"><label>Players needed</label><input id="aNeed" placeholder="2" value="2" inputmode="numeric" /></div></div>' +
+        '<div class="field"><label>Skill level</label><select id="aSkill"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option><option>All levels</option></select></div>' +
+        '<div class="field"><label>Note (optional)</label><textarea id="aNote" placeholder="Friendly doubles, we book the court at 7:45."></textarea></div>' +
+        '<button class="btn btn-accent btn-block" data-act="publish" data-kind="activity">Create activity</button>'
+      );
+    },
+    ask: function () {
+      return (
+        '<div class="grabber"></div>' +
+        "<h3>Ask the community</h3><p class=\"sub\">Your question goes to verified residents, not to the internet.</p>" +
+        '<div class="field"><label>Question</label><input id="qTitle" placeholder="Does anyone know a good maths tutor nearby?" /></div>' +
+        '<div class="field"><label>Detail</label><textarea id="qDetail" placeholder="Grade 10, two evenings a week, close to the community."></textarea></div>' +
+        '<div class="field"><label>Topic</label><select id="qTopic"><option>Recommendations</option><option>Building and amenities</option><option>Kids and school</option><option>Lost and found</option></select></div>' +
+        '<div class="rows" style="margin-bottom:14px"><button class="row" data-act="tog" data-key="firstName">' +
+          '<div class="row-main"><p class="row-title">Show first name only</p><p class="row-sub">Recommended for public questions</p></div>' +
+          '<span class="tog ' + (S.prefs.firstName ? "on" : "") + '"><i></i></span></button></div>' +
+        '<button class="btn btn-accent btn-block" data-act="publish" data-kind="ask">Post question</button>'
+      );
+    },
+    confirm: function () {
+      const c = S.confirmData || {};
+      return (
+        '<div class="grabber"></div>' +
+        "<h3>" + esc(c.title || "Are you sure?") + "</h3><p class=\"sub\">" + esc(c.body || "") + "</p>" +
+        '<button class="btn btn-accent btn-block" data-act="confirmyes">' + esc(c.yes || "Confirm") + "</button>" +
+        '<button class="btn btn-ghost btn-block" style="margin-top:10px" data-act="closesheet">Keep it</button>'
+      );
+    },
+    maintenance: function () {
+      return (
+        '<div class="grabber"></div>' +
+        "<h3>Report an issue</h3><p class=\"sub\">Goes straight to the building technician.</p>" +
+        '<div class="picker">' + [["Plumbing", "Taps, drains, leaks"], ["Electrical", "Sockets, lighting"], ["AC", "Cooling and filters"], ["Other", "Anything else"]]
+          .map(([t, sub], i) => '<button class="pick ' + (i === 0 ? "on" : "") + '" data-act="pick" data-val="' + t + '"><b>' + t + "</b><span>" + sub + "</span></button>").join("") + "</div>" +
+        '<input type="file" id="mPhoto" accept="image/*" multiple hidden />' +
+        '<div class="uploader" id="mDrop" data-act="pickphoto" data-for="mPhoto">' +
+          '<span class="up-plus">' + ic("plus") + "</span>" +
+          "<span class=\"up-label\">Add a photo of the problem</span>" +
+          '<span class="up-hint">Camera or photo library</span></div>' +
+        '<div class="field"><label>What is wrong</label><textarea id="mDesc" placeholder="The kitchen tap drips constantly."></textarea></div>' +
+        '<div class="field"><label>Urgency</label><select id="mUrg"><option>Normal</option><option>Urgent</option><option>Emergency</option></select></div>' +
+        '<button class="btn btn-accent btn-block" data-act="publish" data-kind="maintenance">Send request</button>'
+      );
+    },
+    interests: function () {
+      return (
+        '<div class="grabber"></div>' +
+        "<h3>Your interests</h3><p class=\"sub\">Residents with the same interests see your activities.</p>" +
+        '<div class="interests" style="margin-bottom:16px">' + INTERESTS.map((x) =>
+          '<button class="int ' + (S.myInterests.has(x.key) ? "on" : "") + '" data-act="myint" data-key="' + x.key + '"><span>' + x.emo + "</span>" + x.label + "</button>").join("") + "</div>" +
+        '<button class="btn btn-accent btn-block" data-act="publish" data-kind="interests">Save interests</button>'
+      );
+    },
+    reply: function () {
+      return (
+        '<div class="grabber"></div>' +
+        "<h3>Write a reply</h3><p class=\"sub\">Posted as " + ME.name + ", verified resident.</p>" +
+        '<div class="field"><textarea placeholder="Share what worked for you." style="min-height:120px"></textarea></div>' +
+        '<button class="btn btn-accent btn-block" data-act="publish" data-msg="Reply posted">Post reply</button>'
+      );
+    }
+  };
+
+  function openSheet(name) {
+    sheet.innerHTML = (SHEETS[name] || SHEETS.listing)();
+    scrim.classList.add("on");
+    requestAnimationFrame(() => sheet.classList.add("on"));
+  }
+  function closeSheet() {
+    sheet.classList.remove("on");
+    scrim.classList.remove("on");
+  }
+
+
+  /* ================= create, cancel, tour, reset ================= */
+  const val = (id, fallback) => {
+    const el = document.getElementById(id);
+    const v = el ? String(el.value || "").trim() : "";
+    return v || fallback || "";
+  };
+  const picked = (fallback) => {
+    const el = sheet.querySelector(".pick.on");
+    return el ? (el.dataset.val || el.querySelector("b").textContent.trim()) : (fallback || "");
+  };
+  const uid = (p) => p + Math.random().toString(36).slice(2, 7);
+  const CAT_EMO = { Furniture: "🪑", Electronics: "🎧", Kids: "🧸", Tools: "🔧", Household: "📦", Sport: "🚲" };
+
+  function createListing() {
+    const mode = picked("Sell");
+    const cat = val("lCat", "Furniture");
+    const price = val("lPrice", "");
+    const it = {
+      id: uid("u"), name: val("lTitle", "Untitled item"),
+      price: mode === "Give away" ? "Free" : mode === "Lend" ? "To borrow" : (price ? "AED " + price : "AED 0"),
+      free: mode === "Give away",
+      emo: CAT_EMO[cat] || "📦", photo: (S.photos && S.photos[0]) || null, seller: "me", area: val("lArea", "Tower B"),
+      cat: cat, mode: mode, desc: val("lDesc", "Available to collect in the community."), mine: true
+    };
+    ITEMS.unshift(it);
+    S.photos = [];
+    S.comTab = "market"; S.mcat = "All";
+    go("community", {}, "tab");
+    toast("Listing published", () => { ITEMS.shift(); render(); });
+  }
+
+  function createActivity() {
+    const kind = picked("Padel");
+    const m = {
+      id: uid("n"), cat: kind.toLowerCase(), kind: kind, title: val("aPlace", "Padel Court 2") + " · " + val("aTime", "8:00 PM"),
+      when: val("aDay", "Tonight"), host: ["me"], need: val("aNeed", "2") + " more players",
+      skill: val("aSkill", "Intermediate"), place: val("aPlace", "Padel Court 2"),
+      body: val("aNote", "Open to residents of " + ME.community + ". Message me if you are running late."),
+      cta: "Join", mine: true
+    };
+    MATCHES.unshift(m);
+    S.joined.add(m.id);
+    S.filter = "all";
+    go("match", {}, "tab");
+    toast("Activity created · visible to residents", () => { MATCHES.shift(); S.joined.delete(m.id); render(); });
+  }
+
+  function createQuestion() {
+    const q = {
+      id: uid("q"), asker: "me", when: "Just now", q: val("qTitle", "Can anyone recommend a good tutor nearby?"),
+      detail: val("qDetail", "Posted to verified residents of " + ME.community + "."), replies: [], mine: true
+    };
+    QUESTIONS.unshift(q);
+    go("question", { id: q.id }, "push");
+    toast("Question posted", () => { QUESTIONS.shift(); back(); });
+    /* a neighbour answers while you are still looking at it */
+    setTimeout(() => {
+      if (!QUESTIONS.some((x) => x.id === q.id)) return;
+      q.replies.push({ by: "sara", when: "Just now", text: "I can help with this, I asked the same thing when we moved in. Sending you what worked.", helpful: 1 });
+      if (S.route === "question" && S.params.id === q.id) render();
+      toast("Sara replied to your question");
+    }, 9000);
+  }
+
+  function createRequest() {
+    const q = { id: uid("r"), cat: picked("Plumbing"), desc: val("mDesc", "Reported from the app."), urgency: val("mUrg", "Normal"), stage: 0, photo: (S.photos && S.photos[0]) || null };
+    S.photos = [];
+    S.requests.unshift(q);
+    go("requests", {}, "push");
+    toast("Request logged · technician assigned", () => { S.requests.shift(); render(); });
+    setTimeout(() => { if (S.requests.indexOf(q) > -1) { q.stage = 1; if (S.route === "requests") render(); } }, 4000);
+    setTimeout(() => { if (S.requests.indexOf(q) > -1) { q.stage = 2; if (S.route === "requests") render(); toast("Technician on the way"); } }, 11000);
+  }
+
+  function makePass() {
+    const p = {
+      id: uid("v"), name: val("vName", "Sara Ahmed"), day: val("vDay", "Friday"),
+      time: val("vTime", "8:00 PM"), plate: val("vPlate", ""),
+      code: String(Math.floor(100000 + Math.random() * 899999))
+    };
+    S.passes.unshift(p);
+    go("pass", { id: p.id }, "push");
+    toast("Gate pass issued");
+  }
+
+  /* --- confirmation sheet --- */
+  function confirmThen(title, body, yes, run) {
+    S.confirmData = { title: title, body: body, yes: yes, run: run };
+    openSheet("confirm");
+  }
+
+  /* --- guided tour --- */
+  const TOUR = [
+    { route: "home", tab: true, text: "The feed opens on what matters tonight: a package, a technician, a quiet gym and a padel match two players short." },
+    { route: "match", tab: true, text: "ONE Match. Residents find each other by interest. Nobody's details are shared until both sides opt in." },
+    { route: "community", tab: true, com: "market", text: "A private marketplace between verified neighbours. Collection at the lobby, never at a door." },
+    { route: "services", text: "Management services in the same app: maintenance, amenity booking and a scannable visitor pass." },
+    { route: "ai", tab: true, text: "ONE AI answers from community data, not the internet. Ask it about padel tonight or your package." },
+    { route: "about", text: "The idea in one picture. Traditional apps connect residents to management. ONE Life connects them to each other as well." }
+  ];
+  function tourGo(n) {
+    if (n < 0 || n >= TOUR.length) { S.tour.on = false; render(); return; }
+    S.tour.on = true; S.tour.step = n;
+    const st = TOUR[n];
+    if (st.com) S.comTab = st.com;
+    go(st.route, {}, st.tab ? "tab" : "push");
+  }
+  function tourBar() {
+    if (!S.tour.on) return "";
+    const st = TOUR[S.tour.step];
+    return '<div class="tourbar">' +
+      '<p class="tour-step">' + (S.tour.step + 1) + " of " + TOUR.length + "</p>" +
+      "<p class=\"tour-text\">" + st.text + "</p>" +
+      '<div class="tour-actions">' +
+        '<button class="btn btn-ghost" data-act="tourend">Exit tour</button>' +
+        '<button class="btn btn-accent" data-act="tournext">' + (S.tour.step === TOUR.length - 1 ? "Finish" : "Next") + "</button>" +
+      "</div></div>";
+  }
+
+  /* --- reset the demo to its opening state --- */
+  function resetDemo() {
+    ITEMS.length = BASE.items; MATCHES.length = BASE.matches; QUESTIONS.length = BASE.questions;
+    QUESTIONS.forEach((q) => { q.replies = q.replies.filter((x) => x.by !== "me"); });
+    S.joined = new Set(); S.saved = new Set(["i2"]); S.helpful = new Set();
+    S.connected = new Set(); S.groups = new Set(["g1", "g5"]);
+    S.requests = []; S.bookings = []; S.passes = []; S.chat = {};
+    S.aiThread = []; S.filter = "all"; S.mcat = "All"; S.comTab = "foryou";
+    S.query = ""; S.notesRead = false; S.tour = { on: false, step: 0 };
+    S.amenitySlot = null; S.amenityDay = "Tonight"; S.amenityPick = "a1";
+    S.myInterests = new Set(["padel", "fitness", "gaming", "coffee"]);
+    go("home", {}, "tab");
+    toast("Demo reset");
+  }
+
+  /* ---------------- tab bar + router ---------------- */
+  const TABS = [
+    { key: "home", label: "Home", icon: "home", route: "home" },
+    { key: "community", label: "Community", icon: "users", route: "community" },
+    { key: "match", label: "Match", icon: "spark", route: "match" },
+    { key: "ai", label: "ONE AI", icon: "ai", route: "ai" },
+    { key: "profile", label: "Profile", icon: "user", route: "profile" }
+  ];
+  const TAB_OF = {
+    home: "home", notifications: "home", notifprefs: "home",
+    community: "community", listing: "community", group: "community", question: "community", chat: "community",
+    match: "match", ai: "ai",
+    match: "match", matchdetail: "match", search: "home",
+    profile: "profile", privacy: "profile", about: "profile", mylistings: "profile", saved: "profile",
+    mygroups: "profile", mymatches: "profile", support: "profile",
+    services: "profile", amenity: "profile", visitor: "profile", pass: "profile", requests: "profile",
+    amenities: "home", access: "home", facilities: "home", facility: "home", drone: "home"
+  };
+
+  function drawTabs() {
+    const active = TAB_OF[S.route] || "home";
+    tabbar.innerHTML = TABS.map((t) =>
+      '<button class="tabbtn ' + t.key + " " + (active === t.key ? "on" : "") + '" data-act="tabnav" data-route="' + t.route + '">' +
+        ic(t.icon) + "<span>" + t.label + "</span></button>").join("");
+  }
+
+  const composerSlot = document.getElementById("composerSlot");
+
+  function composerFor() {
+    if (S.route === "ai") {
+      return '<div class="composer">' +
+        '<input id="aiInput" placeholder="Ask about your community" autocomplete="off" enterkeyhint="send" />' +
+        '<button class="send" data-act="aisend" aria-label="Send">' + ic("send") + "</button></div>";
+    }
+    if (S.route === "chat") {
+      const p = r(S.params.id || "ahmed");
+      return '<div class="composer">' +
+        '<input id="chatInput" placeholder="Message ' + p.name + '" autocomplete="off" enterkeyhint="send" />' +
+        '<button class="send" data-act="chatsend" data-id="' + (S.params.id || "ahmed") + '" aria-label="Send">' + ic("send") + "</button></div>";
+    }
+    return "";
+  }
+
+  function render() {
+    const fn = SCREENS[S.route] || SCREENS.home;
+    const focused = document.activeElement;
+    const keep = focused && (focused.id === "aiInput" || focused.id === "chatInput") ? { id: focused.id, v: focused.value } : null;
+    view.innerHTML = fn(S.params) + tourBar();
+    const comp = composerFor();
+    composerSlot.innerHTML = comp;
+    document.getElementById("device").classList.toggle("has-composer", !!comp);
+    if (keep) {
+      const el = document.getElementById(keep.id);
+      if (el) { el.value = keep.v; el.focus(); }
+    }
+    drawTabs();
+  }
+
+  function go(route, params, mode) {
+    if (!SCREENS[route]) return;
+    if (mode !== "back" && mode !== "tab") S.stack.push({ route: S.route, params: S.params });
+    if (mode === "tab") S.stack = [];
+    S.route = route;
+    S.params = params || {};
+    render();
+    view.scrollTop = 0;
+    if (route === "ai" && S.aiThread.length) scrollThread();
+  }
+  function back() {
+    const prev = S.stack.pop();
+    if (prev) { S.route = prev.route; S.params = prev.params; render(); view.scrollTop = 0; }
+    else go("home", {}, "tab");
+  }
+
+  /* ---------------- events ---------------- */
+  document.addEventListener("click", function (e) {
+    const t = e.target.closest("[data-act]");
+    if (!t) return;
+    const act = t.dataset.act;
+
+    switch (act) {
+      case "tabnav": {
+        closeSheet();
+        go(t.dataset.route, {}, "tab");
+        break;
+      }
+      case "go": {
+        closeSheet();
+        go(t.dataset.route, { id: t.dataset.id }, "push");
+        break;
+      }
+      case "back": back(); break;
+
+      case "comtab": {
+        S.comTab = t.dataset.tab;
+        S.route = "community";
+        render();
+        view.scrollTop = 0;
+        break;
+      }
+      case "filter": {
+        S.filter = t.dataset.key;
+        render();
+        break;
+      }
+      case "mcat": { S.mcat = t.dataset.key; render(); break; }
+      case "myint": {
+        const k = t.dataset.key;
+        if (S.myInterests.has(k)) S.myInterests.delete(k); else S.myInterests.add(k);
+        t.classList.toggle("on", S.myInterests.has(k));
+        break;
+      }
+      case "amenpick": { S.amenityPick = t.dataset.id; S.amenitySlot = null; render(); break; }
+      case "amenday":  { S.amenityDay = t.dataset.key; S.amenitySlot = null; render(); break; }
+      case "amenslot": { S.amenitySlot = t.dataset.key; render(); break; }
+      case "bookamenity": {
+        const am = AMENITIES.find((x) => x.id === S.amenityPick);
+        const b = { id: uid("b"), name: am.name, day: S.amenityDay, slot: S.amenitySlot };
+        S.bookings.unshift(b);
+        S.amenitySlot = null;
+        go("requests", {}, "push");
+        toast("Booked · " + b.name + " " + b.day, () => { S.bookings = S.bookings.filter((x) => x.id !== b.id); render(); });
+        break;
+      }
+      case "cancelbooking": {
+        const id = t.dataset.id;
+        const b = S.bookings.find((x) => x.id === id);
+        confirmThen("Cancel this booking?", b ? b.name + " · " + b.day + " " + b.slot : "", "Cancel booking", () => {
+          S.bookings = S.bookings.filter((x) => x.id !== id); render();
+          toast("Booking cancelled", () => { S.bookings.unshift(b); render(); });
+        });
+        break;
+      }
+      case "cancelreq": {
+        const id = t.dataset.id;
+        const q = S.requests.find((x) => x.id === id);
+        confirmThen("Cancel this request?", "The technician will be told it is no longer needed.", "Cancel request", () => {
+          S.requests = S.requests.filter((x) => x.id !== id); render();
+          toast("Request cancelled", () => { S.requests.unshift(q); render(); });
+        });
+        break;
+      }
+      case "cancelpass": {
+        const id = t.dataset.id;
+        const p = S.passes.find((x) => x.id === id);
+        confirmThen("Revoke this pass?", p ? "The gate code for " + p.name + " stops working immediately." : "", "Revoke pass", () => {
+          S.passes = S.passes.filter((x) => x.id !== id);
+          back();
+          toast("Pass revoked", () => { S.passes.unshift(p); render(); });
+        });
+        break;
+      }
+      case "pickphoto": {
+        const inp = document.getElementById(t.dataset.for);
+        if (inp) inp.click();
+        break;
+      }
+      case "makepass": makePass(); break;
+      case "unlock": {
+        const b = t;
+        b.classList.add("is-done");
+        b.innerHTML = ic("check") + "Door open · welcome in";
+        LIVE.gym.now = Math.min(LIVE.gym.cap, LIVE.gym.now + 1);
+        toast("Gym unlocked · you are checked in", () => { LIVE.gym.now = Math.max(0, LIVE.gym.now - 1); render(); });
+        break;
+      }
+      case "dronenext": {
+        S.droneStage = Math.min(3, (S.droneStage || 0) + 1);
+        render();
+        if (S.droneStage === 3) toast("Drone landed · locker 12");
+        break;
+      }
+      case "concierge": {
+        confirmThen("Request " + t.dataset.name + "?", "The concierge team confirms availability and comes back to you in the app, usually within the hour.",
+          "Send request", () => { toast("Request sent to concierge"); });
+        break;
+      }
+      case "tourstart": tourGo(0); break;
+      case "tournext": tourGo(S.tour.step + 1); break;
+      case "tourend": { S.tour.on = false; render(); break; }
+      case "reset": {
+        confirmThen("Reset the demo?", "Everything you joined, saved, listed or booked goes back to the opening state. Useful between presentations.", "Reset demo", resetDemo);
+        break;
+      }
+      case "dosearch": {
+        const el = document.getElementById("qInput");
+        S.query = el ? el.value : "";
+        render();
+        const again = document.getElementById("qInput");
+        if (again) { again.focus(); again.setSelectionRange(again.value.length, again.value.length); }
+        break;
+      }
+      case "pick": {
+        t.parentElement.querySelectorAll(".pick").forEach((x) => x.classList.remove("on"));
+        t.classList.add("on");
+        break;
+      }
+      case "join": {
+        const id = t.dataset.id;
+        if (S.joined.has(id)) { S.joined.delete(id); render(); toast("Left activity", () => { S.joined.add(id); render(); }); }
+        else {
+          S.joined.add(id); render();
+          const m = MATCHES.find((x) => x.id === id);
+          toast(m ? "Joined · " + m.title : "Joined", () => { S.joined.delete(id); render(); });
+        }
+        break;
+      }
+      case "cancelspot": {
+        const id = t.dataset.id;
+        const m = MATCHES.find((x) => x.id === id);
+        confirmThen("Cancel your spot?", m ? m.title + " · " + m.when + ". The other residents are told a place opened up." : "",
+          "Cancel my spot", () => {
+            S.joined.delete(id); render();
+            toast("Spot cancelled", () => { S.joined.add(id); render(); });
+          });
+        break;
+      }
+      case "confirmyes": {
+        const c = S.confirmData;
+        closeSheet();
+        if (c && typeof c.run === "function") c.run();
+        break;
+      }
+      case "closesheet": closeSheet(); break;
+      case "undo": {
+        const u = S.undo;
+        S.undo = null;
+        hideToast();
+        if (u && typeof u.run === "function") u.run();
+        break;
+      }
+      case "joingroup": {
+        const id = t.dataset.id;
+        if (S.groups.has(id)) { S.groups.delete(id); toast("Left group"); }
+        else { S.groups.add(id); toast("Joined group"); }
+        render();
+        break;
+      }
+      case "save": {
+        const id = t.dataset.id;
+        if (S.saved.has(id)) { S.saved.delete(id); toast("Removed from saved"); }
+        else { S.saved.add(id); toast("Saved"); }
+        render();
+        break;
+      }
+      case "helpful": {
+        const id = t.dataset.id;
+        if (!S.helpful.has(id)) { S.helpful.add(id); toast("Marked helpful"); render(); }
+        break;
+      }
+      case "connect": {
+        S.connected.add(t.dataset.id);
+        toast("Request sent · they choose to accept");
+        render();
+        break;
+      }
+      case "tog": {
+        const k = t.dataset.key;
+        S.prefs[k] = !S.prefs[k];
+        const knob = t.querySelector(".tog");
+        if (knob) knob.classList.toggle("on", S.prefs[k]);
+        break;
+      }
+      case "sheet": openSheet(t.dataset.sheet); break;
+      case "publish": {
+        const kind = t.dataset.kind;
+        closeSheet();
+        if (kind === "listing") createListing();
+        else if (kind === "activity") createActivity();
+        else if (kind === "ask") createQuestion();
+        else if (kind === "maintenance") createRequest();
+        else if (kind === "interests") { render(); toast("Interests updated"); }
+        else toast(t.dataset.msg || "Published");
+        break;
+      }
+      case "toastonly": toast(t.dataset.msg || "Done"); break;
+      case "refresh": {
+        render();
+        toast("Feed updated");
+        break;
+      }
+      case "aisay": {
+        aiAsk(t.dataset.text);
+        break;
+      }
+      case "aisend": {
+        const inp = document.getElementById("aiInput");
+        if (inp && inp.value.trim()) { const v = inp.value; inp.value = ""; aiAsk(v); }
+        break;
+      }
+      case "chatsend": {
+        const who = t.dataset.id;
+        const inp = document.getElementById("chatInput");
+        if (!inp || !inp.value.trim()) break;
+        S.chat[who].push({ me: true, t: inp.value });
+        inp.value = "";
+        render();
+        scrollThread();
+        setTimeout(() => {
+          S.chat[who].push({ me: false, t: "Perfect. I am around this evening, I will meet you in the lobby." });
+          if (S.route === "chat") { render(); scrollThread(); }
+        }, 1400);
+        break;
+      }
+    }
+  });
+
+  /* photos chosen from the camera roll show up as real thumbnails */
+  document.addEventListener("change", function (e) {
+    const inp = e.target;
+    if (!inp || inp.type !== "file" || !inp.files || !inp.files.length) return;
+    const drop = document.getElementById(inp.id === "lPhoto" ? "lDrop" : "mDrop");
+    const files = Array.prototype.slice.call(inp.files, 0, 4);
+    let loaded = 0;
+    S.photos = [];
+    files.forEach(function (f, i) {
+      const rd = new FileReader();
+      rd.onload = function () {
+        S.photos[i] = rd.result;
+        if (++loaded === files.length && drop) {
+          drop.classList.add("has");
+          drop.innerHTML = '<div class="up-thumbs">' +
+            S.photos.map(function (src) { return '<img src="' + src + '" alt="" />'; }).join("") +
+            '<span class="up-more">' + ic("plus") + "</span></div>" +
+            '<span class="up-label">' + S.photos.length + (S.photos.length === 1 ? " photo added" : " photos added") + "</span>";
+          toast(S.photos.length === 1 ? "Photo added" : S.photos.length + " photos added");
+        }
+      };
+      rd.readAsDataURL(f);
+    });
+  });
+
+  document.addEventListener("input", function (e) {
+    if (e.target && e.target.id === "qInput") {
+      S.query = e.target.value;
+      const scroll = view.scrollTop;
+      render();
+      const el = document.getElementById("qInput");
+      if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+      view.scrollTop = scroll;
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter") return;
+    if (e.target.id === "aiInput") { const v = e.target.value; e.target.value = ""; aiAsk(v); }
+    if (e.target.id === "chatInput") { document.querySelector('[data-act="chatsend"]').click(); }
+  });
+
+  /* collapse the greeting into the slim bar as the feed scrolls */
+  view.addEventListener("scroll", function () {
+    const mini = document.getElementById("minibar");
+    const big = document.getElementById("bigbar");
+    if (!mini || !big) return;
+    const past = view.scrollTop > 46;
+    mini.classList.toggle("on", past);
+    big.classList.toggle("gone", past);
+  }, { passive: true });
+
+  /* occupancy drifts gently, so the numbers are visibly live during a demo */
+  setInterval(function () {
+    Object.keys(LIVE).forEach(function (k) {
+      const l = LIVE[k];
+      if (Math.random() < 0.55) return;
+      l.now = Math.max(0, Math.min(l.cap, l.now + (Math.random() < 0.5 ? -1 : 1)));
+    });
+    if (S.route === "amenities" || S.route === "facilities" || S.route === "facility") {
+      const y = view.scrollTop; render(); view.scrollTop = y;
+    }
+  }, 5000);
+
+  scrim.addEventListener("click", closeSheet);
+
+  /* ---------------- boot ---------------- */
+  render();
+  const splash = document.getElementById("splash");
+  function dismiss() {
+    splash.classList.add("out");
+    setTimeout(() => splash.remove(), 800);
+  }
+  setTimeout(dismiss, 3000);
+  splash.addEventListener("click", dismiss);
+})();
+
+</script>
+</body>
+</html>
