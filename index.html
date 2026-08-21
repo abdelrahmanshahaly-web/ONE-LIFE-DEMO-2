@@ -1720,6 +1720,258 @@ img{ display:block; max-width:100%; }
 .carlog b{ color:var(--white); }
 .motorcard{ border-color:var(--brand-line); background:linear-gradient(160deg, var(--brand-soft), var(--surface) 64%); }
 
+/* ---------- photographic tower ---------- */
+.bworld{ background:#101228; }
+.bsvg{ height:360px; }
+.st circle{ fill:#fff; opacity:.45; animation:twinkle 4s ease-in-out infinite; }
+.far rect{ fill:#191B36; opacity:.8; }
+.near path{ fill:#1C1A34; }
+.near .nw rect{ fill:rgba(232,196,137,.18); }
+
+.tw .cap2{ fill:#E4DEEE; }
+.mark2{ font-family:var(--font-brand); font-size:6.5px; letter-spacing:.16em; fill:#3E3760; }
+
+/* glass behind the balconies */
+.gl{ fill:rgba(150,170,210,.10); animation:balIn .4s var(--ease) both; animation-delay:var(--d); }
+.gl.on{ fill:rgba(255,214,150,.34); }
+
+/* the slabs */
+.slab{ fill:rgba(238,234,246,.16); animation:balIn .4s var(--ease) both; animation-delay:var(--d); }
+.slab.on{ fill:rgba(246,240,250,.30); }
+.soffit{
+  fill:none; stroke:rgba(255,205,140,.9); stroke-width:1.1; stroke-linecap:round;
+  filter:drop-shadow(0 0 3px rgba(255,190,120,.8));
+  animation:balIn .5s var(--ease) both, warmth 8s ease-in-out infinite; animation-delay:var(--d);
+}
+.sd{ fill:rgba(238,234,246,.10); animation:balIn .4s var(--ease) both; animation-delay:var(--d); }
+.sd.on{ fill:rgba(255,205,140,.26); }
+.pl{ fill:rgba(122,186,140,.75); animation:grnIn .5s var(--ease) both; animation-delay:var(--g); }
+
+/* podium */
+.pdeck path{ fill:none; stroke:rgba(232,196,137,.20); stroke-width:.7; }
+.pdtop{ fill:#4A4368; stroke:rgba(232,196,137,.28); stroke-width:.6; }
+.cars rect{ fill:rgba(232,196,137,.35); }
+.pool2{ fill:rgba(126,196,224,.6); stroke:rgba(196,232,248,.6); stroke-width:.6; cursor:pointer;
+        animation:shimmer 4.5s ease-in-out infinite; }
+.court2{ fill:rgba(124,204,158,.35); stroke:rgba(168,232,192,.5); stroke-width:.6; cursor:pointer; }
+.pad2{ fill:none; stroke:rgba(232,196,137,.65); stroke-width:.9; }
+.padH{ font-family:var(--font-mono); font-size:4.4px; fill:rgba(232,196,137,.85); }
+.heli2{ font-size:8px; }
+.pm{ font-size:9px; opacity:.6; } .pm.sm{ font-size:7px; opacity:.42; }
+.pdl{ font-family:var(--font-mono); font-size:4.2px; letter-spacing:.3em; fill:rgba(232,196,137,.6); }
+
+/* ---------- ONE Passport ---------- */
+.ppcard{
+  position:relative; overflow:hidden; border-radius:20px; padding:24px 22px 20px;
+  background:linear-gradient(150deg, #3B2C6E 0%, #241B46 46%, #150F2B 100%);
+  border:1px solid rgba(183,155,255,.36);
+  box-shadow:0 26px 60px -28px rgba(143,102,244,.7);
+}
+.pp-sheen{
+  position:absolute; left:-45%; top:-70%; width:190%; height:240%;
+  background:linear-gradient(112deg, transparent 42%, rgba(255,255,255,.14) 49%, transparent 57%);
+  animation:sheen 7s var(--ease) infinite; pointer-events:none;
+}
+.pp-top{ display:flex; align-items:flex-start; justify-content:space-between; position:relative; z-index:1; }
+.pp-top .mark b{ font-size:26px; } .pp-top .mark span{ font-size:6.5px; color:#B79BFF; }
+.pp-tier{
+  font-family:var(--font-mono); font-size:8px; letter-spacing:.22em; text-transform:uppercase;
+  padding:6px 12px; border-radius:100px; border:1px solid rgba(183,155,255,.5);
+  color:#D9CDF6; background:rgba(183,155,255,.12);
+}
+.pp-name{ font-family:var(--font-brand); font-size:26px; margin-top:26px; position:relative; z-index:1; }
+.pp-rows{ display:flex; gap:24px; margin-top:18px; position:relative; z-index:1; }
+.pp-rows span{
+  display:block; font-family:var(--font-mono); font-size:7.5px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--grey-2);
+}
+.pp-rows b{ display:block; font-size:13px; margin-top:5px; font-weight:600; }
+.pp-foot{
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:22px;
+  padding-top:16px; border-top:1px solid rgba(255,255,255,.12); position:relative; z-index:1;
+}
+.pp-chip{
+  font-family:var(--font-mono); font-size:8px; letter-spacing:.14em; text-transform:uppercase;
+  padding:5px 10px; border-radius:100px; border:1px solid rgba(255,255,255,.16); color:var(--grey);
+}
+.pp-verified{
+  margin-left:auto; display:flex; align-items:center; gap:6px; font-size:11px; color:#B79BFF;
+}
+.pp-verified svg{ width:13px; height:13px; }
+.perk{
+  display:flex; gap:14px; align-items:flex-start; padding:16px 16px;
+  border-radius:var(--r-md); border:1px solid var(--line); background:var(--surface);
+}
+.perk-emo{ font-size:22px; line-height:1; flex:0 0 auto; }
+
+/* ================= the day ahead ================= */
+.dayworld{
+  position:relative; margin:4px var(--pad) 0; border-radius:var(--r-lg);
+  overflow:hidden; border:1px solid var(--line);
+}
+.daysvg{ width:100%; height:250px; display:block; }
+.daysky{ transition:fill 1.1s var(--ease); }
+.phase-night   .daysky{ fill:#0C0D22; }
+.phase-dawn    .daysky{ fill:#3E3358; }
+.phase-day     .daysky{ fill:#5C7FB0; }
+.phase-dusk    .daysky{ fill:#8B5F78; }
+.phase-evening .daysky{ fill:#33265A; }
+/* a wash of colour over the sky so the transition reads as light, not paint */
+.dayworld::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
+  transition:background 1.1s var(--ease), opacity 1.1s var(--ease);
+}
+.phase-dawn::before{    background:linear-gradient(180deg, rgba(255,168,120,0) 40%, rgba(255,168,120,.34)); }
+.phase-day::before{     background:linear-gradient(180deg, rgba(190,220,255,.10), rgba(255,240,210,.20)); }
+.phase-dusk::before{    background:linear-gradient(180deg, rgba(90,60,120,.10) 30%, rgba(255,150,90,.42)); }
+.phase-evening::before{ background:linear-gradient(180deg, rgba(40,26,80,.30), rgba(120,70,140,.26)); }
+.phase-night::before{   background:linear-gradient(180deg, rgba(10,12,34,.42), rgba(20,16,48,.30)); }
+
+.daystars circle{ fill:#fff; transition:opacity 1.1s var(--ease); }
+.orb{ transition:cx 1s var(--ease), cy 1s var(--ease); }
+.orbcore{ fill:#FFF3D8; transition:cx 1s var(--ease), cy 1s var(--ease), r .6s var(--ease); }
+.phase-night .orbcore,.phase-evening .orbcore{ fill:#E8E8FF; }
+.sunwash{ fill:rgba(255,224,170,.5); transition:opacity 1.1s var(--ease); mix-blend-mode:soft-light; }
+.podshape{ fill:#241E38; }
+.daysvg .slab{ fill:rgba(238,234,246,.16); animation:none; transition:fill .7s var(--ease); }
+.daysvg .slab.on{ fill:rgba(255,214,150,.42); }
+.soffit.still{ animation:none; }
+
+.dayreadout{
+  position:absolute; left:0; right:0; bottom:0; z-index:2;
+  padding:16px 18px; background:linear-gradient(to top, rgba(13,11,20,.86), transparent);
+}
+.daytime{ font-family:var(--font-brand); font-size:34px; line-height:1; color:#fff; }
+.dayphase{
+  font-family:var(--font-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:rgba(255,255,255,.72); margin-top:8px;
+}
+
+/* the scrubber */
+.dayslider{
+  -webkit-appearance:none; appearance:none; width:100%; height:34px; background:transparent; cursor:grab;
+}
+.dayslider:active{ cursor:grabbing; }
+.dayslider::-webkit-slider-runnable-track{
+  height:4px; border-radius:100px;
+  background:linear-gradient(90deg,#1B1636 0%,#3C2E63 22%,#C88A6A 30%,#7EA8D8 50%,#C87A72 74%,#2A1F52 84%,#14112A 100%);
+}
+.dayslider::-webkit-slider-thumb{
+  -webkit-appearance:none; width:26px; height:26px; margin-top:-11px; border-radius:50%;
+  background:#fff; border:3px solid var(--brand);
+  box-shadow:0 4px 14px rgba(0,0,0,.5); cursor:grab;
+}
+.dayslider::-moz-range-track{ height:4px; border-radius:100px; background:#3C2E63; }
+.dayslider::-moz-range-thumb{ width:22px; height:22px; border-radius:50%; background:#fff; border:3px solid var(--brand); }
+.daymarks{
+  display:flex; justify-content:space-between; margin-top:6px;
+  font-family:var(--font-mono); font-size:8px; letter-spacing:.14em; color:var(--grey-2);
+}
+
+/* what the building says, animated on each change */
+.adviceclip{ overflow:hidden; border-radius:var(--r-lg); }
+.advicecard{
+  padding:22px 20px; border-radius:var(--r-lg);
+  border:1px solid var(--brand-line);
+  background:linear-gradient(160deg, var(--brand-soft), var(--surface) 66%);
+  animation:adviceIn .45s var(--ease);
+}
+@keyframes adviceIn{ from{ opacity:0; transform:translateY(12px) } to{ opacity:1; transform:none } }
+
+/* amenity forecast rows */
+.frow-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:13.5px; }
+.frow-top b{ font-family:var(--font-mono); font-size:12px; color:var(--grey); }
+.fbar{ height:5px; border-radius:100px; background:rgba(255,255,255,.08); overflow:hidden; margin-top:9px; }
+.fbar i{ display:block; height:100%; border-radius:100px; transition:width .7s var(--ease); background:#6FCF97; }
+.frow.steady .fbar i{ background:var(--brand); }
+.frow.busy   .fbar i{ background:#B79BFF; }
+.frow.busy .frow-top b{ color:#B79BFF; }
+
+/* the whole day at a glance */
+.daychart{
+  display:flex; align-items:flex-end; gap:3px; height:84px;
+  padding:10px 12px; border-radius:var(--r-md);
+  background:var(--surface); border:1px solid var(--line);
+}
+.dbar{
+  flex:1; border-radius:2px 2px 0 0; background:rgba(183,155,255,.24);
+  transition:background .25s var(--ease), transform .25s var(--ease);
+}
+.dbar:active{ transform:scaleY(1.06); }
+.dbar.on{ background:linear-gradient(180deg,#C9B4FF,var(--brand)); box-shadow:0 0 10px rgba(183,155,255,.6); }
+
+/* ================= leaving ================= */
+.movehero{
+  padding:28px 22px; border-radius:var(--r-lg); position:relative; overflow:hidden;
+  border:1px solid var(--brand-line);
+  background:
+    radial-gradient(110% 80% at 80% 0%, rgba(183,155,255,.16), transparent 62%),
+    linear-gradient(160deg, var(--brand-soft), var(--surface) 68%);
+}
+.movehero b{ color:var(--white); }
+.movehero.live{ text-align:center; }
+.move-plane{
+  font-size:34px; margin-bottom:16px; display:block;
+  animation:fly 9s var(--ease) infinite;
+}
+@keyframes fly{
+  0%   { transform:translateX(-8px) translateY(2px) rotate(-6deg); opacity:.55 }
+  50%  { transform:translateX(10px) translateY(-6px) rotate(-2deg); opacity:1 }
+  100% { transform:translateX(-8px) translateY(2px) rotate(-6deg); opacity:.55 }
+}
+.moveprog{ height:5px; border-radius:100px; background:rgba(255,255,255,.10); overflow:hidden; margin-top:18px; }
+.moveprog i{ display:block; height:100%; background:linear-gradient(90deg,var(--brand),#C9B4FF); transition:width .8s var(--ease); }
+
+/* the choices */
+.optgrid{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+.opt{
+  position:relative; text-align:left; padding:17px 15px 15px; border-radius:14px;
+  border:1px solid var(--line); background:var(--surface);
+  display:flex; flex-direction:column; gap:6px;
+  transition:border-color .25s var(--ease), background .25s var(--ease), transform .18s var(--ease);
+  animation:cardIn .45s var(--ease) both;
+}
+.opt:active{ transform:scale(.98); }
+.opt.on{ border-color:var(--brand); background:linear-gradient(160deg,var(--brand-soft),var(--surface) 66%); }
+.opt-emo{ font-size:22px; line-height:1; }
+.opt-t{ font-size:13.5px; font-weight:600; letter-spacing:-.01em; }
+.opt-s{ font-size:11.5px; color:var(--grey); line-height:1.45; }
+.opt-tick{
+  position:absolute; top:12px; right:12px; width:20px; height:20px; border-radius:50%;
+  display:grid; place-items:center; background:var(--brand); color:#fff;
+  opacity:0; transform:scale(.5); transition:all .25s var(--ease);
+}
+.opt-tick svg{ width:12px; height:12px; }
+.opt.on .opt-tick{ opacity:1; transform:none; }
+
+/* what happens to the accounts */
+.acctbox{
+  margin-top:16px; padding:20px 18px; border-radius:var(--r-lg);
+  border:1px solid var(--line); background:var(--surface);
+}
+.acct-lead{ font-size:13.5px; line-height:1.65; color:var(--grey); }
+.acctlist{ margin-top:18px; display:flex; flex-direction:column; }
+.acctrow{
+  display:flex; gap:13px; align-items:center; padding:13px 0;
+  border-top:1px solid var(--line);
+}
+.acctrow:first-child{ border-top:0; }
+.acct-emo{ font-size:19px; line-height:1; flex:0 0 auto; }
+.acct-state{
+  flex:0 0 auto; font-family:var(--font-mono); font-size:9.5px; letter-spacing:.08em;
+  padding:6px 10px; border-radius:100px; border:1px solid var(--line-2); color:var(--grey);
+}
+.acct-state.transfer{ color:#B79BFF; border-color:var(--brand-line); background:var(--brand-soft); }
+.acct-state.close{ color:#8FD3AE; border-color:rgba(111,207,151,.3); background:rgba(111,207,151,.08); }
+
+/* the running tracker */
+.tl.done .tl-dot{ background:var(--brand); border-color:var(--brand); }
+.tl.done .tl-body{ border-color:var(--brand-line); }
+.leavecard{
+  border-color:var(--brand-line);
+  background:linear-gradient(160deg, var(--brand-soft), var(--surface) 64%);
+}
+
 </style>
 </head>
 <body>
@@ -2840,6 +3092,12 @@ img{ display:block; max-width:100%; }
     logShared: false,
     carView: new Set(),
     carFilter: "all",
+    guestPass: false,
+    dayHour: null,
+    dayTomorrow: false,
+    movePlan: {},
+    moveStarted: false,
+    moveStage: 0,
     wantVote: new Set(),
     devInterest: new Set(),
     vouched: new Set(),
@@ -2951,8 +3209,11 @@ img{ display:block; max-width:100%; }
       { ic: "box", label: "Drone", value: "4 minutes out", note: "Pharmacy · Tower B pad", live: true, act: 'data-act="go" data-route="drone"' },
       { ic: "lock", label: "My key", value: "Phone unlocks doors", note: "No card needed", act: 'data-act="go" data-route="access"' },
       { ic: "tag", label: "Payments", value: "AED 5,368 due", note: "4 bills this month", act: 'data-act="go" data-route="pay"' },
+      { ic: "activity", label: "The day ahead", value: "Drag time", note: "See any hour, today or tomorrow", act: 'data-act="go" data-route="dayahead"' },
       { ic: "pin", label: "Coming home", value: "Gate · lift · cooling", note: "Ready before you arrive", act: 'data-act="go" data-route="arrive"' },
       { ic: "tag", label: "The podium", value: "5 places downstairs", note: "Resident rates", act: 'data-act="go" data-route="podium"' },
+      { ic: "shield", label: "Passport", value: "4 buildings open", note: "Abu Dhabi · Dubai · London", act: 'data-act="go" data-route="passport"' },
+      { ic: "pin", label: "ONE Motors", value: "5 cars nearby", note: "Buy · borrow · in your basement", act: 'data-act="go" data-route="motors"' },
       { ic: "wrench", label: "Maintenance", value: "Technician 4:15 PM", note: "Kitchen tap · Track", act: 'data-act="toastonly" data-msg="Tracking maintenance visit"' },
       { ic: "activity", label: "Gym", value: LIVE.gym.now + " of " + LIVE.gym.cap + " in use", note: "Quietest at " + LIVE.gym.quiet, act: 'data-act="go" data-route="amenities"' },
       { ic: "clock", label: "Padel", value: "2 players needed", note: "Court 2 · 8:00 PM", act: 'data-act="go" data-route="match"' }
@@ -3037,6 +3298,15 @@ img{ display:block; max-width:100%; }
               '<p class="card-body">Al Reem Island, 34 floors. Residents of ONE Residence get first look for 14 days before it goes public.</p>' +
               '<div class="meta-row"><span class="chip accent">Selling now</span><span class="chip">Launching March</span></div>' +
               '<div class="card-actions"><button class="btn btn-accent" data-act="go" data-route="updates">See what ONE is building</button></div>' +
+            "</article>" +
+
+            /* cars between neighbours */
+            '<article class="card tap motorcard" data-anim ' + stagger(5) + ' data-act="go" data-route="motors">' +
+              '<div class="card-eyebrow"><i class="tick"></i>ONE MOTORS · YOUR BASEMENT</div>' +
+              '<h3 class="card-title">Noor is lending her Lexus</h3>' +
+              '<p class="card-body">AED 180 a day, insured for residents, parked in B1 bay 12. Five cars are for sale or to borrow in this building right now.</p>' +
+              '<div class="meta-row"><span class="chip accent">3 to borrow</span><span class="chip">3 for sale</span><span class="chip">0% commission</span></div>' +
+              '<div class="card-actions"><button class="btn btn-accent" data-act="go" data-route="motors">Open ONE Motors</button></div>' +
             "</article>" +
 
             /* a neighbour released a court */
@@ -3631,6 +3901,7 @@ img{ display:block; max-width:100%; }
   /* --- PROFILE --- */
   SCREENS.profile = function () {
     const rows = [
+      ["passport", "ONE Passport", "Your access across every ONE building", "shield"],
       ["privacy", "Privacy", "Who can see you and reach you", "lock"],
       ["notifprefs", "Notifications", "Choose what reaches your phone", "bell"],
       ["mylistings", "My listings", "1 active · 1 sold", "tag"],
@@ -3844,10 +4115,12 @@ img{ display:block; max-width:100%; }
       ["amenities", "Right now", "Live occupancy across the community", "activity"],
       ["facilities", "Facilities", FACILITIES.length + " across ONE Residence", "pin"],
       ["building", "The building, right now", "A live model of ONE Residence", "pin"],
+      ["dayahead", "The day ahead", "Drag through 24 hours of the building", "activity"],
       ["motors", "ONE Motors", CARS.length + " cars for sale between neighbours", "pin"],
       ["logbook", "Your home's logbook", LOG.length + " verified records since handover", "shield"],
       ["podium", "The podium", SHOPS.length + " places downstairs, chosen by residents", "tag"],
       ["myhome", "Your home", "What it is worth and who is waiting", "pin"],
+      ["leaving", "Leaving the country", "Move out without coming back", "activity"],
       ["ledger", "The building's ledger", "What it earned and your credit", "activity"],
       ["arrive", "Coming home", "What the building does before you arrive", "pin"],
       ["pay", "Payments", "Service charge, utilities and bookings", "tag"],
@@ -4461,37 +4734,46 @@ img{ display:block; max-width:100%; }
     return p < 35 ? "quiet" : p < 70 ? "steady" : "busy";
   }
 
-  /* ONE Residence, drawn from the render: a slender tower with sweeping
-     curved balcony bands wrapping one face, a pale core corner, planting on
-     every terrace, and an open parking podium with the landscaped deck above. */
+  /* ONE Residence — photographic treatment. Glass, depth of field, warm
+     interior light, atmospheric haze, reflections on the ground. */
   SCREENS.building = function () {
     const gymL = lampFor("gym"), poolL = lampFor("pool"), padelL = lampFor("padel");
     const totalNow = Object.keys(LIVE).reduce((a2, k) => a2 + LIVE[k].now, 0);
     const totalCap = Object.keys(LIVE).reduce((a2, k) => a2 + LIVE[k].cap, 0);
     const rot = S.bRot || 0;
 
-    /* the wide face: balconies that sweep and cantilever, like the render */
-    let sweep = "", green = "", right = "";
-    const lit = [0,2,3,5,6,8,9,11,12,14,15,17,18,20,21,23];
-    for (let i = 0; i < 25; i++) {
-      const y = 244 - i * 7.6;
-      const bow = 5 + (i % 3) * 2.6;                 /* how far the curve bellies out */
-      const out = (i % 4 === 0) ? 6 : 0;             /* every fourth floor cantilevers */
-      const L = 108 - out, R = 168;
-      sweep += '<path class="sw' + (lit.indexOf(i) > -1 ? " lit" : "") + '" style="--d:' + (i * 40) + 'ms" ' +
-        'd="M' + L + ' ' + y + ' Q' + ((L + R) / 2) + ' ' + (y - bow) + ' ' + R + ' ' + (y - 1) +
-        ' L' + R + ' ' + (y + 2.6) + ' Q' + ((L + R) / 2) + ' ' + (y - bow + 3.4) + ' ' + L + ' ' + (y + 3.6) + ' Z"/>';
-      /* planting sitting on the terraces */
+    /* balconies: deep slabs with a lit soffit and planting, like the render */
+    let bands = "", glass = "", plants = "";
+    const litFl = [0,1,3,4,6,7,9,10,12,13,15,16,18,19,21,22,24];
+    for (let i = 0; i < 26; i++) {
+      const y = 236 - i * 7.05;
+      const on = litFl.indexOf(i) > -1;
+      const bow = 4.4 + (i % 3) * 1.5;
+      const jut = (i % 4 === 0) ? 5.5 : (i % 2 === 0 ? 2 : 0);
+      const L = 112 - jut, R = 170;
+      /* the slab */
+      bands += '<path class="slab' + (on ? " on" : "") + '" style="--d:' + (i * 34) + 'ms" d="M' + L + " " + y +
+        " Q" + ((L + R) / 2) + " " + (y - bow) + " " + R + " " + (y - .8) +
+        " L" + R + " " + (y + 2.2) + " Q" + ((L + R) / 2) + " " + (y - bow + 2.6) + " " + L + " " + (y + 3) + ' Z"/>';
+      /* warm light under the slab */
+      if (on) bands += '<path class="soffit" style="--d:' + (i * 34 + 120) + 'ms" d="M' + (L + 2) + " " + (y + 3.1) +
+        " Q" + ((L + R) / 2) + " " + (y - bow + 3.2) + " " + (R - 2) + " " + (y + 1.4) + '"/>';
+      /* the glass behind */
+      glass += '<rect class="gl' + (on ? " on" : "") + '" style="--d:' + (i * 34) + 'ms" x="' + (L + 4) +
+        '" y="' + (y - 4.4) + '" width="' + (R - L - 8) + '" height="4" rx="0.6"/>';
+      /* planting */
       if (i % 2 === 0) {
-        const gx = L + 6 + (i % 5) * 11;
-        green += '<circle class="grn" cx="' + gx + '" cy="' + (y - 1.6) + '" r="2.5" style="--g:' + (i * 60) + 'ms"/>' +
-                 '<circle class="grn" cx="' + (gx + 22) + '" cy="' + (y - 1.2) + '" r="2" style="--g:' + (i * 60 + 200) + 'ms"/>';
+        const gx = L + 8 + (i % 4) * 13;
+        plants += '<circle class="pl" cx="' + gx + '" cy="' + (y - 1.4) + '" r="2.2" style="--g:' + (i * 50) + 'ms"/>' +
+                  '<circle class="pl" cx="' + (gx + 17) + '" cy="' + (y - 1) + '" r="1.7" style="--g:' + (i * 50 + 160) + 'ms"/>';
       }
-      /* the narrow return face: square stacked balconies */
-      const ry = y - 2;
-      right += '<path class="rb' + (lit.indexOf(i) > -1 ? " lit" : "") + '" style="--d:' + (i * 40) + 'ms" ' +
-        'd="M182 ' + ry + ' L206 ' + (ry - 8) + ' L206 ' + (ry - 4.4) + ' L182 ' + (ry + 3.6) + ' Z"/>';
-      if (i % 3 === 0) green += '<circle class="grn" cx="196" cy="' + (ry - 6) + '" r="2" style="--g:' + (i * 70) + 'ms"/>';
+    }
+    /* the narrow return face */
+    let side = "";
+    for (let i = 0; i < 26; i++) {
+      const y = 234 - i * 7.05, on = litFl.indexOf(i) > -1;
+      side += '<path class="sd' + (on ? " on" : "") + '" style="--d:' + (i * 34) + 'ms" d="M184 ' + y +
+        " L206 " + (y - 7) + " L206 " + (y - 4.2) + " L184 " + (y + 2.8) + ' Z"/>';
     }
 
     return (
@@ -4501,90 +4783,102 @@ img{ display:block; max-width:100%; }
           '<p class="page-sub">' + totalNow + " residents using the building · drag to turn</p></div></header>" +
 
         '<div class="bworld" id="bworld">' +
-          '<div class="bstage" style="transform:rotateZ(' + (rot * 0.1) + 'deg) translateX(' + (rot * 0.42) + 'px)">' +
-            '<svg viewBox="0 0 300 320" class="bsvg" preserveAspectRatio="xMidYMax meet">' +
+          '<div class="bstage" style="transform:translateX(' + (rot * 0.5) + 'px) rotateZ(' + (rot * 0.05) + 'deg)">' +
+            '<svg viewBox="0 0 300 300" class="bsvg" preserveAspectRatio="xMidYMax slice">' +
               '<defs>' +
-                '<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">' +
-                  '<stop offset="0%" stop-color="#1A1636"/><stop offset="46%" stop-color="#3A2E58"/>' +
-                  '<stop offset="76%" stop-color="#7E5D72"/><stop offset="100%" stop-color="#D0956C"/></linearGradient>' +
-                '<linearGradient id="core" x1="0" y1="0" x2="1" y2="0">' +
-                  '<stop offset="0%" stop-color="#EDE7F2"/><stop offset="100%" stop-color="#B9AECB"/></linearGradient>' +
-                '<linearGradient id="faceL" x1="0" y1="0" x2="1" y2="0">' +
-                  '<stop offset="0%" stop-color="#3E3760"/><stop offset="100%" stop-color="#2A2444"/></linearGradient>' +
-                '<linearGradient id="faceR" x1="0" y1="0" x2="1" y2="0">' +
-                  '<stop offset="0%" stop-color="#241E3C"/><stop offset="100%" stop-color="#171226"/></linearGradient>' +
-                '<linearGradient id="podG" x1="0" y1="0" x2="0" y2="1">' +
-                  '<stop offset="0%" stop-color="#3B3355"/><stop offset="100%" stop-color="#231D36"/></linearGradient>' +
-                '<radialGradient id="sun" cx="8%" cy="90%" r="46%">' +
-                  '<stop offset="0%" stop-color="rgba(240,175,115,.8)"/>' +
-                  '<stop offset="100%" stop-color="rgba(240,175,115,0)"/></radialGradient>' +
-                '<radialGradient id="halo">' +
-                  '<stop offset="0%" stop-color="rgba(183,155,255,.34)"/>' +
-                  '<stop offset="100%" stop-color="rgba(183,155,255,0)"/></radialGradient>' +
+                '<linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">' +
+                  '<stop offset="0%"  stop-color="#101228"/><stop offset="34%" stop-color="#25294F"/>' +
+                  '<stop offset="64%" stop-color="#5B5177"/><stop offset="86%" stop-color="#A67A78"/>' +
+                  '<stop offset="100%" stop-color="#E0A171"/></linearGradient>' +
+                '<linearGradient id="fA" x1="0" y1="0" x2="1" y2="0">' +
+                  '<stop offset="0%" stop-color="#5A5478"/><stop offset="55%" stop-color="#443E63"/>' +
+                  '<stop offset="100%" stop-color="#332D4E"/></linearGradient>' +
+                '<linearGradient id="fB" x1="0" y1="0" x2="1" y2="0">' +
+                  '<stop offset="0%" stop-color="#2A2542"/><stop offset="100%" stop-color="#1A1730"/></linearGradient>' +
+                '<linearGradient id="spine" x1="0" y1="0" x2="1" y2="0">' +
+                  '<stop offset="0%" stop-color="#F2EEF6"/><stop offset="40%" stop-color="#D6CFE2"/>' +
+                  '<stop offset="100%" stop-color="#A79FBD"/></linearGradient>' +
+                '<linearGradient id="podG2" x1="0" y1="0" x2="0" y2="1">' +
+                  '<stop offset="0%" stop-color="#4A4368"/><stop offset="100%" stop-color="#241E38"/></linearGradient>' +
+                '<linearGradient id="refl" x1="0" y1="0" x2="0" y2="1">' +
+                  '<stop offset="0%" stop-color="rgba(232,196,137,.20)"/>' +
+                  '<stop offset="100%" stop-color="rgba(232,196,137,0)"/></linearGradient>' +
+                '<radialGradient id="sun2" cx="6%" cy="92%" r="52%">' +
+                  '<stop offset="0%" stop-color="rgba(255,186,120,.85)"/>' +
+                  '<stop offset="60%" stop-color="rgba(230,140,110,.25)"/>' +
+                  '<stop offset="100%" stop-color="rgba(230,140,110,0)"/></radialGradient>' +
+                '<radialGradient id="glowT">' +
+                  '<stop offset="0%" stop-color="rgba(232,196,137,.30)"/>' +
+                  '<stop offset="100%" stop-color="rgba(232,196,137,0)"/></radialGradient>' +
+                '<filter id="blur1"><feGaussianBlur stdDeviation="1.6"/></filter>' +
+                '<filter id="blur3"><feGaussianBlur stdDeviation="3.4"/></filter>' +
               "</defs>" +
 
-              '<rect width="300" height="320" fill="url(#sky)"/>' +
-              '<rect width="300" height="320" fill="url(#sun)"/>' +
-              '<g class="stars"><circle cx="46" cy="30" r="1"/><circle cx="118" cy="16" r=".8"/>' +
-                '<circle cx="232" cy="26" r="1"/><circle cx="272" cy="58" r=".7"/><circle cx="180" cy="12" r=".8"/></g>' +
+              '<rect width="300" height="300" fill="url(#sky2)"/>' +
+              '<rect width="300" height="300" fill="url(#sun2)"/>' +
+              '<g class="st"><circle cx="52" cy="26" r=".9"/><circle cx="128" cy="14" r=".7"/>' +
+                '<circle cx="238" cy="22" r=".9"/><circle cx="278" cy="52" r=".6"/><circle cx="190" cy="10" r=".7"/></g>' +
 
-              /* the neighbouring tower from the render */
-              '<g class="neighbour">' +
-                '<path d="M36 262 L36 118 L84 104 L84 262 Z"/>' +
-                '<g class="nwin">' +
-                  '<rect x="44" y="130" width="30" height="3"/><rect x="44" y="146" width="30" height="3"/>' +
-                  '<rect x="44" y="162" width="30" height="3"/><rect x="44" y="178" width="30" height="3"/>' +
-                  '<rect x="44" y="194" width="30" height="3"/><rect x="44" y="210" width="30" height="3"/>' +
-                  '<rect x="44" y="226" width="30" height="3"/><rect x="44" y="242" width="30" height="3"/>' +
-                "</g></g>" +
+              /* far skyline, blurred for depth */
+              '<g class="far" filter="url(#blur3)">' +
+                '<rect x="0"   y="196" width="30" height="88"/><rect x="252" y="204" width="26" height="80"/>' +
+                '<rect x="276" y="220" width="24" height="64"/></g>' +
+              /* the neighbouring tower, slightly soft */
+              '<g class="near" filter="url(#blur1)">' +
+                '<path d="M42 258 L42 128 L88 116 L88 258 Z"/>' +
+                '<g class="nw">' + [0,1,2,3,4,5,6,7,8].map((n) =>
+                  '<rect x="50" y="' + (140 + n * 13) + '" width="30" height="2.6"/>').join("") + "</g></g>" +
 
-              '<ellipse cx="156" cy="150" rx="104" ry="132" fill="url(#halo)"/>' +
+              '<ellipse cx="156" cy="140" rx="98" ry="126" fill="url(#glowT)"/>' +
 
               /* the tower */
-              '<g class="tower">' +
-                '<path d="M108 248 L108 56 L168 44 L168 248 Z" fill="url(#faceL)"/>' +
-                '<path d="M182 246 L182 52 L206 44 L206 238 Z" fill="url(#faceR)"/>' +
-                /* the pale structural core on the corner */
-                '<path d="M168 248 L168 44 L182 40 L182 246 Z" fill="url(#core)"/>' +
-                '<path d="M108 56 L168 44 L182 40 L206 44 L206 52 L182 52 L168 56 Z" class="cap"/>' +
-                '<text class="crownmark" x="175" y="36" text-anchor="middle">ONE</text>' +
-                '<g class="sweeps">' + sweep + "</g>" +
-                '<g class="rights">' + right + "</g>" +
-                '<g class="greens">' + green + "</g>" +
+              '<g class="tw">' +
+                '<path d="M112 240 L112 44 L170 32 L170 240 Z" fill="url(#fA)"/>' +
+                '<path d="M184 238 L184 40 L206 33 L206 232 Z" fill="url(#fB)"/>' +
+                '<path d="M170 240 L170 32 L184 28 L184 238 Z" fill="url(#spine)"/>' +
+                '<path d="M112 44 L170 32 L184 28 L206 33 L206 40 L184 40 L170 44 Z" class="cap2"/>' +
+                '<g class="glasses">' + glass + "</g>" +
+                '<g class="slabs">' + bands + "</g>" +
+                '<g class="sides">' + side + "</g>" +
+                '<g class="plants">' + plants + "</g>" +
+                '<text class="mark2" x="177" y="25" text-anchor="middle">ONE</text>' +
               "</g>" +
 
-              /* the open parking podium: visible decks, like the render */
-              '<g class="podium">' +
-                '<path d="M44 300 L156 316 L268 300 L268 246 L156 262 L44 246 Z" fill="url(#podG)"/>' +
-                '<g class="decks">' +
-                  '<path d="M44 264 L156 280 L268 264"/><path d="M44 282 L156 298 L268 282"/>' +
-                "</g>" +
-                '<path d="M44 246 L156 262 L268 246 L156 228 Z" class="deck"/>' +
+              /* podium with open parking decks */
+              '<g class="pod2">' +
+                '<path d="M46 290 L156 306 L266 290 L266 236 L156 252 L46 236 Z" fill="url(#podG2)"/>' +
+                '<g class="pdeck">' +
+                  '<path d="M46 254 L156 270 L266 254"/><path d="M46 272 L156 288 L266 272"/></g>' +
+                '<path d="M46 236 L156 252 L266 236 L156 220 Z" class="pdtop"/>' +
+                /* cars parked on the decks */
+                '<g class="cars">' + [0,1,2,3,4,5].map((n) =>
+                  '<rect x="' + (62 + n * 30) + '" y="' + (258 + (n % 2) * 17) + '" width="9" height="3" rx="1"/>').join("") + "</g>" +
               "</g>" +
 
-              /* the landscaped roof deck */
-              '<g class="deckitems">' +
-                '<path d="M92 250 L124 255 L110 260 L78 255 Z" class="pool" data-act="bzone" data-id="z2"/>' +
-                '<path d="M176 252 L210 257 L196 262 L162 257 Z" class="court" data-act="bzone" data-id="z3"/>' +
-                '<ellipse class="helipad" cx="150" cy="243" rx="14" ry="4.4"/>' +
-                '<text class="heliH" x="150" y="245" text-anchor="middle">H</text>' +
-                '<text class="heli" x="150" y="241" text-anchor="middle">🚁</text>' +
-                '<g class="palms">' +
-                  '<text x="54" y="262" class="palm">🌴</text><text x="250" y="258" class="palm">🌴</text>' +
-                  '<text x="72" y="296" class="palm sm">🌴</text><text x="236" y="298" class="palm sm">🌴</text>' +
-                  '<text x="120" y="308" class="palm sm">🌴</text><text x="196" y="310" class="palm sm">🌴</text>' +
-                "</g>" +
-                '<text class="podlabel" x="156" y="310" text-anchor="middle">ONE RESIDENCE</text>' +
+              /* landscaped deck */
+              '<g class="dk">' +
+                '<path d="M96 242 L126 246 L112 251 L82 247 Z" class="pool2" data-act="bzone" data-id="z2"/>' +
+                '<path d="M176 244 L208 248 L194 253 L162 249 Z" class="court2" data-act="bzone" data-id="z3"/>' +
+                '<ellipse class="pad2" cx="152" cy="236" rx="13" ry="4"/>' +
+                '<text class="padH" x="152" y="238" text-anchor="middle">H</text>' +
+                '<text class="heli2" x="152" y="234" text-anchor="middle">🚁</text>' +
+                '<g class="pms">' +
+                  '<text x="56" y="250" class="pm">🌴</text><text x="248" y="246" class="pm">🌴</text>' +
+                  '<text x="74" y="288" class="pm sm">🌴</text><text x="234" y="290" class="pm sm">🌴</text>' +
+                  '<text x="118" y="300" class="pm sm">🌴</text><text x="196" y="302" class="pm sm">🌴</text></g>' +
+                '<text class="pdl" x="156" y="302" text-anchor="middle">ONE RESIDENCE</text>' +
               "</g>" +
+
+              /* wet road reflection */
+              '<rect x="0" y="292" width="300" height="8" fill="url(#refl)"/>' +
 
               '<g class="lamps">' +
-                '<circle class="lamp ' + poolL  + '" cx="100" cy="255" r="4.2" data-act="bzone" data-id="z2"/>' +
-                '<circle class="lamp ' + padelL + '" cx="186" cy="257" r="4.2" data-act="bzone" data-id="z3"/>' +
-                '<circle class="lamp ' + gymL   + '" cx="156" cy="272" r="4.2" data-act="bzone" data-id="z1"/>' +
-                '<circle class="lamp ' + lampFor("sauna") + '" cx="218" cy="270" r="3.8" data-act="bzone" data-id="z4"/>' +
-                '<circle class="lamp ' + lampFor("yoga")  + '" cx="92"  cy="270" r="3.8" data-act="bzone" data-id="z5"/>' +
+                '<circle class="lamp ' + poolL  + '" cx="104" cy="247" r="4" data-act="bzone" data-id="z2"/>' +
+                '<circle class="lamp ' + padelL + '" cx="185" cy="249" r="4" data-act="bzone" data-id="z3"/>' +
+                '<circle class="lamp ' + gymL   + '" cx="156" cy="264" r="4" data-act="bzone" data-id="z1"/>' +
+                '<circle class="lamp ' + lampFor("sauna") + '" cx="216" cy="262" r="3.6" data-act="bzone" data-id="z4"/>' +
+                '<circle class="lamp ' + lampFor("yoga")  + '" cx="94"  cy="262" r="3.6" data-act="bzone" data-id="z5"/>' +
               "</g>" +
-
               '<g class="dronefly"><text x="0" y="0" class="dtext">🛸</text></g>' +
             "</svg>" +
           "</div>" +
@@ -4599,7 +4893,7 @@ img{ display:block; max-width:100%; }
           '<div class="zonegrid">' + ZONES.map((z, i) => {
             const l = LIVE[z.live], p = pct(z.live);
             return '<button class="zone ' + lampFor(z.live) + '" data-anim ' + stagger(i) + ' data-act="bzone" data-id="' + z.id + '">' +
-              '<span class="zone-emo">' + z.emo + "</span><span class=\"zone-name\">" + z.name + "</span>" +
+              '<span class="zone-emo">' + z.emo + '</span><span class="zone-name">' + z.name + "</span>" +
               '<span class="zone-num">' + l.now + " / " + l.cap + "</span>" +
               '<span class="zone-bar"><i style="width:' + Math.max(p, 4) + '%"></i></span></button>';
           }).join("") + "</div>" +
@@ -5073,6 +5367,16 @@ img{ display:block; max-width:100%; }
         "</div>" +
 
         '<div class="section">' +
+          '<article class="card tap leavecard" data-anim data-act="go" data-route="leaving">' +
+            '<div class="card-eyebrow"><i class="tick"></i>IF YOU ARE TRANSFERRED ABROAD</div>' +
+            '<h3 class="card-title sm">Move out without ever coming back</h3>' +
+            '<p class="card-body">Tell the building the date. It sells or rents the home, packs your things, reads the meters, ' +
+              "recovers your deposits and hands over the keys — while you are already somewhere else.</p>" +
+            '<div class="card-actions"><button class="btn btn-accent" data-act="go" data-route="leaving">See how it works</button></div>' +
+          "</article>" +
+        "</div>" +
+
+        '<div class="section">' +
           '<article class="card tap logcard" data-anim data-act="go" data-route="logbook">' +
             '<div class="card-eyebrow"><i class="tick"></i>WHAT MAKES YOURS WORTH MORE</div>' +
             '<h3 class="card-title sm">Your home has a logbook</h3>' +
@@ -5418,6 +5722,457 @@ img{ display:block; max-width:100%; }
 
         '<div class="privacy-note" style="margin-top:20px">' + ic("lock") +
           "<span>Bay numbers show only for listed cars, and only to verified residents.</span></div>" +
+        '<div style="height:32px"></div>' +
+      "</div>"
+    );
+  };
+
+
+  /* ================= ONE PASSPORT =================
+     Verified once, recognised everywhere ONE builds. A resident of one tower
+     can use the pool at another, book a guest suite in a ONE building abroad,
+     and carry privileges with partners. It turns a flat into membership —
+     and it is the reason a ONE unit carries a premium over an identical one. */
+  const ONE_PLACES = [
+    { emo:"🏙", name:"ONE Residence",      city:"Al Reem · Abu Dhabi", state:"Your home",  open:true },
+    { emo:"🌴", name:"ONE Marina Heights", city:"Al Reem · Abu Dhabi", state:"Full access", open:true },
+    { emo:"🏝", name:"ONE Gardens",        city:"Yas Island",          state:"Full access", open:true },
+    { emo:"🏜", name:"ONE Dunes",          city:"Al Ain",              state:"Full access", open:true },
+    { emo:"🕌", name:"ONE Downtown",       city:"Dubai",               state:"Opens 2027",  open:false },
+    { emo:"🗼", name:"ONE Riverside",      city:"London",              state:"Opens 2028",  open:false }
+  ];
+  const PERKS = [
+    { emo:"🏨", t:"Two guest suites a year",  s:"In any ONE building, for family visiting from abroad" },
+    { emo:"🛎", t:"Concierge anywhere",       s:"The same team, whichever ONE building you are standing in" },
+    { emo:"🎾", t:"Every amenity, every site", s:"Pool, gym and courts across all ONE developments" },
+    { emo:"✈️", t:"Airport lounge",           s:"Abu Dhabi and Dubai, four visits a year" },
+    { emo:"🍽", t:"Partner restaurants",      s:"Priority tables and a resident rate at 40 places" },
+    { emo:"🚗", t:"Valet and storage",        s:"Leave the car at any ONE building while you travel" }
+  ];
+
+  SCREENS.passport = function () {
+    const acct = loadAccount() || {};
+    const since = "2023";
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">ONE Passport</h1>' +
+          '<p class="page-sub">Verified once. Recognised everywhere ONE builds.</p></div></header>' +
+
+        /* the card */
+        '<div class="section">' +
+          '<div class="ppcard" data-anim>' +
+            '<div class="pp-sheen"></div>' +
+            '<div class="pp-top">' +
+              '<div class="mark" style="text-align:left"><b>ONE</b><span>PASSPORT</span></div>' +
+              '<span class="pp-tier">Resident</span>' +
+            "</div>" +
+            '<p class="pp-name">' + ME.both + "</p>" +
+            '<div class="pp-rows">' +
+              '<div><span>Home</span><b>' + ME.community + " · " + ME.tower + "</b></div>" +
+              '<div><span>Member since</span><b>' + since + "</b></div>" +
+            "</div>" +
+            '<div class="pp-foot">' +
+              '<span class="pp-chip">' + ONE_PLACES.filter((p) => p.open).length + " buildings</span>" +
+              '<span class="pp-chip">2 countries</span>' +
+              '<span class="pp-verified">' + ic("check") + " Verified by ONE</span>" +
+            "</div>" +
+          "</div>" +
+        "</div>" +
+
+        '<div class="section">' +
+          '<div class="section-head"><h2>Where it works</h2><span class="ledger-tot">' +
+            ONE_PLACES.filter((p) => p.open).length + " open</span></div>" +
+          '<div class="rows">' + ONE_PLACES.map((p) =>
+            '<button class="row" data-act="' + (p.open ? "ppuse" : "toastonly") + '" data-name="' + p.name +
+              '" data-msg="' + p.name + " opens in " + (p.open ? "" : p.state.replace("Opens ", "")) + '">' +
+              '<span class="row-ico" style="font-size:16px">' + p.emo + "</span>" +
+              '<div class="row-main"><p class="row-title">' + p.name + '</p><p class="row-sub">' + p.city + "</p></div>" +
+              '<span class="chip ' + (p.open ? "accent" : "") + '">' + p.state + "</span></button>").join("") + "</div>" +
+        "</div>" +
+
+        '<div class="section">' +
+          '<div class="section-head"><h2>What it opens</h2></div>' +
+          '<div class="stack">' + PERKS.map((k, i) =>
+            '<div class="perk" data-anim ' + stagger(i) + '>' +
+              '<span class="perk-emo">' + k.emo + "</span>" +
+              '<div><p class="row-title">' + k.t + '</p><p class="row-sub" style="margin-top:4px">' + k.s + "</p></div>" +
+            "</div>").join("") + "</div>" +
+        "</div>" +
+
+        /* give a guest a pass */
+        '<div class="section">' +
+          '<div class="card sellcard">' +
+            '<div class="card-eyebrow"><i class="tick"></i>SHARE IT</div>' +
+            '<h3 class="card-title sm">Two guest passes left this year</h3>' +
+            '<p class="card-body">Give someone a day at any ONE building — the pool, the gym, the clubhouse. ' +
+              "They arrive, show the pass, and are treated like a resident.</p>" +
+            '<div class="card-actions">' +
+              '<button class="btn ' + (S.guestPass ? "is-done" : "btn-accent") + ' btn-block" data-act="guestpass">' +
+                (S.guestPass ? ic("check") + "Pass sent · one left" : "Give a guest pass") + "</button>" +
+            "</div></div>" +
+        "</div>" +
+
+        '<div class="section">' +
+          '<div class="card"><p class="card-body" style="margin:0">' +
+            "Buying here stops being a transaction and becomes a membership. It is also why a ONE unit is worth more " +
+            "than an identical one down the road: the buyer is not just purchasing walls, they are joining something " +
+            "that already has ten thousand verified members and gets better with every building ONE opens." +
+          "</p></div>" +
+        "</div>" +
+
+        '<div class="privacy-note" style="margin-top:20px">' + ic("lock") +
+          "<span>Your passport proves you are a verified ONE resident and nothing else. No building sees your address, your unit or your history.</span></div>" +
+        '<div style="height:32px"></div>' +
+      "</div>"
+    );
+  };
+
+
+  /* ================= THE DAY AHEAD =================
+     Drag time and the building answers. The sun crosses the sky, homes light
+     up as people come back, and every amenity shows what it will be like at
+     that hour. Past is measured, future is forecast from the same data that
+     decides what gets built. Two questions answered at once: what is this
+     building like to live in, and which apartment gets the good light. */
+  const CURVE = {
+    gym:   [2,1,1,1,3,9,22,31,26,18,14,12,15,17,16,14,19,28,36,38,30,18,9,4],
+    pool:  [0,0,0,0,0,2,6,10,14,20,26,30,28,24,22,26,30,28,20,12,6,3,1,0],
+    padel: [0,0,0,0,0,1,4,6,5,4,3,3,4,6,8,10,14,18,20,20,16,10,4,1],
+    sauna: [0,0,0,0,1,3,6,8,6,4,3,3,4,5,6,8,10,12,13,11,7,4,2,1],
+    yoga:  [0,0,0,0,2,7,12,10,7,9,11,8,6,5,7,9,12,14,11,7,4,2,1,0]
+  };
+  /* how many homes have somebody in them, hour by hour */
+  const HOMEC = [92,93,93,92,90,86,74,58,42,34,31,30,31,33,36,42,58,74,84,89,91,92,92,92];
+
+  const hourNow = () => new Date().getHours();
+  const foreAt = (k, h) => CURVE[k][((h % 24) + 24) % 24];
+  function hLabel(h) {
+    const x = ((h % 24) + 24) % 24;
+    const ap = x < 12 ? "AM" : "PM";
+    const d = x % 12 === 0 ? 12 : x % 12;
+    return d + " " + ap;
+  }
+  function phaseOf(h) {
+    return h < 5 ? "night" : h < 7 ? "dawn" : h < 16 ? "day" : h < 19 ? "dusk" : h < 21 ? "evening" : "night";
+  }
+  /* the honest bit: what the building can actually tell you */
+  function advice(h) {
+    const g = foreAt("gym", h), p = foreAt("pool", h), pd = foreAt("padel", h);
+    if (h >= 5 && h <= 7)  return { t:"The gym is yours", s:"Three or four people at most. This is the quietest hour of the day." };
+    if (h >= 9 && h <= 11) return { t:"Best light on the west balconies", s:"Late morning sun reaches the Tower B terraces without the afternoon heat." };
+    if (h >= 13 && h <= 15) return { t:"The pool is busy, the courts are empty", s:"Padel at " + pd + " of 12. Nobody plays in the afternoon heat." };
+    if (h >= 17 && h <= 19) return { t:"Golden hour on the north face", s:"Sunset hits the upper balconies from about 6. This is the light people buy for." };
+    if (h >= 19 && h <= 21) return { t:"Peak hour · everything full", s:"Gym at " + g + " of 40, courts fully booked. Come at 9 and it clears." };
+    return { t:"The building is quiet", s:"Most homes are settled. Pool and gym practically empty." };
+  }
+
+  SCREENS.dayahead = function () {
+    const h = (S.dayHour === null || S.dayHour === undefined) ? hourNow() : S.dayHour;
+    const tomorrow = !!S.dayTomorrow;
+    const ph = phaseOf(h);
+    const a = advice(h);
+    const homes = HOMEC[((h % 24) + 24) % 24];
+    /* sun and moon travel across the sky */
+    const t = ((h - 5) / 14);                      /* 5am to 7pm */
+    const sunX = 40 + t * 220;
+    const sunY = 150 - Math.sin(Math.max(0, Math.min(1, t)) * Math.PI) * 108;
+    const isDay = h >= 5 && h <= 19;
+
+    /* the tower, lit for this hour */
+    let bands = "";
+    const litCount = Math.round((homes / 100) * 26);
+    for (let i = 0; i < 26; i++) {
+      const y = 236 - i * 7.05;
+      const on = (i * 7 + 3) % 26 < litCount;
+      const bow = 4.4 + (i % 3) * 1.5;
+      const jut = (i % 4 === 0) ? 5.5 : (i % 2 === 0 ? 2 : 0);
+      const L = 112 - jut, R = 170;
+      bands += '<path class="slab' + (on ? " on" : "") + '" d="M' + L + " " + y +
+        " Q" + ((L + R) / 2) + " " + (y - bow) + " " + R + " " + (y - .8) +
+        " L" + R + " " + (y + 2.2) + " Q" + ((L + R) / 2) + " " + (y - bow + 2.6) + " " + L + " " + (y + 3) + ' Z"/>';
+      if (on && !isDay) bands += '<path class="soffit still" d="M' + (L + 2) + " " + (y + 3.1) +
+        " Q" + ((L + R) / 2) + " " + (y - bow + 3.2) + " " + (R - 2) + " " + (y + 1.4) + '"/>';
+    }
+
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">The day ahead</h1>' +
+          '<p class="page-sub">Drag time and the building answers</p></div></header>' +
+
+        '<div class="dayworld phase-' + ph + '">' +
+          '<svg viewBox="0 0 300 260" class="daysvg" preserveAspectRatio="xMidYMax slice">' +
+            '<defs>' +
+              '<radialGradient id="sunG"><stop offset="0%" stop-color="rgba(255,226,160,1)"/>' +
+                '<stop offset="55%" stop-color="rgba(255,190,120,.55)"/>' +
+                '<stop offset="100%" stop-color="rgba(255,180,110,0)"/></radialGradient>' +
+              '<radialGradient id="moonG"><stop offset="0%" stop-color="rgba(226,226,255,1)"/>' +
+                '<stop offset="60%" stop-color="rgba(200,200,255,.35)"/>' +
+                '<stop offset="100%" stop-color="rgba(200,200,255,0)"/></radialGradient>' +
+              '<linearGradient id="fA2" x1="0" y1="0" x2="1" y2="0">' +
+                '<stop offset="0%" stop-color="#5A5478"/><stop offset="100%" stop-color="#332D4E"/></linearGradient>' +
+              '<linearGradient id="fB2" x1="0" y1="0" x2="1" y2="0">' +
+                '<stop offset="0%" stop-color="#2A2542"/><stop offset="100%" stop-color="#1A1730"/></linearGradient>' +
+              '<linearGradient id="sp2" x1="0" y1="0" x2="1" y2="0">' +
+                '<stop offset="0%" stop-color="#F2EEF6"/><stop offset="100%" stop-color="#A79FBD"/></linearGradient>' +
+            "</defs>" +
+            '<rect class="daysky" width="300" height="260"/>' +
+            '<g class="daystars" style="opacity:' + (isDay ? 0 : 1) + '">' +
+              '<circle cx="48" cy="26" r="1"/><circle cx="126" cy="16" r=".8"/><circle cx="236" cy="24" r="1"/>' +
+              '<circle cx="276" cy="54" r=".7"/><circle cx="188" cy="12" r=".8"/></g>' +
+
+            /* sun or moon, moving with the slider */
+            '<circle class="orb" cx="' + sunX.toFixed(1) + '" cy="' + sunY.toFixed(1) + '" r="34" fill="url(#' +
+              (isDay ? "sunG" : "moonG") + ')"/>' +
+            '<circle class="orbcore" cx="' + sunX.toFixed(1) + '" cy="' + sunY.toFixed(1) + '" r="' + (isDay ? 8 : 5) + '"/>' +
+
+            /* the tower, same silhouette as the live model */
+            '<g class="tw">' +
+              '<path d="M112 240 L112 44 L170 32 L170 240 Z" fill="url(#fA2)"/>' +
+              '<path d="M184 238 L184 40 L206 33 L206 232 Z" fill="url(#fB2)"/>' +
+              '<path d="M170 240 L170 32 L184 28 L184 238 Z" fill="url(#sp2)"/>' +
+              bands +
+            "</g>" +
+            /* the light the sun throws on the facade */
+            '<path class="sunwash" style="opacity:' + (isDay ? 0.5 : 0) + '" d="M112 240 L112 44 L170 32 L170 240 Z"/>' +
+            '<path d="M46 260 L156 260 L266 260 L266 236 L156 252 L46 236 Z" class="podshape"/>' +
+          "</svg>" +
+
+          '<div class="dayreadout">' +
+            '<p class="daytime">' + hLabel(h) + "</p>" +
+            '<p class="dayphase">' + (tomorrow ? "Tomorrow" : (h === hourNow() ? "Right now" : "Today")) + " · " +
+              homes + "% of homes occupied</p>" +
+          "</div>" +
+        "</div>" +
+
+        /* the scrubber */
+        '<div class="section" style="padding-top:16px">' +
+          '<input class="dayslider" id="daySlider" type="range" min="0" max="23" step="1" value="' + h + '" />' +
+          '<div class="daymarks"><span>12 AM</span><span>6 AM</span><span>NOON</span><span>6 PM</span><span>12 AM</span></div>' +
+          '<div class="seg" style="margin-top:16px">' +
+            '<button class="seg-opt ' + (!tomorrow ? "on" : "") + '" data-act="daywhen" data-k="today">Today</button>' +
+            '<button class="seg-opt ' + (tomorrow ? "on" : "") + '" data-act="daywhen" data-k="tomorrow">Tomorrow</button>' +
+          "</div>" +
+        "</div>" +
+
+        /* what the building says about this hour */
+        '<div class="section">' +
+          '<div class="adviceclip"><div class="advicecard" key="' + h + '">' +
+            '<div class="card-eyebrow"><i class="tick"></i>' + (tomorrow ? "FORECAST" : (h < hourNow() ? "MEASURED" : "FORECAST")) + " · " + hLabel(h) + "</div>" +
+            '<h3 class="card-title sm">' + a.t + "</h3>" +
+            '<p class="card-body">' + a.s + "</p>" +
+          "</div></div>" +
+        "</div>" +
+
+        /* every amenity at this hour */
+        '<div class="section">' +
+          '<div class="section-head"><h2>At ' + hLabel(h) + "</h2></div>" +
+          '<div class="stack" style="gap:14px">' + ZONES.map((z) => {
+            const v = foreAt(z.live, h), cap = LIVE[z.live].cap;
+            const p = Math.round((v / cap) * 100);
+            const cls = p < 35 ? "quiet" : p < 70 ? "steady" : "busy";
+            return '<div class="frow ' + cls + '">' +
+              '<div class="frow-top"><span>' + z.emo + "  " + z.name + "</span><b>" + v + " / " + cap + "</b></div>" +
+              '<div class="fbar"><i style="width:' + Math.max(p, 3) + '%"></i></div></div>';
+          }).join("") + "</div>" +
+        "</div>" +
+
+        /* the 24 hour shape, so you can see the whole day at once */
+        '<div class="section">' +
+          '<div class="section-head"><h2>The whole day</h2><span class="ledger-tot">Gym</span></div>' +
+          '<div class="daychart">' + CURVE.gym.map((v, i) =>
+            '<button class="dbar ' + (i === h ? "on" : "") + '" data-act="dayjump" data-h="' + i + '" ' +
+              'style="height:' + Math.max(6, Math.round((v / 40) * 100)) + '%" aria-label="' + hLabel(i) + '"></button>').join("") + "</div>" +
+          '<div class="daymarks"><span>12 AM</span><span>6 AM</span><span>NOON</span><span>6 PM</span><span>11 PM</span></div>' +
+        "</div>" +
+
+        '<div class="section">' +
+          '<div class="card"><p class="card-body" style="margin:0">' +
+            "Everything before now is measured. Everything after is forecast from the same record. " +
+            "It is how a resident knows the gym is empty at twenty to seven, and how management knew the courts " +
+            "needed a third before anybody complained." +
+          "</p></div>" +
+        "</div>" +
+
+        '<div class="privacy-note" style="margin-top:20px">' + ic("shield") +
+          "<span>Forecasts are built from counts only. The building never records who was where.</span></div>" +
+        '<div style="height:32px"></div>' +
+      "</div>"
+    );
+  };
+
+
+  /* ================= LEAVING WITHOUT COMING BACK =================
+     A transfer abroad normally means flying back, packing, queueing at the
+     utility office, chasing deposits and handing keys to a stranger. The
+     building already knows the buyers, the vendors, the meter readings and
+     the logbook — so it can do the whole thing while you are somewhere else. */
+  const MOVE_Q = [
+    { k:"home",  t:"Your home", s:"What happens to the apartment",
+      opts:[
+        { id:"sell",  emo:"🔑", t:"Sell it",        s:"47 verified people are already waiting" },
+        { id:"rent",  emo:"📋", t:"Rent it out",    s:"Tenant vetted inside the network" },
+        { id:"keep",  emo:"🏠", t:"Keep it empty",  s:"Building checks it monthly" },
+        { id:"fam",   emo:"👨‍👩‍👧", t:"Family moves in", s:"Transfer access to someone you name" }
+      ] },
+    { k:"stuff", t:"Your things", s:"Everything inside the apartment",
+      opts:[
+        { id:"ship",  emo:"✈️", t:"Ship it to me",   s:"Packed here, cleared, delivered abroad" },
+        { id:"store", emo:"📦", t:"Store in the building", s:"Basement store, AED 180 a month" },
+        { id:"split", emo:"🔀", t:"Ship some, sell some", s:"You choose room by room" },
+        { id:"clear", emo:"🎁", t:"Sell and donate",  s:"Neighbours first, rest to charity" }
+      ] },
+    { k:"acct",  t:"Your accounts", s:"Utilities, service charge, parking",
+      opts:[
+        { id:"transfer", emo:"🔁", t:"Transfer to whoever takes the home",
+          s:"Same account, no gap, no reconnection fee" },
+        { id:"close",    emo:"✅", t:"Close everything and refund me",
+          s:"Final readings, final bills, deposits returned" },
+        { id:"hold",     emo:"⏸", t:"Keep them open in my name",
+          s:"For an empty home you plan to come back to" }
+      ] },
+    { k:"money", t:"The money", s:"Where proceeds and refunds go",
+      opts:[
+        { id:"uae",  emo:"🏦", t:"My UAE account",  s:"Same account the service charge comes from" },
+        { id:"intl", emo:"🌍", t:"Abroad",          s:"Converted and sent to your new country" },
+        { id:"hold2",emo:"🔒", t:"Hold it here",    s:"Sits with the building until you decide" }
+      ] }
+  ];
+
+  /* the accounts, and what actually happens to each */
+  const ACCTS = [
+    { emo:"⚡", name:"Electricity · ADDC",  det:"Meter read on your last day",  dep:"1,000" },
+    { emo:"💧", name:"Water · ADDC",        det:"Same account, read together",  dep:"—" },
+    { emo:"❄️", name:"Cooling · Tabreed",   det:"Final consumption billed",     dep:"2,000" },
+    { emo:"🌐", name:"Internet · Etisalat", det:"Router collected by concierge",dep:"350" },
+    { emo:"🏛", name:"Service charge",      det:"Settled to the day you leave", dep:"—" },
+    { emo:"🅿️", name:"Parking · bay 118",   det:"Released or handed over",      dep:"500" }
+  ];
+
+  const MOVE_STAGES = [
+    { t:"You told us",            s:"Nothing happens until you confirm each step" },
+    { t:"Home listed inside",     s:"47 verified residents see it first, no portal" },
+    { t:"Packing and collection", s:"Building-approved movers, you are not needed" },
+    { t:"Accounts settled",       s:"Readings taken, bills closed, deposits released" },
+    { t:"Keys handed over",       s:"Logbook transfers with the home" },
+    { t:"Money sent",             s:"Proceeds and refunds paid out" }
+  ];
+
+  SCREENS.leaving = function () {
+    const P = S.movePlan;
+    const started = S.moveStarted;
+    const chosen = (k) => P[k];
+    const allPicked = MOVE_Q.every((q) => P[q.k]);
+    const acctMode = P.acct || "transfer";
+    const totalDep = ACCTS.reduce((a, x) => a + (x.dep === "—" ? 0 : parseInt(x.dep.replace(/,/g, ""), 10)), 0);
+
+    if (started) {
+      return (
+        '<div class="page push">' +
+          '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+            '<h1 class="page-title" style="margin-top:10px">Your move is running</h1>' +
+            '<p class="page-sub">You do not need to be in the country for any of this</p></div></header>' +
+
+          '<div class="section">' +
+            '<div class="movehero live" data-anim>' +
+              '<p class="pay-eyebrow">Departure</p>' +
+              '<p class="ledger-big" style="font-size:38px">14 March</p>' +
+              '<p class="pay-sub">' + MOVE_STAGES.length + " steps · " + (S.moveStage + 1) + " done</p>" +
+              '<div class="moveprog"><i style="width:' + Math.round(((S.moveStage + 1) / MOVE_STAGES.length) * 100) + '%"></i></div>' +
+            "</div>" +
+          "</div>" +
+
+          '<div class="section">' +
+            '<div class="section-head"><h2>What is happening</h2><span class="live-dot"></span></div>' +
+            '<div class="timeline">' + MOVE_STAGES.map((st, i) =>
+              '<div class="tl ' + (i <= S.moveStage ? "done" : "") + '" data-anim ' + stagger(i) + '>' +
+                '<span class="tl-dot"></span>' +
+                '<div class="tl-body"><p class="tl-when">' + (i <= S.moveStage ? "Done" : "Waiting") + "</p>" +
+                '<p class="row-title" style="margin-top:5px">' + st.t + "</p>" +
+                '<p class="row-sub" style="margin-top:4px">' + st.s + "</p></div></div>").join("") + "</div>" +
+            (S.moveStage < MOVE_STAGES.length - 1
+              ? '<button class="btn btn-ghost btn-block" style="margin-top:16px" data-act="movenext">Advance for the demo</button>'
+              : '<div class="matched-note" style="margin-top:16px">' + ic("check") +
+                "<span><b>Done.</b> You never came back, and the home is handed over.</span></div>") +
+          "</div>" +
+
+          '<div class="section"><div class="rows">' +
+            '<button class="row" data-act="movestop"><span class="row-ico">' + ic("refresh") + "</span>" +
+              '<div class="row-main"><p class="row-title">Start over</p><p class="row-sub">Reset the plan</p></div>' +
+              '<span class="row-right">' + ic("chevron") + "</span></button></div></div>" +
+          '<div style="height:32px"></div>' +
+        "</div>"
+      );
+    }
+
+    return (
+      '<div class="page push">' +
+        '<header class="topbar solid"><div><button class="icon-btn" data-act="back" aria-label="Back">' + ic("back") + "</button>" +
+          '<h1 class="page-title" style="margin-top:10px">Leaving</h1>' +
+          '<p class="page-sub">Tell the building when. It does the rest while you are somewhere else.</p></div></header>' +
+
+        '<div class="section">' +
+          '<div class="movehero" data-anim>' +
+            '<div class="move-plane">✈️</div>' +
+            '<p class="mem-line" style="margin:0">Being transferred abroad normally means flying back to pack, queueing at the ' +
+              'utility office, chasing deposits and handing your keys to a stranger. ' +
+              '<b>The building already knows the buyers, the movers, the meter readings and the history of your home.</b> ' +
+              'So it can do all of it without you.</p>' +
+          "</div>" +
+        "</div>" +
+
+        MOVE_Q.map((q, qi) =>
+          '<div class="section">' +
+            '<div class="section-head"><h2>' + q.t + "</h2><span class=\"ledger-tot\">" + q.s + "</span></div>" +
+            '<div class="optgrid">' + q.opts.map((o, oi) =>
+              '<button class="opt ' + (chosen(q.k) === o.id ? "on" : "") + '" data-anim ' + stagger(oi) +
+                ' data-act="movepick" data-k="' + q.k + '" data-v="' + o.id + '">' +
+                '<span class="opt-emo">' + o.emo + "</span>" +
+                '<span class="opt-t">' + o.t + "</span>" +
+                '<span class="opt-s">' + o.s + "</span>" +
+                '<span class="opt-tick">' + ic("check") + "</span>" +
+              "</button>").join("") + "</div>" +
+
+            /* the accounts question gets a real answer, not a promise */
+            (q.k === "acct"
+              ? '<div class="acctbox" data-anim>' +
+                  '<p class="acct-lead">' +
+                    (acctMode === "transfer"
+                      ? "Nothing is cancelled. On your last day the meters are read, your balance is settled, and the same accounts carry on in the new resident's name from the next morning. No reconnection fee, no gap, nobody sits in a dark apartment."
+                      : acctMode === "close"
+                      ? "Every account is closed properly. Meters read on your last day, final bills paid from your balance, and the deposits below are returned to you — which most people never get back because they leave the country first."
+                      : "Everything stays in your name and keeps running. The building reads the meters monthly and sends you the bill, so the home is ready the day you walk back in.") +
+                  "</p>" +
+                  '<div class="acctlist">' + ACCTS.map((x) =>
+                    '<div class="acctrow"><span class="acct-emo">' + x.emo + "</span>" +
+                      '<div style="flex:1"><p class="row-title">' + x.name + '</p><p class="row-sub">' + x.det + "</p></div>" +
+                      '<span class="acct-state ' + acctMode + '">' +
+                        (acctMode === "transfer" ? "Transfers" : acctMode === "close" ? (x.dep === "—" ? "Closes" : "AED " + x.dep + " back") : "Stays open") +
+                      "</span></div>").join("") + "</div>" +
+                  (acctMode === "close"
+                    ? '<div class="matched-note" style="margin-top:14px">' + ic("check") +
+                      "<span><b>AED " + totalDep.toLocaleString() + " of deposits recovered.</b> This is the money most people abandon when they leave the UAE in a hurry.</span></div>"
+                    : "") +
+                "</div>"
+              : "") +
+          "</div>").join("") +
+
+        '<div class="section">' +
+          '<div class="card sellcard">' +
+            '<div class="card-eyebrow"><i class="tick"></i>WHAT YOU HAVE TO DO</div>' +
+            '<h3 class="card-title sm">' + (allPicked ? "Nothing else" : "Choose the four above") + "</h3>" +
+            '<p class="card-body">' + (allPicked
+              ? "You have made every decision this needs. From here the building lists the home to the 47 people already waiting, books the movers, reads the meters, hands over the keys with the logbook attached, and pays you out."
+              : "Four decisions, then the building takes it from there. You can change any of them until the day before.") + "</p>" +
+            '<div class="card-actions">' +
+              '<button class="btn ' + (allPicked ? "btn-accent" : "btn-ghost") + ' btn-block" data-act="movestart">' +
+                (allPicked ? "Start my move" : "Choose all four first") + "</button>" +
+            "</div></div>" +
+        "</div>" +
+
+        '<div class="privacy-note" style="margin-top:20px">' + ic("lock") +
+          "<span>Nothing is listed, cancelled or moved until you confirm. You can stop the whole thing from anywhere in the world.</span></div>" +
         '<div style="height:32px"></div>' +
       "</div>"
     );
@@ -6010,7 +6765,7 @@ img{ display:block; max-width:100%; }
     mygroups: "profile", mymatches: "profile", support: "profile",
     services: "profile", amenity: "profile", visitor: "profile", pass: "profile", requests: "profile",
     amenities: "home", access: "home", facilities: "home", facility: "home", drone: "home",
-    memory: "community", quiet: "community", freed: "home", building: "home", updates: "home", arrive: "home", ledger: "pay", myhome: "pay", podium: "home", logbook: "pay", motors: "community"
+    memory: "community", quiet: "community", freed: "home", building: "home", updates: "home", arrive: "home", ledger: "pay", myhome: "pay", podium: "home", logbook: "pay", motors: "community", passport: "profile", dayahead: "home", leaving: "pay"
   };
 
   function drawTabs() {
@@ -6179,6 +6934,44 @@ img{ display:block; max-width:100%; }
       }
       case "arrivestop": { S.arriving = false; render(); break; }
       case "carfilter": { S.carFilter = t.dataset.key; render(); break; }
+      case "daywhen": { S.dayTomorrow = t.dataset.k === "tomorrow"; render(); break; }
+      case "movepick": {
+        S.movePlan[t.dataset.k] = t.dataset.v;
+        const y = view.scrollTop; render(); view.scrollTop = y;
+        break;
+      }
+      case "movestart": {
+        if (!MOVE_Q.every((q) => S.movePlan[q.k])) { toast("Choose all four first"); break; }
+        confirmThen("Start your move?",
+          "The building lists your home to the 47 people waiting, books the movers, and settles your accounts. Nothing is irreversible and you can stop it from anywhere.",
+          "Start it", () => {
+            S.moveStarted = true; S.moveStage = 0; render();
+            toast("Your move has started");
+          });
+        break;
+      }
+      case "movenext": {
+        if (S.moveStage < MOVE_STAGES.length - 1) {
+          S.moveStage += 1; render();
+          toast(MOVE_STAGES[S.moveStage].t);
+        }
+        break;
+      }
+      case "movestop": { S.moveStarted = false; S.moveStage = 0; S.movePlan = {}; render(); break; }
+      case "dayjump": { S.dayHour = parseInt(t.dataset.h, 10); render(); break; }
+      case "ppuse": {
+        const n = t.dataset.name;
+        confirmThen("Use your passport at " + n + "?",
+          "The concierge there is told you are arriving. Pool, gym and courts are open to you as a ONE resident.",
+          "Tell them I am coming", () => { toast(n + " concierge notified"); });
+        break;
+      }
+      case "guestpass": {
+        if (S.guestPass) break;
+        S.guestPass = true; render();
+        toast("Guest pass sent · one left this year", () => { S.guestPass = false; render(); });
+        break;
+      }
       case "carview": {
         const id = t.dataset.id, c = CARS.find((x) => x.id === id);
         if (S.carView.has(id)) break;
@@ -6569,6 +7362,15 @@ img{ display:block; max-width:100%; }
   });
 
   document.addEventListener("input", function (e) {
+    if (e.target && e.target.id === "daySlider") {
+      S.dayHour = parseInt(e.target.value, 10);
+      const y = view.scrollTop;
+      render();
+      view.scrollTop = y;
+      const sl = document.getElementById("daySlider");
+      if (sl) sl.focus();
+      return;
+    }
     if (e.target && e.target.id === "otpInput") {
       AUTH.typed = e.target.value.replace(/\D/g, "").slice(0, 6);
       const boxes = document.querySelectorAll(".otp-box");
